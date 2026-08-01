@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+soc-command-center/node_modules/
+
+# Build & Dist
+dist/
+soc-command-center/dist/
+
+# OS & Environment Files
+.DS_Store
+*.log
+logs/*.log
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker / Temporary runtime files
+/tmp/soc-lab-sim/

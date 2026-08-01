@@ -1,0 +1,42 @@
+[
+  {
+    "timestamp": "2025-01-15T19:45:12Z",
+    "hostname": "prod-web-01",
+    "program": "sudo",
+    "pid": 34521,
+    "message": "testuser : user NOT in sudoers ; TTY=pts/0 ; PWD=/home/testuser ; USER=root ; COMMAND=/bin/bash",
+    "action": "sudo_denied",
+    "username": "testuser",
+    "target_user": "root",
+    "command": "/bin/bash",
+    "tty": "pts/0",
+    "pwd": "/home/testuser",
+    "srcip": "10.0.1.55"
+  },
+  {
+    "timestamp": "2025-01-15T19:47:33Z",
+    "hostname": "prod-web-01",
+    "program": "sudo",
+    "pid": 34589,
+    "message": "devuser : TTY=pts/1 ; PWD=/tmp ; USER=root ; COMMAND=/bin/bash -i",
+    "action": "sudo_success",
+    "username": "devuser",
+    "target_user": "root",
+    "command": "/bin/bash -i",
+    "tty": "pts/1",
+    "pwd": "/tmp",
+    "srcip": "10.0.1.60"
+  },
+  {
+    "timestamp": "2025-01-15T19:52:01Z",
+    "hostname": "prod-web-01",
+    "program": "su",
+    "pid": 34612,
+    "message": "+ pts/2 testuser-root",
+    "action": "su_success",
+    "username": "testuser",
+    "target_user": "root",
+    "tty": "pts/2",
+    "srcip": "10.0.1.55"
+  }
+]

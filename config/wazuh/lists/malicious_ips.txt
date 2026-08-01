@@ -1,0 +1,70 @@
+# =============================================================================
+# Home SOC Lab — Malicious IP CDB List
+# =============================================================================
+# Format: <key>:<value>
+# For CDB lookups, the key is the IP address followed by a colon.
+# The value after the colon can be used for categorization.
+#
+# These IPs use RFC 5737 documentation ranges (TEST-NET):
+#   198.51.100.0/24  (TEST-NET-2)
+#   203.0.113.0/24   (TEST-NET-3)
+#
+# These ranges are reserved for documentation and MUST NOT appear in
+# real network traffic, making them safe for lab testing.
+#
+# Categories:
+#   botnet    — Known botnet C2 infrastructure
+#   scanner   — Aggressive port/vuln scanners
+#   bruteforce — SSH/RDP brute-force sources
+#   malware   — Malware distribution / payload hosting
+#   phishing  — Phishing infrastructure
+#   tor_exit  — Tor exit nodes (suspicious in enterprise context)
+#   apt       — Advanced Persistent Threat infrastructure
+#
+# Usage in Wazuh rules:
+#   <list field="srcip" lookup="address_match_key">etc/lists/custom/malicious_ips.txt</list>
+#
+# To update: add IPs, then restart the manager or run:
+#   /var/ossec/bin/wazuh-control restart
+# =============================================================================
+
+# --- Botnet C2 Servers ---
+198.51.100.10:botnet
+198.51.100.11:botnet
+198.51.100.12:botnet
+198.51.100.23:botnet
+
+# --- Aggressive Scanners ---
+198.51.100.50:scanner
+198.51.100.51:scanner
+198.51.100.52:scanner
+203.0.113.80:scanner
+203.0.113.81:scanner
+
+# --- SSH / RDP Brute-Force Sources ---
+198.51.100.100:bruteforce
+198.51.100.101:bruteforce
+198.51.100.102:bruteforce
+203.0.113.100:bruteforce
+203.0.113.101:bruteforce
+
+# --- Malware Distribution ---
+203.0.113.10:malware
+203.0.113.11:malware
+203.0.113.12:malware
+203.0.113.13:malware
+
+# --- Phishing Infrastructure ---
+203.0.113.40:phishing
+203.0.113.41:phishing
+203.0.113.42:phishing
+
+# --- Tor Exit Nodes (flagged in enterprise context) ---
+198.51.100.200:tor_exit
+198.51.100.201:tor_exit
+203.0.113.200:tor_exit
+
+# --- APT Infrastructure ---
+198.51.100.250:apt
+203.0.113.250:apt
+203.0.113.251:apt

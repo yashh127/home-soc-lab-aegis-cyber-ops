@@ -1,0 +1,197 @@
+[
+  {
+    "version": "0",
+    "id": "a7b8c9d0-e1f2-3456-a012-3456789abcde",
+    "detail-type": "GuardDuty Finding",
+    "source": "aws.guardduty",
+    "account": "123456789012",
+    "time": "2025-01-15T16:14:22Z",
+    "region": "us-east-1",
+    "resources": [],
+    "detail": {
+      "schemaVersion": "2.0",
+      "accountId": "123456789012",
+      "region": "us-east-1",
+      "id": "d4567890-ef01-2345-6789-abcdef012345",
+      "type": "CryptoCurrency:EC2/BitcoinTool.B!DNS",
+      "severity": 8,
+      "title": "EC2 instance i-0abc1234def56789e is querying a domain associated with cryptocurrency mining",
+      "description": "EC2 instance i-0abc1234def56789e is querying domain pool.minergate.com which is associated with cryptocurrency-related activity. This instance may be compromised and used for unauthorized cryptocurrency mining.",
+      "resource": {
+        "resourceType": "Instance",
+        "instanceDetails": {
+          "instanceId": "i-0abc1234def56789e",
+          "instanceType": "c5.2xlarge",
+          "launchTime": "2025-01-12T06:00:00Z",
+          "platform": null,
+          "availabilityZone": "us-east-1b",
+          "imageId": "ami-0abcdef1234567894",
+          "iamInstanceProfile": {
+            "arn": "arn:aws:iam::123456789012:instance-profile/EC2-Compute-Role",
+            "id": "AIPAI234567894EXAMPLE"
+          },
+          "networkInterfaces": [
+            {
+              "networkInterfaceId": "eni-0e5f6a7b8c9012345",
+              "subnetId": "subnet-0ff5g13hi7EXAMPLE",
+              "vpcId": "vpc-0a1b2c3d4e5f67890",
+              "privateDnsName": "ip-10-0-2-200.ec2.internal",
+              "privateIpAddress": "10.0.2.200",
+              "publicDnsName": "ec2-54-203-0-117.compute-1.amazonaws.com",
+              "publicIp": "54.203.0.117",
+              "securityGroups": [
+                {
+                  "groupName": "compute-cluster-sg",
+                  "groupId": "sg-0e5f6a7b8c9012345"
+                }
+              ]
+            }
+          ],
+          "tags": [
+            { "key": "Name", "value": "compute-worker-03" },
+            { "key": "Environment", "value": "production" }
+          ]
+        }
+      },
+      "service": {
+        "serviceName": "guardduty",
+        "detectorId": "d2b1c3a4e5f678901234567890abcdef",
+        "action": {
+          "actionType": "DNS_REQUEST",
+          "dnsRequestAction": {
+            "domain": "pool.minergate.com",
+            "protocol": "UDP",
+            "blocked": false
+          }
+        },
+        "evidence": {
+          "threatIntelligenceDetails": [
+            {
+              "threatListName": "default-cryptocurrency-domain-list",
+              "threatNames": ["CryptoCurrency", "Mining Pool"]
+            }
+          ]
+        },
+        "resourceRole": "ACTOR",
+        "additionalInfo": {
+          "domain": "pool.minergate.com"
+        },
+        "eventFirstSeen": "2025-01-15T15:45:00Z",
+        "eventLastSeen": "2025-01-15T16:14:22Z",
+        "archived": false,
+        "count": 23
+      }
+    }
+  },
+  {
+    "version": "0",
+    "id": "b8c9d0e1-f2a3-4567-b012-456789abcdef",
+    "detail-type": "GuardDuty Finding",
+    "source": "aws.guardduty",
+    "account": "123456789012",
+    "time": "2025-01-15T16:22:47Z",
+    "region": "us-east-1",
+    "resources": [],
+    "detail": {
+      "schemaVersion": "2.0",
+      "accountId": "123456789012",
+      "region": "us-east-1",
+      "id": "e5678901-f012-3456-789a-bcdef0123456",
+      "type": "CryptoCurrency:EC2/BitcoinTool.B",
+      "severity": 8,
+      "title": "EC2 instance i-0abc1234def56789e is communicating with a known cryptocurrency mining server",
+      "description": "EC2 instance i-0abc1234def56789e is communicating with IP address 203.0.113.180 on port 3333, which is associated with cryptocurrency mining activity (Stratum mining protocol).",
+      "resource": {
+        "resourceType": "Instance",
+        "instanceDetails": {
+          "instanceId": "i-0abc1234def56789e",
+          "instanceType": "c5.2xlarge",
+          "launchTime": "2025-01-12T06:00:00Z",
+          "platform": null,
+          "availabilityZone": "us-east-1b",
+          "imageId": "ami-0abcdef1234567894",
+          "iamInstanceProfile": {
+            "arn": "arn:aws:iam::123456789012:instance-profile/EC2-Compute-Role",
+            "id": "AIPAI234567894EXAMPLE"
+          },
+          "networkInterfaces": [
+            {
+              "networkInterfaceId": "eni-0e5f6a7b8c9012345",
+              "subnetId": "subnet-0ff5g13hi7EXAMPLE",
+              "vpcId": "vpc-0a1b2c3d4e5f67890",
+              "privateDnsName": "ip-10-0-2-200.ec2.internal",
+              "privateIpAddress": "10.0.2.200",
+              "publicDnsName": "ec2-54-203-0-117.compute-1.amazonaws.com",
+              "publicIp": "54.203.0.117",
+              "securityGroups": [
+                {
+                  "groupName": "compute-cluster-sg",
+                  "groupId": "sg-0e5f6a7b8c9012345"
+                }
+              ]
+            }
+          ],
+          "tags": [
+            { "key": "Name", "value": "compute-worker-03" },
+            { "key": "Environment", "value": "production" }
+          ]
+        }
+      },
+      "service": {
+        "serviceName": "guardduty",
+        "detectorId": "d2b1c3a4e5f678901234567890abcdef",
+        "action": {
+          "actionType": "NETWORK_CONNECTION",
+          "networkConnectionAction": {
+            "connectionDirection": "OUTBOUND",
+            "remoteIpDetails": {
+              "ipAddressV4": "203.0.113.180",
+              "organization": {
+                "asn": "14061",
+                "asnOrg": "DigitalOcean LLC",
+                "isp": "DigitalOcean",
+                "org": "DigitalOcean"
+              },
+              "country": {
+                "countryName": "Netherlands"
+              },
+              "city": {
+                "cityName": "Amsterdam"
+              },
+              "geoLocation": {
+                "lat": 52.3676,
+                "lon": 4.9041
+              }
+            },
+            "remotePortDetails": {
+              "port": 3333,
+              "portName": "Stratum Mining"
+            },
+            "localPortDetails": {
+              "port": 51234,
+              "portName": "Unknown"
+            },
+            "protocol": "TCP",
+            "blocked": false
+          }
+        },
+        "evidence": {
+          "threatIntelligenceDetails": [
+            {
+              "threatListName": "default-cryptocurrency-ip-list",
+              "threatNames": ["CryptoCurrency", "Mining Pool"]
+            }
+          ]
+        },
+        "resourceRole": "ACTOR",
+        "additionalInfo": {
+          "unusualProtocol": "TCP"
+        },
+        "eventFirstSeen": "2025-01-15T15:50:00Z",
+        "eventLastSeen": "2025-01-15T16:22:47Z",
+        "archived": false,
+        "count": 156
+      }
+    }
+  }
+]

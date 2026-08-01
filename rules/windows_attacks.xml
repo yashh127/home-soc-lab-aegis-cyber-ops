@@ -1,0 +1,90 @@
+<!--
+  Windows Attack Detection Rules
+  Home SOC Lab - Custom Wazuh Rules
+  MITRE ATT&CK Mapped
+-->
+<group name="windows,attack,custom,">
+
+  <!-- Rule 100001: Mimikatz / Credential Dumping Detection
+       Detects execution of Mimikatz or credential dumping tools via
+       Sysmon Process Create (EventID 1) command line analysis.
+       MITRE ATT&CK: T1003.001 - OS Credential Dumping: LSASS Memory
+  -->
+  <rule id="100001" level="12">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)mimikatz|sekurlsa|lsadump</field>
+    <description>Mimikatz or credential dumping tool detected in process command line</description>
+    <mitre>
+      <id>T1003.001</id>
+    </mitre>
+    <options>no_full_log</options>
+    <group>credential_access,credential_dumping,high_severity,</group>
+  </rule>
+
+  <!-- Rule 100002: Encoded PowerShell Command Execution
+       Detects PowerShell invoked with Base64-encoded commands,
+       a common technique for obfuscation and defense evasion.
+       MITRE ATT&CK: T1059.001 - Command and Scripting Interpreter: PowerShell
+  -->
+  <rule id="100002" level="10">
+    <if_sid>91801,61603</if_sid>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)\-enc(\s|odedcommand)</field>
+    <description>Encoded PowerShell command execution detected — possible obfuscation</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+    <options>no_full_log</options>
+    <group>execution,defense_evasion,powershell,</group>
+  </rule>
+
+  <!-- Rule 100003: New Windows Service Installed
+       Detects new service installation via System Event Log EventID 7045.
+       Attackers commonly install malicious services for persistence.
+       MITRE ATT&CK: T1543.003 - Create or Modify System Process: Windows Service
+  -->
+  <rule id="100003" level="8">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID">^7045$</field>
+    <description>New Windows service installed — review for persistence mechanism</description>
+    <mitre>
+      <id>T1543.003</id>
+    </mitre>
+    <options>no_full_log</options>
+    <group>persistence,privilege_escalation,service_creation,</group>
+  </rule>
+
+  <!-- Rule 100004: LSASS Memory Access via Sysmon
+       Detects process accessing LSASS memory (Sysmon EventID 10 - ProcessAccess).
+       Critical indicator of credential theft attempts.
+       MITRE ATT&CK: T1003.001 - OS Credential Dumping: LSASS Memory
+  -->
+  <rule id="100004" level="14">
+    <if_group>windows</if_group>
+    <field name="win.system.eventID">^10$</field>
+    <field name="win.eventdata.targetImage" type="pcre2">(?i)lsass\.exe$</field>
+    <description>CRITICAL: LSASS memory access detected via Sysmon — credential theft attempt</description>
+    <mitre>
+      <id>T1003.001</id>
+    </mitre>
+    <options>no_full_log</options>
+    <group>credential_access,lsass_access,critical_severity,</group>
+  </rule>
+
+  <!-- Rule 100005: Suspicious Parent-Child Process Relationship
+       Detects cmd.exe spawned by Office applications (Word, Excel, Outlook),
+       indicating possible macro-based malware execution.
+       MITRE ATT&CK: T1055 - Process Injection
+  -->
+  <rule id="100005" level="10">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)cmd\.exe$</field>
+    <field name="win.eventdata.parentImage" type="pcre2">(?i)(winword|excel|outlook)\.exe$</field>
+    <description>Suspicious process chain: cmd.exe spawned by Office application — possible macro execution</description>
+    <mitre>
+      <id>T1055</id>
+    </mitre>
+    <options>no_full_log</options>
+    <group>execution,initial_access,office_macro,</group>
+  </rule>
+
+</group>

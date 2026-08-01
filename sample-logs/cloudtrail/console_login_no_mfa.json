@@ -1,0 +1,94 @@
+{
+  "Records": [
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAI3EXAMPLEDEVUSR04",
+        "arn": "arn:aws:iam::123456789012:user/dev-user",
+        "accountId": "123456789012",
+        "userName": "dev-user"
+      },
+      "eventTime": "2025-01-15T07:30:12Z",
+      "eventSource": "signin.amazonaws.com",
+      "eventName": "ConsoleLogin",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.100",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "requestParameters": null,
+      "responseElements": {
+        "ConsoleLogin": "Success"
+      },
+      "additionalEventData": {
+        "MFAUsed": "No",
+        "LoginTo": "https://console.aws.amazon.com/console/home"
+      },
+      "requestID": "a1234567-b890-1234-cdef-567890abcdef",
+      "eventID": "d1e2f3a4-b5c6-7890-1234-567890abcdef",
+      "readOnly": false,
+      "eventType": "AwsConsoleSignIn",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAI3EXAMPLEADMBKP05",
+        "arn": "arn:aws:iam::123456789012:user/admin-backup",
+        "accountId": "123456789012",
+        "userName": "admin-backup"
+      },
+      "eventTime": "2025-01-15T08:15:44Z",
+      "eventSource": "signin.amazonaws.com",
+      "eventName": "ConsoleLogin",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.101",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_2_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15",
+      "requestParameters": null,
+      "responseElements": {
+        "ConsoleLogin": "Success"
+      },
+      "additionalEventData": {
+        "MFAUsed": "No",
+        "LoginTo": "https://console.aws.amazon.com/console/home"
+      },
+      "requestID": "b2345678-c901-2345-def0-678901bcdef0",
+      "eventID": "e2f3a4b5-c6d7-8901-2345-678901bcdef0",
+      "readOnly": false,
+      "eventType": "AwsConsoleSignIn",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAI3EXAMPLEFINLD06",
+        "arn": "arn:aws:iam::123456789012:user/finance-lead",
+        "accountId": "123456789012",
+        "userName": "finance-lead"
+      },
+      "eventTime": "2025-01-15T11:42:09Z",
+      "eventSource": "signin.amazonaws.com",
+      "eventName": "ConsoleLogin",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "198.51.100.25",
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "requestParameters": null,
+      "responseElements": {
+        "ConsoleLogin": "Success"
+      },
+      "additionalEventData": {
+        "MFAUsed": "No",
+        "LoginTo": "https://console.aws.amazon.com/console/home"
+      },
+      "requestID": "c3456789-d012-3456-ef01-789012cdef01",
+      "eventID": "f3a4b5c6-d7e8-9012-3456-789012cdef01",
+      "readOnly": false,
+      "eventType": "AwsConsoleSignIn",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012"
+    }
+  ]
+}

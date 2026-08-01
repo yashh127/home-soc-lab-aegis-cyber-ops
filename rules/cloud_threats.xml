@@ -1,0 +1,196 @@
+<!-- ============================================================
+     Cloud Threat Detection Rules (100201 - 100208)
+     Home SOC Lab - Custom Wazuh Rules
+     
+     Detects AWS security threats via CloudTrail and GuardDuty
+     event analysis, mapped to MITRE ATT&CK framework.
+     
+     Prerequisites:
+       - AWS CloudTrail integration (parent SID 80302)
+       - AWS GuardDuty integration (parent SID 80400)
+     ============================================================ -->
+
+<group name="cloud,aws,custom,">
+
+  <!-- ==========================================================
+       SECTION 1: AWS IAM & Authentication Threats
+       ========================================================== -->
+
+  <!-- ==========================================================
+       Rule 100201: AWS Console Login Without MFA
+       MITRE ATT&CK: T1078 (Valid Accounts)
+       
+       Detection logic:
+       Matches CloudTrail ConsoleLogin events where the MFAUsed
+       field is "No". Console access without MFA significantly
+       increases the risk of account compromise, especially if
+       credentials are leaked or phished.
+       ========================================================== -->
+  <rule id="100201" level="10">
+    <if_sid>80302</if_sid>
+    <field name="aws.eventName">ConsoleLogin</field>
+    <field name="aws.additionalEventData.MFAUsed">No</field>
+    <description>AWS Console login without MFA detected</description>
+    <mitre>
+      <id>T1078</id>
+    </mitre>
+    <group>authentication,aws_cloudtrail,pci_dss_10.2.5,</group>
+  </rule>
+
+  <!-- ==========================================================
+       Rule 100203: IAM User Created
+       MITRE ATT&CK: T1136.003 (Create Account: Cloud Account)
+       
+       Detection logic:
+       Matches CloudTrail CreateUser API calls. New IAM user
+       creation should be verified against change management
+       records. Unauthorized user creation may indicate
+       persistence establishment by an attacker.
+       ========================================================== -->
+  <rule id="100203" level="8">
+    <if_sid>80302</if_sid>
+    <field name="aws.eventName">CreateUser</field>
+    <description>New IAM user created - verify authorization</description>
+    <mitre>
+      <id>T1136.003</id>
+    </mitre>
+    <group>iam,aws_cloudtrail,pci_dss_10.2.5,</group>
+  </rule>
+
+  <!-- ==========================================================
+       Rule 100204: Root Account API Call
+       MITRE ATT&CK: T1078.004 (Valid Accounts: Cloud Accounts)
+       
+       Detection logic:
+       Triggers when the AWS Root account makes API calls other
+       than ConsoleLogin. Root account usage for API operations
+       is a critical security concern — best practice dictates
+       the root account should only be used for initial setup
+       and billing. Any API call from root is highly suspicious.
+       ========================================================== -->
+  <rule id="100204" level="14">
+    <if_sid>80302</if_sid>
+    <field name="aws.userIdentity.type">Root</field>
+    <field name="aws.eventName" negate="yes">ConsoleLogin</field>
+    <description>AWS Root account API call detected - critical security event</description>
+    <mitre>
+      <id>T1078.004</id>
+    </mitre>
+    <group>iam,aws_cloudtrail,pci_dss_10.2.2,</group>
+  </rule>
+
+  <!-- ==========================================================
+       SECTION 2: AWS Data Security
+       ========================================================== -->
+
+  <!-- ==========================================================
+       Rule 100202: S3 Bucket Made Public
+       MITRE ATT&CK: T1530 (Data from Cloud Storage Object)
+       
+       Detection logic:
+       Matches CloudTrail events for PutBucketAcl or
+       PutBucketPolicy that contain "public-read" in the
+       request parameters. Making S3 buckets publicly accessible
+       is a leading cause of cloud data breaches.
+       ========================================================== -->
+  <rule id="100202" level="12">
+    <if_sid>80302</if_sid>
+    <field name="aws.eventName">PutBucketAcl|PutBucketPolicy</field>
+    <match>public-read</match>
+    <description>S3 bucket ACL changed to public - data exposure risk</description>
+    <mitre>
+      <id>T1530</id>
+    </mitre>
+    <group>aws_s3,aws_cloudtrail,pci_dss_10.2.7,</group>
+  </rule>
+
+  <!-- ==========================================================
+       SECTION 3: AWS GuardDuty Threat Findings
+       ========================================================== -->
+
+  <!-- ==========================================================
+       Rule 100205: GuardDuty Cryptocurrency Mining Detection
+       MITRE ATT&CK: T1496 (Resource Hijacking)
+       
+       Detection logic:
+       Matches GuardDuty findings with type containing
+       "CryptoCurrency". Crypto mining on compromised instances
+       is one of the most common post-exploitation activities,
+       indicating the instance has been compromised and is being
+       used for unauthorized resource consumption.
+       ========================================================== -->
+  <rule id="100205" level="14">
+    <if_sid>80400</if_sid>
+    <regex>CryptoCurrency</regex>
+    <description>GuardDuty: Cryptocurrency mining activity detected</description>
+    <mitre>
+      <id>T1496</id>
+    </mitre>
+    <group>aws_guardduty,resource_hijacking,</group>
+  </rule>
+
+  <!-- ==========================================================
+       Rule 100206: GuardDuty Command and Control Communication
+       MITRE ATT&CK: T1071 (Application Layer Protocol)
+       
+       Detection logic:
+       Matches GuardDuty findings with type containing Backdoor,
+       Trojan, or C&C indicators. These findings suggest an
+       instance is communicating with known C2 infrastructure,
+       indicating active compromise requiring immediate response.
+       ========================================================== -->
+  <rule id="100206" level="14">
+    <if_sid>80400</if_sid>
+    <regex>Backdoor|Trojan|C&amp;C</regex>
+    <description>GuardDuty: Command and Control communication detected</description>
+    <mitre>
+      <id>T1071</id>
+    </mitre>
+    <group>aws_guardduty,command_and_control,</group>
+  </rule>
+
+  <!-- ==========================================================
+       SECTION 4: AWS Defense Evasion & Reconnaissance
+       ========================================================== -->
+
+  <!-- ==========================================================
+       Rule 100207: CloudTrail Logging Disabled
+       MITRE ATT&CK: T1562.008 (Impair Defenses: Disable Cloud Logs)
+       
+       Detection logic:
+       Matches CloudTrail StopLogging or DeleteTrail API calls.
+       Disabling CloudTrail is a critical defense evasion
+       technique — attackers disable logging to hide subsequent
+       malicious activity. This requires immediate investigation.
+       ========================================================== -->
+  <rule id="100207" level="14">
+    <if_sid>80302</if_sid>
+    <field name="aws.eventName">StopLogging|DeleteTrail</field>
+    <description>CloudTrail logging disabled - defense evasion detected</description>
+    <mitre>
+      <id>T1562.008</id>
+    </mitre>
+    <group>aws_cloudtrail,defense_evasion,pci_dss_10.5.2,</group>
+  </rule>
+
+  <!-- ==========================================================
+       Rule 100208: Unauthorized AWS API Call
+       MITRE ATT&CK: T1087 (Account Discovery)
+       
+       Detection logic:
+       Matches CloudTrail events with error codes containing
+       AccessDenied or UnauthorizedAccess. Repeated denied API
+       calls may indicate reconnaissance activity — an attacker
+       enumerating permissions to find exploitable access paths.
+       ========================================================== -->
+  <rule id="100208" level="6">
+    <if_sid>80302</if_sid>
+    <field name="aws.errorCode">AccessDenied|UnauthorizedAccess</field>
+    <description>AWS API call denied - possible reconnaissance</description>
+    <mitre>
+      <id>T1087</id>
+    </mitre>
+    <group>aws_cloudtrail,reconnaissance,pci_dss_10.2.4,</group>
+  </rule>
+
+</group>

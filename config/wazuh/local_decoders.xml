@@ -1,0 +1,130 @@
+<!--
+  =============================================================================
+  Home SOC Lab — Custom Decoders (local_decoders.xml)
+  =============================================================================
+  Custom decoders for log sources specific to this SOC lab.
+
+  These decoders extract structured fields from:
+    1. AWS CloudTrail JSON logs (replayed via syslog or custom file)
+    2. AWS GuardDuty JSON logs (replayed via syslog or custom file)
+    3. Generic JSON logs dropped into /var/log/custom/*.json
+
+  Decoder execution order:
+    1. Wazuh tries built-in decoders first (ruleset/decoders/).
+    2. If no match, it falls through to this file.
+    3. Child decoders refine fields extracted by parent decoders.
+
+  Reference:
+    https://documentation.wazuh.com/current/user-manual/ruleset/custom-decoders.html
+  =============================================================================
+-->
+
+<!-- =========================================================================
+     AWS CLOUDTRAIL — JSON Log Replay Decoder
+     =========================================================================
+     Matches CloudTrail JSON events that contain "eventVersion" and
+     standard CloudTrail fields. Works for both direct S3 ingestion
+     and syslog/file-replayed CloudTrail records.
+
+     Decoded fields:
+       - aws.eventVersion
+       - aws.eventSource
+       - aws.eventName
+       - aws.awsRegion
+       - aws.sourceIPAddress
+       - aws.userIdentity.type
+       - aws.userIdentity.arn
+       - aws.errorCode (if present)
+       - aws.errorMessage (if present)
+-->
+<decoder name="custom-cloudtrail">
+  <prematch>\"eventVersion\"</prematch>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+</decoder>
+
+<decoder name="custom-cloudtrail-fields">
+  <parent>custom-cloudtrail</parent>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+  <regex type="pcre2">\"eventSource\"\s*:\s*\"(\S+)\"</regex>
+  <order>aws.eventSource</order>
+</decoder>
+
+<decoder name="custom-cloudtrail-action">
+  <parent>custom-cloudtrail</parent>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+  <regex type="pcre2">\"eventName\"\s*:\s*\"(\S+)\"</regex>
+  <order>aws.eventName</order>
+</decoder>
+
+<decoder name="custom-cloudtrail-region">
+  <parent>custom-cloudtrail</parent>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+  <regex type="pcre2">\"awsRegion\"\s*:\s*\"(\S+)\"</regex>
+  <order>aws.awsRegion</order>
+</decoder>
+
+<decoder name="custom-cloudtrail-srcip">
+  <parent>custom-cloudtrail</parent>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+  <regex type="pcre2">\"sourceIPAddress\"\s*:\s*\"(\S+)\"</regex>
+  <order>aws.sourceIPAddress</order>
+</decoder>
+
+<!-- =========================================================================
+     AWS GUARDDUTY — JSON Log Replay Decoder
+     =========================================================================
+     Matches GuardDuty findings that contain "detail-type" set to
+     "GuardDuty Finding". Works for replayed CloudWatch Events or
+     direct EventBridge JSON.
+
+     Decoded fields:
+       - aws.guardduty.type
+       - aws.guardduty.severity
+       - aws.guardduty.title
+       - aws.guardduty.description
+       - aws.guardduty.accountId
+-->
+<decoder name="custom-guardduty">
+  <prematch>\"detail-type\"\s*:\s*\"GuardDuty</prematch>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+</decoder>
+
+<decoder name="custom-guardduty-type">
+  <parent>custom-guardduty</parent>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+  <regex type="pcre2">\"type\"\s*:\s*\"(\S+)\"</regex>
+  <order>aws.guardduty.type</order>
+</decoder>
+
+<decoder name="custom-guardduty-severity">
+  <parent>custom-guardduty</parent>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+  <regex type="pcre2">\"severity\"\s*:\s*(\d+\.?\d*)</regex>
+  <order>aws.guardduty.severity</order>
+</decoder>
+
+<decoder name="custom-guardduty-title">
+  <parent>custom-guardduty</parent>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+  <regex type="pcre2">\"title\"\s*:\s*\"([^\"]+)\"</regex>
+  <order>aws.guardduty.title</order>
+</decoder>
+
+<!-- =========================================================================
+     GENERIC JSON — Custom Log File Decoder
+     =========================================================================
+     Catches any JSON log line from /var/log/custom/*.json that isn't
+     matched by the CloudTrail or GuardDuty decoders above.
+
+     This is a broad catch-all: it decodes every top-level JSON key
+     into a Wazuh field. Use rules to filter on specific field values.
+-->
+<decoder name="custom-json-generic">
+  <prematch>^\{</prematch>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+</decoder>
+
+<decoder name="custom-json-generic-fields">
+  <parent>custom-json-generic</parent>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+</decoder>

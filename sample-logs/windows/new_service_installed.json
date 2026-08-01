@@ -1,0 +1,107 @@
+[
+  {
+    "rule": {
+      "level": 10,
+      "description": "Windows System - New Service Installed - 7045",
+      "id": "61150",
+      "groups": ["windows", "windows_system", "service_installed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Service Control Manager",
+          "providerGuid": "{555908D1-A6D7-4695-8E1E-26931D2012F4}",
+          "eventID": "7045",
+          "version": "0",
+          "level": "4",
+          "task": "0",
+          "opcode": "0",
+          "keywords": "0x8080000000000000",
+          "systemTime": "2025-01-15T03:45:11.334Z",
+          "eventRecordID": "45201",
+          "channel": "System",
+          "computer": "WORKSTATION-01.corp.local"
+        },
+        "eventdata": {
+          "serviceName": "WindowsUpdateHelper",
+          "imagePath": "C:\\ProgramData\\update.exe",
+          "serviceType": "user mode service",
+          "startType": "auto start",
+          "accountName": "LocalSystem"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T03:45:11.334+0000"
+  },
+  {
+    "rule": {
+      "level": 10,
+      "description": "Windows System - New Service Installed - 7045",
+      "id": "61150",
+      "groups": ["windows", "windows_system", "service_installed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Service Control Manager",
+          "providerGuid": "{555908D1-A6D7-4695-8E1E-26931D2012F4}",
+          "eventID": "7045",
+          "version": "0",
+          "level": "4",
+          "task": "0",
+          "opcode": "0",
+          "keywords": "0x8080000000000000",
+          "systemTime": "2025-01-15T03:47:22.891Z",
+          "eventRecordID": "45202",
+          "channel": "System",
+          "computer": "WORKSTATION-01.corp.local"
+        },
+        "eventdata": {
+          "serviceName": "SystemHealthMonitor",
+          "imagePath": "C:\\Temp\\svchost.exe",
+          "serviceType": "user mode service",
+          "startType": "auto start",
+          "accountName": "LocalSystem"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T03:47:22.891+0000"
+  },
+  {
+    "rule": {
+      "level": 12,
+      "description": "Windows System - New Kernel Mode Driver Installed - 7045",
+      "id": "61151",
+      "groups": ["windows", "windows_system", "service_installed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Service Control Manager",
+          "providerGuid": "{555908D1-A6D7-4695-8E1E-26931D2012F4}",
+          "eventID": "7045",
+          "version": "0",
+          "level": "4",
+          "task": "0",
+          "opcode": "0",
+          "keywords": "0x8080000000000000",
+          "systemTime": "2025-01-15T03:52:05.112Z",
+          "eventRecordID": "45203",
+          "channel": "System",
+          "computer": "WORKSTATION-01.corp.local"
+        },
+        "eventdata": {
+          "serviceName": "NetworkDiagnostics",
+          "imagePath": "C:\\Users\\Public\\health.exe",
+          "serviceType": "kernel mode driver",
+          "startType": "auto start",
+          "accountName": "LocalSystem"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T03:52:05.112+0000"
+  }
+]

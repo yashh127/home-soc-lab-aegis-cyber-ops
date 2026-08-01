@@ -1,0 +1,256 @@
+<!--
+  =============================================================================
+  Home SOC Lab — Sysmon Configuration (REFERENCE)
+  =============================================================================
+  IMPORTANT: This is a REFERENCE configuration for Windows endpoints.
+  It is NOT used by the Wazuh Manager container directly.
+
+  Deploy this to Windows endpoints where Sysmon is installed:
+    1. Download Sysmon from https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
+    2. Install: sysmon64.exe -accepteula -i sysmonconfig.xml
+    3. Update: sysmon64.exe -c sysmonconfig.xml
+
+  Based on the SwiftOnSecurity Sysmon template:
+    https://github.com/SwiftOnSecurity/sysmon-config
+
+  Wazuh will collect Sysmon events via the eventchannel log source
+  "Microsoft-Windows-Sysmon/Operational" configured in ossec.conf.
+
+  Event IDs covered:
+    1  — Process Creation
+    3  — Network Connection
+    7  — Image Loaded (DLL)
+    10 — Process Access (credential dumping, injection)
+    11 — File Create
+    12 — Registry Object Added or Deleted
+    13 — Registry Value Set
+    14 — Registry Object Renamed
+    22 — DNS Query
+  =============================================================================
+-->
+
+<Sysmon schemaversion="4.90">
+
+  <!-- =======================================================================
+       HASH ALGORITHMS
+       =======================================================================
+       SHA256 for IOC matching; IMPHASH for import-table similarity analysis.
+  -->
+  <HashAlgorithms>SHA256,IMPHASH</HashAlgorithms>
+
+  <!-- =======================================================================
+       CHECK REVOCATION
+       =======================================================================
+       Verify digital signature revocation status of loaded images.
+  -->
+  <CheckRevocation>true</CheckRevocation>
+
+  <EventFiltering>
+
+    <!-- =====================================================================
+         EVENT ID 1: Process Creation
+         =====================================================================
+         Log all process creations EXCEPT known-noisy benign processes.
+         This is the most important Sysmon event for threat detection.
+    -->
+    <RuleGroup name="ProcessCreate" groupRelation="or">
+      <ProcessCreate onmatch="exclude">
+        <!-- Windows Update noise -->
+        <Image condition="is">C:\Windows\System32\backgroundTaskHost.exe</Image>
+        <Image condition="is">C:\Windows\System32\SearchProtocolHost.exe</Image>
+        <Image condition="is">C:\Windows\System32\SearchFilterHost.exe</Image>
+        <Image condition="is">C:\Windows\System32\SearchIndexer.exe</Image>
+        <Image condition="is">C:\Windows\System32\MusNotification.exe</Image>
+        <Image condition="is">C:\Windows\System32\usoclient.exe</Image>
+
+        <!-- Runtime / Telemetry noise -->
+        <Image condition="is">C:\Windows\System32\conhost.exe</Image>
+        <Image condition="is">C:\Windows\System32\wermgr.exe</Image>
+        <Image condition="is">C:\Windows\System32\WerFault.exe</Image>
+        <Image condition="is">C:\Windows\System32\audiodg.exe</Image>
+        <Image condition="is">C:\Windows\System32\RuntimeBroker.exe</Image>
+
+        <!-- Defender noise (still logged via Windows Security channel) -->
+        <Image condition="is">C:\Program Files\Windows Defender\MsMpEng.exe</Image>
+        <Image condition="is">C:\Program Files\Windows Defender\NisSrv.exe</Image>
+
+        <!-- Chrome / Edge update helpers -->
+        <ParentImage condition="contains">GoogleUpdate.exe</ParentImage>
+        <ParentImage condition="contains">MicrosoftEdgeUpdate.exe</ParentImage>
+      </ProcessCreate>
+    </RuleGroup>
+
+    <!-- =====================================================================
+         EVENT ID 3: Network Connection Detected
+         =====================================================================
+         Log outbound connections, excluding known-good system processes.
+         Critical for C2 detection and data exfiltration monitoring.
+    -->
+    <RuleGroup name="NetworkConnect" groupRelation="or">
+      <NetworkConnect onmatch="exclude">
+        <!-- Windows system networking -->
+        <Image condition="is">C:\Windows\System32\svchost.exe</Image>
+        <Image condition="is">C:\Windows\System32\wbem\WmiPrvSE.exe</Image>
+        <Image condition="is">C:\Windows\SystemApps\Microsoft.Windows.Search_cw5n1h2txyewy\SearchApp.exe</Image>
+
+        <!-- Local loopback (127.x.x.x) -->
+        <DestinationIp condition="begin with">127.</DestinationIp>
+
+        <!-- Link-local / multicast -->
+        <DestinationIp condition="begin with">169.254.</DestinationIp>
+        <DestinationIp condition="begin with">224.</DestinationIp>
+        <DestinationIp condition="is">::1</DestinationIp>
+
+        <!-- DNS and NTP traffic (high volume, low signal) -->
+        <DestinationPort condition="is">53</DestinationPort>
+        <DestinationPort condition="is">123</DestinationPort>
+      </NetworkConnect>
+    </RuleGroup>
+
+    <!-- =====================================================================
+         EVENT ID 7: Image Loaded (DLL)
+         =====================================================================
+         Log DLL loads — useful for detecting DLL side-loading, proxy execution,
+         and in-memory attacks. Exclude signed Microsoft DLLs to reduce volume.
+    -->
+    <RuleGroup name="ImageLoad" groupRelation="or">
+      <ImageLoad onmatch="include">
+        <!-- Flag unsigned or non-Microsoft DLLs loaded into sensitive processes -->
+        <Signed condition="is">false</Signed>
+        <!-- Flag DLLs loaded from unusual paths -->
+        <ImageLoaded condition="contains">\Temp\</ImageLoaded>
+        <ImageLoaded condition="contains">\AppData\</ImageLoaded>
+        <ImageLoaded condition="contains">\Downloads\</ImageLoaded>
+        <ImageLoaded condition="contains">\ProgramData\</ImageLoaded>
+        <ImageLoaded condition="begin with">C:\Users\Public\</ImageLoaded>
+      </ImageLoad>
+    </RuleGroup>
+
+    <!-- =====================================================================
+         EVENT ID 10: Process Access
+         =====================================================================
+         Critical for detecting credential dumping (e.g., Mimikatz targeting
+         lsass.exe) and process injection techniques.
+    -->
+    <RuleGroup name="ProcessAccess" groupRelation="or">
+      <ProcessAccess onmatch="include">
+        <!-- Monitor access to LSASS (credential theft) -->
+        <TargetImage condition="is">C:\Windows\System32\lsass.exe</TargetImage>
+        <!-- Monitor access to csrss (process injection) -->
+        <TargetImage condition="is">C:\Windows\System32\csrss.exe</TargetImage>
+        <!-- Monitor access to winlogon -->
+        <TargetImage condition="is">C:\Windows\System32\winlogon.exe</TargetImage>
+      </ProcessAccess>
+    </RuleGroup>
+
+    <!-- =====================================================================
+         EVENT ID 11: File Create
+         =====================================================================
+         Log file creation in common staging directories and for
+         suspicious file types.
+    -->
+    <RuleGroup name="FileCreate" groupRelation="or">
+      <FileCreate onmatch="include">
+        <!-- Executable drops -->
+        <TargetFilename condition="end with">.exe</TargetFilename>
+        <TargetFilename condition="end with">.dll</TargetFilename>
+        <TargetFilename condition="end with">.sys</TargetFilename>
+        <TargetFilename condition="end with">.bat</TargetFilename>
+        <TargetFilename condition="end with">.cmd</TargetFilename>
+        <TargetFilename condition="end with">.ps1</TargetFilename>
+        <TargetFilename condition="end with">.vbs</TargetFilename>
+        <TargetFilename condition="end with">.hta</TargetFilename>
+        <TargetFilename condition="end with">.scr</TargetFilename>
+        <TargetFilename condition="end with">.lnk</TargetFilename>
+        <!-- Common staging directories -->
+        <TargetFilename condition="contains">\Temp\</TargetFilename>
+        <TargetFilename condition="contains">\ProgramData\</TargetFilename>
+        <TargetFilename condition="begin with">C:\Users\Public\</TargetFilename>
+        <!-- Startup persistence -->
+        <TargetFilename condition="contains">\Start Menu\Programs\Startup\</TargetFilename>
+      </FileCreate>
+    </RuleGroup>
+
+    <!-- =====================================================================
+         EVENT ID 12: Registry Object Added or Deleted
+         =====================================================================
+         Monitor registry keys commonly abused for persistence and
+         privilege escalation.
+    -->
+    <RuleGroup name="RegistryEvent_AddDelete" groupRelation="or">
+      <RegistryEvent onmatch="include">
+        <!-- Run keys (persistence) -->
+        <TargetObject condition="contains">\CurrentVersion\Run</TargetObject>
+        <TargetObject condition="contains">\CurrentVersion\RunOnce</TargetObject>
+        <!-- Services (persistence / rootkit) -->
+        <TargetObject condition="contains">\Services\</TargetObject>
+        <!-- Image File Execution Options (debugger hijack) -->
+        <TargetObject condition="contains">\Image File Execution Options\</TargetObject>
+        <!-- AppInit_DLLs (DLL injection) -->
+        <TargetObject condition="contains">\Windows\CurrentVersion\Windows\AppInit_DLLs</TargetObject>
+        <!-- Winlogon (credential interception) -->
+        <TargetObject condition="contains">\Winlogon\</TargetObject>
+        <!-- Scheduled tasks -->
+        <TargetObject condition="contains">\Schedule\TaskCache\</TargetObject>
+      </RegistryEvent>
+    </RuleGroup>
+
+    <!-- =====================================================================
+         EVENT ID 13: Registry Value Set
+         =====================================================================
+         Same focus as EventID 12, but captures value modifications.
+    -->
+    <RuleGroup name="RegistryEvent_SetValue" groupRelation="or">
+      <RegistryEvent onmatch="include">
+        <TargetObject condition="contains">\CurrentVersion\Run</TargetObject>
+        <TargetObject condition="contains">\CurrentVersion\RunOnce</TargetObject>
+        <TargetObject condition="contains">\Services\</TargetObject>
+        <TargetObject condition="contains">\Image File Execution Options\</TargetObject>
+        <TargetObject condition="contains">\Winlogon\</TargetObject>
+        <TargetObject condition="contains">\Windows\CurrentVersion\Windows\AppInit_DLLs</TargetObject>
+        <!-- PowerShell execution policy tampering -->
+        <TargetObject condition="contains">\PowerShell\</TargetObject>
+      </RegistryEvent>
+    </RuleGroup>
+
+    <!-- =====================================================================
+         EVENT ID 14: Registry Object Renamed
+         =====================================================================
+         Detect registry key renaming, sometimes used to evade monitoring.
+    -->
+    <RuleGroup name="RegistryEvent_Rename" groupRelation="or">
+      <RegistryEvent onmatch="include">
+        <TargetObject condition="contains">\CurrentVersion\Run</TargetObject>
+        <TargetObject condition="contains">\Services\</TargetObject>
+      </RegistryEvent>
+    </RuleGroup>
+
+    <!-- =====================================================================
+         EVENT ID 22: DNS Query
+         =====================================================================
+         Log DNS queries for threat intel matching (C2 domains, DGA detection).
+         Exclude noisy Microsoft telemetry domains.
+    -->
+    <RuleGroup name="DnsQuery" groupRelation="or">
+      <DnsQuery onmatch="exclude">
+        <!-- Microsoft telemetry -->
+        <QueryName condition="end with">.microsoft.com</QueryName>
+        <QueryName condition="end with">.windowsupdate.com</QueryName>
+        <QueryName condition="end with">.windows.com</QueryName>
+        <QueryName condition="end with">.msftconnecttest.com</QueryName>
+        <QueryName condition="end with">.msftncsi.com</QueryName>
+        <QueryName condition="end with">.live.com</QueryName>
+        <QueryName condition="end with">.bing.com</QueryName>
+        <QueryName condition="end with">.office.com</QueryName>
+        <QueryName condition="end with">.office365.com</QueryName>
+        <!-- Google -->
+        <QueryName condition="end with">.googleapis.com</QueryName>
+        <QueryName condition="end with">.gstatic.com</QueryName>
+        <!-- Local DNS -->
+        <QueryName condition="end with">.local</QueryName>
+        <QueryName condition="end with">.localdomain</QueryName>
+      </DnsQuery>
+    </RuleGroup>
+
+  </EventFiltering>
+</Sysmon>

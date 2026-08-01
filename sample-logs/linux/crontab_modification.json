@@ -1,0 +1,43 @@
+[
+  {
+    "timestamp": "2025-01-15T14:22:08Z",
+    "hostname": "prod-web-01",
+    "program": "crontab",
+    "pid": 31204,
+    "message": "(testuser) REPLACE (testuser)",
+    "action": "crontab_modified",
+    "username": "testuser",
+    "uid": 1001
+  },
+  {
+    "timestamp": "2025-01-15T14:22:07Z",
+    "hostname": "prod-web-01",
+    "program": "audit",
+    "type": "EXECVE",
+    "pid": 31203,
+    "message": "argc=2 a0=\"crontab\" a1=\"-e\"",
+    "action": "execve",
+    "username": "testuser",
+    "uid": 1001,
+    "exe": "/usr/bin/crontab",
+    "command": "crontab -e"
+  },
+  {
+    "timestamp": "2025-01-15T14:22:10Z",
+    "hostname": "prod-web-01",
+    "program": "syscheck",
+    "message": "File '/var/spool/cron/crontabs/testuser' modified",
+    "action": "file_modified",
+    "file": "/var/spool/cron/crontabs/testuser",
+    "before": {
+      "md5": "a3f2b8c1d4e5f6a7b8c9d0e1f2a3b4c5",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 245
+    },
+    "after": {
+      "md5": "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+      "sha256": "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
+      "size": 312
+    }
+  }
+]

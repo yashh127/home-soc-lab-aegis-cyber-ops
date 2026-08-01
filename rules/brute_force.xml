@@ -1,0 +1,97 @@
+<!-- ============================================================
+     Brute-Force Detection Rules (100301 - 100303)
+     Home SOC Lab - Custom Wazuh Rules
+     
+     Frequency-based correlation rules that detect brute-force
+     attacks and post-compromise login activity. These rules
+     rely on Wazuh's built-in authentication failure rules as
+     parent triggers.
+     
+     Parent rule dependencies:
+       - SID 5710:  SSHD authentication failure
+       - SID 5715:  SSHD successful authentication
+       - SID 60122: Windows RDP authentication failure
+     ============================================================ -->
+
+<group name="authentication,brute_force,custom,">
+
+  <!-- ==========================================================
+       Rule 100301: SSH Brute-Force Attack Detected
+       MITRE ATT&CK: T1110.001 (Brute Force: Password Guessing)
+       
+       Detection logic:
+       Correlates 8 or more SSH authentication failures
+       (parent SID 5710) from the same source IP within a
+       120-second window. The threshold of 8 failures in 2
+       minutes balances detection sensitivity against false
+       positives from users mistyping passwords.
+       
+       Tuning notes:
+       - Increase frequency for environments with many users
+       - Decrease timeframe for more aggressive detection
+       - Consider whitelisting known scanner IPs
+       ========================================================== -->
+  <rule id="100301" level="10" frequency="8" timeframe="120">
+    <if_matched_sid>5710</if_matched_sid>
+    <same_source_ip />
+    <description>SSH brute-force attack detected (8+ failures in 2 minutes)</description>
+    <mitre>
+      <id>T1110.001</id>
+    </mitre>
+    <group>authentication_failures,brute_force,pci_dss_11.4,gpg13_7.1,</group>
+  </rule>
+
+  <!-- ==========================================================
+       Rule 100302: RDP Brute-Force Attack Detected
+       MITRE ATT&CK: T1110.001 (Brute Force: Password Guessing)
+       
+       Detection logic:
+       Correlates 8 or more RDP authentication failures
+       (parent SID 60122) from the same source IP within a
+       120-second window. RDP brute-force is one of the most
+       common initial access vectors for ransomware operators.
+       
+       Tuning notes:
+       - RDP should ideally not be exposed to the internet
+       - Consider pairing with active response to block IPs
+       - Monitor for password-spray variants (same password,
+         different users) separately
+       ========================================================== -->
+  <rule id="100302" level="10" frequency="8" timeframe="120">
+    <if_matched_sid>60122</if_matched_sid>
+    <same_source_ip />
+    <description>RDP brute-force attack detected (8+ failures in 2 minutes)</description>
+    <mitre>
+      <id>T1110.001</id>
+    </mitre>
+    <group>authentication_failures,brute_force,pci_dss_11.4,gpg13_7.1,</group>
+  </rule>
+
+  <!-- ==========================================================
+       Rule 100303: Successful Login After Brute-Force Attack
+       MITRE ATT&CK: T1078 (Valid Accounts)
+       
+       Detection logic:
+       Triggers when a successful SSH login (SID 5715) occurs
+       from the same source IP that previously triggered the
+       SSH brute-force rule (SID 100301) within a 10-minute
+       window. This is a HIGH-CONFIDENCE indicator of compromise
+       — it means the attacker likely guessed valid credentials.
+       
+       Response actions:
+       - Immediately investigate the source IP and target account
+       - Check for lateral movement from the compromised host
+       - Reset credentials for the affected account
+       - Consider blocking the source IP at the firewall
+       ========================================================== -->
+  <rule id="100303" level="12" frequency="2" timeframe="600">
+    <if_matched_sid>100301</if_matched_sid>
+    <same_source_ip />
+    <description>Successful login detected after brute-force attack - possible compromise</description>
+    <mitre>
+      <id>T1078</id>
+    </mitre>
+    <group>authentication_success,brute_force,compromise,pci_dss_10.2.4,gpg13_7.1,</group>
+  </rule>
+
+</group>

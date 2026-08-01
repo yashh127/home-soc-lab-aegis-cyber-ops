@@ -1,0 +1,86 @@
+<!--
+  =============================================================================
+  Home SOC Lab — Local Rules (local_rules.xml)
+  =============================================================================
+  This file contains base local rules that are loaded by the Wazuh Manager.
+
+  IMPORTANT: Place your main detection rules (SSH brute-force, malware,
+  lateral movement, etc.) in the rules/custom/ directory, NOT here.
+  Files in rules/custom/ are automatically loaded via the <rule_dir>
+  directive in ossec.conf.
+
+  This file is reserved for:
+    • Catch-all rules for custom log sources
+    • Overrides of built-in rules
+    • Quick one-off rules during triage
+
+  Rule ID allocation:
+    100000–100099  : Local overrides & catch-alls (this file)
+    100100–100199  : Reserved
+    100200–100299  : Network / firewall rules
+    100300–100399  : SSH & authentication rules
+    100400–100499  : Malware & endpoint rules
+    100500–100599  : Lateral movement & persistence rules
+    100600–100699  : AWS / cloud rules
+    100700–100799  : Windows event rules
+    100800–100899  : Sysmon rules
+    100900–100999  : Log replay & custom JSON rules
+  =============================================================================
+-->
+
+<group name="local,syslog,custom_json,">
+
+  <!-- =========================================================================
+       CATCH-ALL: Replayed Syslog JSON Logs
+       =========================================================================
+       Matches any JSON log replayed into /var/log/custom/*.json.
+       This ensures all replayed events generate at least a level-3 alert
+       so they appear in the dashboard for analysis.
+
+       Child rules in rules/custom/ can match on decoded JSON fields
+       (e.g., event.action, source.ip) for higher-fidelity detections.
+  -->
+  <rule id="100900" level="3">
+    <decoded_as>json</decoded_as>
+    <match>log_type</match>
+    <description>Custom JSON log ingested via log replay.</description>
+    <options>no_full_log</options>
+    <group>custom_json,replay,</group>
+  </rule>
+
+  <!-- =========================================================================
+       CATCH-ALL: Generic syslog from network devices
+       =========================================================================
+       Catch syslog messages that don't match any specific decoder.
+       Useful during initial lab setup to verify log flow.
+  -->
+  <rule id="100901" level="2">
+    <if_sid>1</if_sid>
+    <match>^syslog:</match>
+    <description>Unclassified syslog message from network device.</description>
+    <group>syslog,unclassified,</group>
+  </rule>
+
+</group>
+
+<!--
+  =============================================================================
+  MAIN DETECTION RULES
+  =============================================================================
+  All detection rules live in the rules/custom/ directory (mounted from
+  ./rules/ on the host). Each file should follow this naming convention:
+
+    rules/custom/
+    ├── 100300-ssh_bruteforce.xml
+    ├── 100400-malware_indicators.xml
+    ├── 100500-lateral_movement.xml
+    ├── 100600-aws_cloudtrail.xml
+    ├── 100700-windows_events.xml
+    ├── 100800-sysmon_detections.xml
+    └── README.md
+
+  Rules are loaded alphabetically. Use the ID ranges above to avoid
+  collisions. See the Wazuh rule syntax reference:
+  https://documentation.wazuh.com/current/user-manual/ruleset/custom.html
+  =============================================================================
+-->

@@ -1,0 +1,81 @@
+{
+  "Records": [
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAI3EXAMPLEJRDEV07",
+        "arn": "arn:aws:iam::123456789012:user/junior-dev",
+        "accountId": "123456789012",
+        "userName": "junior-dev"
+      },
+      "eventTime": "2025-01-15T14:33:21Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "PutBucketAcl",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.1.50",
+      "userAgent": "aws-cli/2.15.10 Python/3.11.6 Linux/5.15.0-91-generic",
+      "requestParameters": {
+        "bucketName": "company-assets-prod",
+        "AccessControlPolicy": {
+          "AccessControlList": {
+            "Grant": [
+              {
+                "Grantee": {
+                  "xsi:type": "Group",
+                  "URI": "http://acs.amazonaws.com/groups/global/AllUsers"
+                },
+                "Permission": "READ"
+              }
+            ]
+          }
+        }
+      },
+      "responseElements": null,
+      "requestID": "aa112233-bb44-5566-cc77-dd8899eeff00",
+      "eventID": "4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f90",
+      "readOnly": false,
+      "eventType": "AwsApiCall",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAI3EXAMPLEJRDEV07",
+        "arn": "arn:aws:iam::123456789012:user/junior-dev",
+        "accountId": "123456789012",
+        "userName": "junior-dev"
+      },
+      "eventTime": "2025-01-15T14:35:08Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "PutBucketPolicy",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.1.50",
+      "userAgent": "aws-cli/2.15.10 Python/3.11.6 Linux/5.15.0-91-generic",
+      "requestParameters": {
+        "bucketName": "customer-uploads-prod",
+        "bucketPolicy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "PublicRead",
+              "Effect": "Allow",
+              "Principal": "*",
+              "Action": "s3:GetObject",
+              "Resource": "arn:aws:s3:::customer-uploads-prod/*"
+            }
+          ]
+        }
+      },
+      "responseElements": null,
+      "requestID": "bb223344-cc55-6677-dd88-ee9900aabb11",
+      "eventID": "5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b",
+      "readOnly": false,
+      "eventType": "AwsApiCall",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012"
+    }
+  ]
+}

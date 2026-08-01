@@ -1,0 +1,410 @@
+[
+  {
+    "rule": {
+      "level": 5,
+      "description": "Windows Logon Failure - 4625",
+      "id": "60122",
+      "groups": ["windows", "windows_security", "authentication_failed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-Security-Auditing",
+          "providerGuid": "{54849625-5478-4994-A5BA-3E3B0328C30D}",
+          "eventID": "4625",
+          "version": "0",
+          "level": "0",
+          "task": "12544",
+          "opcode": "0",
+          "keywords": "0x8010000000000000",
+          "systemTime": "2025-01-15T02:15:03.112Z",
+          "eventRecordID": "892341",
+          "channel": "Security",
+          "computer": "DC-01.corp.local"
+        },
+        "eventdata": {
+          "subjectUserSid": "S-1-0-0",
+          "subjectUserName": "-",
+          "subjectDomainName": "-",
+          "subjectLogonId": "0x0",
+          "targetUserSid": "S-1-0-0",
+          "targetUserName": "administrator",
+          "targetDomainName": "CORP",
+          "status": "0xC000006D",
+          "failureReason": "%%2313",
+          "subStatus": "0xC000006A",
+          "logonType": "10",
+          "logonProcessName": "User32",
+          "authenticationPackageName": "Negotiate",
+          "workstationName": "ATTACKER-PC",
+          "transmiттedServices": "-",
+          "lmPackageName": "-",
+          "keyLength": "0",
+          "processId": "0x0",
+          "processName": "-",
+          "ipAddress": "198.51.100.50",
+          "ipPort": "49821"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T02:15:03.112+0000"
+  },
+  {
+    "rule": {
+      "level": 5,
+      "description": "Windows Logon Failure - 4625",
+      "id": "60122",
+      "groups": ["windows", "windows_security", "authentication_failed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-Security-Auditing",
+          "providerGuid": "{54849625-5478-4994-A5BA-3E3B0328C30D}",
+          "eventID": "4625",
+          "version": "0",
+          "level": "0",
+          "task": "12544",
+          "opcode": "0",
+          "keywords": "0x8010000000000000",
+          "systemTime": "2025-01-15T02:15:11.445Z",
+          "eventRecordID": "892342",
+          "channel": "Security",
+          "computer": "DC-01.corp.local"
+        },
+        "eventdata": {
+          "subjectUserSid": "S-1-0-0",
+          "subjectUserName": "-",
+          "subjectDomainName": "-",
+          "subjectLogonId": "0x0",
+          "targetUserSid": "S-1-0-0",
+          "targetUserName": "admin",
+          "targetDomainName": "CORP",
+          "status": "0xC000006D",
+          "failureReason": "%%2313",
+          "subStatus": "0xC000006A",
+          "logonType": "10",
+          "logonProcessName": "User32",
+          "authenticationPackageName": "Negotiate",
+          "workstationName": "ATTACKER-PC",
+          "transmittedServices": "-",
+          "lmPackageName": "-",
+          "keyLength": "0",
+          "processId": "0x0",
+          "processName": "-",
+          "ipAddress": "198.51.100.50",
+          "ipPort": "49822"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T02:15:11.445+0000"
+  },
+  {
+    "rule": {
+      "level": 5,
+      "description": "Windows Logon Failure - 4625",
+      "id": "60122",
+      "groups": ["windows", "windows_security", "authentication_failed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-Security-Auditing",
+          "providerGuid": "{54849625-5478-4994-A5BA-3E3B0328C30D}",
+          "eventID": "4625",
+          "version": "0",
+          "level": "0",
+          "task": "12544",
+          "opcode": "0",
+          "keywords": "0x8010000000000000",
+          "systemTime": "2025-01-15T02:15:18.201Z",
+          "eventRecordID": "892343",
+          "channel": "Security",
+          "computer": "DC-01.corp.local"
+        },
+        "eventdata": {
+          "subjectUserSid": "S-1-0-0",
+          "subjectUserName": "-",
+          "subjectDomainName": "-",
+          "subjectLogonId": "0x0",
+          "targetUserSid": "S-1-0-0",
+          "targetUserName": "root",
+          "targetDomainName": "CORP",
+          "status": "0xC000006D",
+          "failureReason": "%%2313",
+          "subStatus": "0xC000006A",
+          "logonType": "10",
+          "logonProcessName": "User32",
+          "authenticationPackageName": "Negotiate",
+          "workstationName": "ATTACKER-PC",
+          "transmittedServices": "-",
+          "lmPackageName": "-",
+          "keyLength": "0",
+          "processId": "0x0",
+          "processName": "-",
+          "ipAddress": "198.51.100.50",
+          "ipPort": "49823"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T02:15:18.201+0000"
+  },
+  {
+    "rule": {
+      "level": 5,
+      "description": "Windows Logon Failure - 4625",
+      "id": "60122",
+      "groups": ["windows", "windows_security", "authentication_failed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-Security-Auditing",
+          "providerGuid": "{54849625-5478-4994-A5BA-3E3B0328C30D}",
+          "eventID": "4625",
+          "version": "0",
+          "level": "0",
+          "task": "12544",
+          "opcode": "0",
+          "keywords": "0x8010000000000000",
+          "systemTime": "2025-01-15T02:15:26.887Z",
+          "eventRecordID": "892344",
+          "channel": "Security",
+          "computer": "DC-01.corp.local"
+        },
+        "eventdata": {
+          "subjectUserSid": "S-1-0-0",
+          "subjectUserName": "-",
+          "subjectDomainName": "-",
+          "subjectLogonId": "0x0",
+          "targetUserSid": "S-1-0-0",
+          "targetUserName": "user",
+          "targetDomainName": "CORP",
+          "status": "0xC000006D",
+          "failureReason": "%%2313",
+          "subStatus": "0xC000006A",
+          "logonType": "10",
+          "logonProcessName": "User32",
+          "authenticationPackageName": "Negotiate",
+          "workstationName": "ATTACKER-PC",
+          "transmittedServices": "-",
+          "lmPackageName": "-",
+          "keyLength": "0",
+          "processId": "0x0",
+          "processName": "-",
+          "ipAddress": "198.51.100.50",
+          "ipPort": "49824"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T02:15:26.887+0000"
+  },
+  {
+    "rule": {
+      "level": 5,
+      "description": "Windows Logon Failure - 4625",
+      "id": "60122",
+      "groups": ["windows", "windows_security", "authentication_failed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-Security-Auditing",
+          "providerGuid": "{54849625-5478-4994-A5BA-3E3B0328C30D}",
+          "eventID": "4625",
+          "version": "0",
+          "level": "0",
+          "task": "12544",
+          "opcode": "0",
+          "keywords": "0x8010000000000000",
+          "systemTime": "2025-01-15T02:15:33.554Z",
+          "eventRecordID": "892345",
+          "channel": "Security",
+          "computer": "DC-01.corp.local"
+        },
+        "eventdata": {
+          "subjectUserSid": "S-1-0-0",
+          "subjectUserName": "-",
+          "subjectDomainName": "-",
+          "subjectLogonId": "0x0",
+          "targetUserSid": "S-1-0-0",
+          "targetUserName": "backup",
+          "targetDomainName": "CORP",
+          "status": "0xC000006D",
+          "failureReason": "%%2313",
+          "subStatus": "0xC000006A",
+          "logonType": "10",
+          "logonProcessName": "User32",
+          "authenticationPackageName": "Negotiate",
+          "workstationName": "ATTACKER-PC",
+          "transmittedServices": "-",
+          "lmPackageName": "-",
+          "keyLength": "0",
+          "processId": "0x0",
+          "processName": "-",
+          "ipAddress": "198.51.100.50",
+          "ipPort": "49825"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T02:15:33.554+0000"
+  },
+  {
+    "rule": {
+      "level": 5,
+      "description": "Windows Logon Failure - 4625",
+      "id": "60122",
+      "groups": ["windows", "windows_security", "authentication_failed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-Security-Auditing",
+          "providerGuid": "{54849625-5478-4994-A5BA-3E3B0328C30D}",
+          "eventID": "4625",
+          "version": "0",
+          "level": "0",
+          "task": "12544",
+          "opcode": "0",
+          "keywords": "0x8010000000000000",
+          "systemTime": "2025-01-15T02:15:40.332Z",
+          "eventRecordID": "892346",
+          "channel": "Security",
+          "computer": "DC-01.corp.local"
+        },
+        "eventdata": {
+          "subjectUserSid": "S-1-0-0",
+          "subjectUserName": "-",
+          "subjectDomainName": "-",
+          "subjectLogonId": "0x0",
+          "targetUserSid": "S-1-0-0",
+          "targetUserName": "test",
+          "targetDomainName": "CORP",
+          "status": "0xC000006D",
+          "failureReason": "%%2313",
+          "subStatus": "0xC000006A",
+          "logonType": "10",
+          "logonProcessName": "User32",
+          "authenticationPackageName": "Negotiate",
+          "workstationName": "ATTACKER-PC",
+          "transmittedServices": "-",
+          "lmPackageName": "-",
+          "keyLength": "0",
+          "processId": "0x0",
+          "processName": "-",
+          "ipAddress": "198.51.100.50",
+          "ipPort": "49826"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T02:15:40.332+0000"
+  },
+  {
+    "rule": {
+      "level": 5,
+      "description": "Windows Logon Failure - 4625",
+      "id": "60122",
+      "groups": ["windows", "windows_security", "authentication_failed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-Security-Auditing",
+          "providerGuid": "{54849625-5478-4994-A5BA-3E3B0328C30D}",
+          "eventID": "4625",
+          "version": "0",
+          "level": "0",
+          "task": "12544",
+          "opcode": "0",
+          "keywords": "0x8010000000000000",
+          "systemTime": "2025-01-15T02:15:49.118Z",
+          "eventRecordID": "892347",
+          "channel": "Security",
+          "computer": "DC-01.corp.local"
+        },
+        "eventdata": {
+          "subjectUserSid": "S-1-0-0",
+          "subjectUserName": "-",
+          "subjectDomainName": "-",
+          "subjectLogonId": "0x0",
+          "targetUserSid": "S-1-0-0",
+          "targetUserName": "service",
+          "targetDomainName": "CORP",
+          "status": "0xC000006D",
+          "failureReason": "%%2313",
+          "subStatus": "0xC000006A",
+          "logonType": "10",
+          "logonProcessName": "User32",
+          "authenticationPackageName": "Negotiate",
+          "workstationName": "ATTACKER-PC",
+          "transmittedServices": "-",
+          "lmPackageName": "-",
+          "keyLength": "0",
+          "processId": "0x0",
+          "processName": "-",
+          "ipAddress": "198.51.100.50",
+          "ipPort": "49827"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T02:15:49.118+0000"
+  },
+  {
+    "rule": {
+      "level": 5,
+      "description": "Windows Logon Failure - 4625",
+      "id": "60122",
+      "groups": ["windows", "windows_security", "authentication_failed"]
+    },
+    "data": {
+      "win": {
+        "system": {
+          "providerName": "Microsoft-Windows-Security-Auditing",
+          "providerGuid": "{54849625-5478-4994-A5BA-3E3B0328C30D}",
+          "eventID": "4625",
+          "version": "0",
+          "level": "0",
+          "task": "12544",
+          "opcode": "0",
+          "keywords": "0x8010000000000000",
+          "systemTime": "2025-01-15T02:15:55.667Z",
+          "eventRecordID": "892348",
+          "channel": "Security",
+          "computer": "DC-01.corp.local"
+        },
+        "eventdata": {
+          "subjectUserSid": "S-1-0-0",
+          "subjectUserName": "-",
+          "subjectDomainName": "-",
+          "subjectLogonId": "0x0",
+          "targetUserSid": "S-1-0-0",
+          "targetUserName": "guest",
+          "targetDomainName": "CORP",
+          "status": "0xC000006D",
+          "failureReason": "%%2313",
+          "subStatus": "0xC000006A",
+          "logonType": "10",
+          "logonProcessName": "User32",
+          "authenticationPackageName": "Negotiate",
+          "workstationName": "ATTACKER-PC",
+          "transmittedServices": "-",
+          "lmPackageName": "-",
+          "keyLength": "0",
+          "processId": "0x0",
+          "processName": "-",
+          "ipAddress": "198.51.100.50",
+          "ipPort": "49828"
+        }
+      }
+    },
+    "location": "EventChannel",
+    "timestamp": "2025-01-15T02:15:55.667+0000"
+  }
+]

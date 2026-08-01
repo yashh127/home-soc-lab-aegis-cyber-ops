@@ -1,0 +1,307 @@
+[
+  {
+    "version": "0",
+    "id": "d4e5f6a7-b8c9-0123-def0-123456789abc",
+    "detail-type": "GuardDuty Finding",
+    "source": "aws.guardduty",
+    "account": "123456789012",
+    "time": "2025-01-15T11:42:08Z",
+    "region": "us-east-1",
+    "resources": [],
+    "detail": {
+      "schemaVersion": "2.0",
+      "accountId": "123456789012",
+      "region": "us-east-1",
+      "id": "a1234567-bcde-f012-3456-789abcdef012",
+      "type": "UnauthorizedAccess:EC2/TorRelay",
+      "severity": 8,
+      "title": "EC2 instance i-0abc1234def56789c is communicating with a Tor relay",
+      "description": "EC2 instance i-0abc1234def56789c is communicating with IP address 203.0.113.200 on the Tor anonymity network, indicating potential unauthorized relay activity.",
+      "resource": {
+        "resourceType": "Instance",
+        "instanceDetails": {
+          "instanceId": "i-0abc1234def56789c",
+          "instanceType": "m5.large",
+          "launchTime": "2025-01-05T14:00:00Z",
+          "platform": null,
+          "availabilityZone": "us-east-1a",
+          "imageId": "ami-0abcdef1234567892",
+          "iamInstanceProfile": {
+            "arn": "arn:aws:iam::123456789012:instance-profile/EC2-Backend-Role",
+            "id": "AIPAI234567892EXAMPLE"
+          },
+          "networkInterfaces": [
+            {
+              "networkInterfaceId": "eni-0c3d4e5f6a7890123",
+              "subnetId": "subnet-0dd3e91fg5EXAMPLE",
+              "vpcId": "vpc-0a1b2c3d4e5f67890",
+              "privateDnsName": "ip-10-0-1-100.ec2.internal",
+              "privateIpAddress": "10.0.1.100",
+              "publicDnsName": "ec2-54-203-0-115.compute-1.amazonaws.com",
+              "publicIp": "54.203.0.115",
+              "securityGroups": [
+                {
+                  "groupName": "backend-server-sg",
+                  "groupId": "sg-0c3d4e5f6a7890123"
+                }
+              ]
+            }
+          ],
+          "tags": [
+            { "key": "Name", "value": "prod-backend-01" },
+            { "key": "Environment", "value": "production" }
+          ]
+        }
+      },
+      "service": {
+        "serviceName": "guardduty",
+        "detectorId": "d2b1c3a4e5f678901234567890abcdef",
+        "action": {
+          "actionType": "NETWORK_CONNECTION",
+          "networkConnectionAction": {
+            "connectionDirection": "OUTBOUND",
+            "remoteIpDetails": {
+              "ipAddressV4": "203.0.113.200",
+              "organization": {
+                "asn": "680",
+                "asnOrg": "DFN Verein zur Foerderung eines Deutschen Forschungsnetzes",
+                "isp": "DFN",
+                "org": "Tor Exit Node"
+              },
+              "country": {
+                "countryName": "Germany"
+              },
+              "city": {
+                "cityName": "Frankfurt"
+              },
+              "geoLocation": {
+                "lat": 50.1109,
+                "lon": 8.6821
+              }
+            },
+            "remotePortDetails": {
+              "port": 9001,
+              "portName": "Tor ORPort"
+            },
+            "localPortDetails": {
+              "port": 49152,
+              "portName": "Unknown"
+            },
+            "protocol": "TCP",
+            "blocked": false
+          }
+        },
+        "evidence": {
+          "threatIntelligenceDetails": [
+            {
+              "threatListName": "default-tor-exit-list",
+              "threatNames": ["Tor Relay"]
+            }
+          ]
+        },
+        "resourceRole": "ACTOR",
+        "additionalInfo": {
+          "unusualProtocol": "TCP",
+          "agent": {
+            "agentId": ""
+          }
+        },
+        "eventFirstSeen": "2025-01-15T11:00:00Z",
+        "eventLastSeen": "2025-01-15T11:42:08Z",
+        "archived": false,
+        "count": 15
+      }
+    }
+  },
+  {
+    "version": "0",
+    "id": "e5f6a7b8-c9d0-1234-ef01-23456789abcd",
+    "detail-type": "GuardDuty Finding",
+    "source": "aws.guardduty",
+    "account": "123456789012",
+    "time": "2025-01-15T13:27:55Z",
+    "region": "us-east-1",
+    "resources": [],
+    "detail": {
+      "schemaVersion": "2.0",
+      "accountId": "123456789012",
+      "region": "us-east-1",
+      "id": "b2345678-cdef-0123-4567-89abcdef0123",
+      "type": "UnauthorizedAccess:IAMUser/ConsoleLoginSuccess.B",
+      "severity": 8,
+      "title": "Successful console login by IAM user admin-backup from an unusual location",
+      "description": "A successful AWS Management Console sign-in was observed for IAM principal admin-backup from IP address 198.51.100.99 in China. This login activity is unusual and may indicate compromised credentials.",
+      "resource": {
+        "resourceType": "AccessKey",
+        "accessKeyDetails": {
+          "accessKeyId": "ASIAxxxxxxEXAMPLE01",
+          "principalId": "AIDAI2345678901EXAMPLE",
+          "userType": "IAMUser",
+          "userName": "admin-backup"
+        }
+      },
+      "service": {
+        "serviceName": "guardduty",
+        "detectorId": "d2b1c3a4e5f678901234567890abcdef",
+        "action": {
+          "actionType": "AWS_API_CALL",
+          "awsApiCallAction": {
+            "api": "ConsoleLogin",
+            "serviceName": "signin.amazonaws.com",
+            "callerType": "Remote IP",
+            "remoteIpDetails": {
+              "ipAddressV4": "198.51.100.99",
+              "organization": {
+                "asn": "4808",
+                "asnOrg": "China Unicom Beijing Province Network",
+                "isp": "China Unicom",
+                "org": "China Unicom"
+              },
+              "country": {
+                "countryName": "China"
+              },
+              "city": {
+                "cityName": "Beijing"
+              },
+              "geoLocation": {
+                "lat": 39.9042,
+                "lon": 116.4074
+              }
+            },
+            "affectedResources": {}
+          }
+        },
+        "evidence": {
+          "threatIntelligenceDetails": [
+            {
+              "threatListName": "ProofPoint",
+              "threatNames": ["Suspicious Login"]
+            }
+          ]
+        },
+        "resourceRole": "TARGET",
+        "additionalInfo": {
+          "recentApiCalls": [
+            { "api": "ConsoleLogin", "count": 1 }
+          ],
+          "loginAttribute": "MFA not used"
+        },
+        "eventFirstSeen": "2025-01-15T13:27:55Z",
+        "eventLastSeen": "2025-01-15T13:27:55Z",
+        "archived": false,
+        "count": 1
+      }
+    }
+  },
+  {
+    "version": "0",
+    "id": "f6a7b8c9-d0e1-2345-f012-3456789abcde",
+    "detail-type": "GuardDuty Finding",
+    "source": "aws.guardduty",
+    "account": "123456789012",
+    "time": "2025-01-15T14:58:31Z",
+    "region": "us-east-1",
+    "resources": [],
+    "detail": {
+      "schemaVersion": "2.0",
+      "accountId": "123456789012",
+      "region": "us-east-1",
+      "id": "c3456789-def0-1234-5678-9abcdef01234",
+      "type": "UnauthorizedAccess:EC2/RDPBruteForce",
+      "severity": 8,
+      "title": "EC2 instance i-0abc1234def56789d is being targeted by RDP brute force attacks",
+      "description": "EC2 instance i-0abc1234def56789d is the target of RDP brute force attacks from 203.0.113.201. 1500 authentication attempts have been observed.",
+      "resource": {
+        "resourceType": "Instance",
+        "instanceDetails": {
+          "instanceId": "i-0abc1234def56789d",
+          "instanceType": "t3.medium",
+          "launchTime": "2025-01-03T10:15:00Z",
+          "platform": "windows",
+          "availabilityZone": "us-east-1c",
+          "imageId": "ami-0abcdef1234567893",
+          "iamInstanceProfile": {
+            "arn": "arn:aws:iam::123456789012:instance-profile/EC2-Windows-Role",
+            "id": "AIPAI234567893EXAMPLE"
+          },
+          "networkInterfaces": [
+            {
+              "networkInterfaceId": "eni-0d4e5f6a7b8901234",
+              "subnetId": "subnet-0ee4f02gh6EXAMPLE",
+              "vpcId": "vpc-0a1b2c3d4e5f67890",
+              "privateDnsName": "ip-10-0-3-75.ec2.internal",
+              "privateIpAddress": "10.0.3.75",
+              "publicDnsName": "ec2-54-203-0-116.compute-1.amazonaws.com",
+              "publicIp": "54.203.0.116",
+              "securityGroups": [
+                {
+                  "groupName": "windows-rdp-sg",
+                  "groupId": "sg-0d4e5f6a7b8901234"
+                }
+              ]
+            }
+          ],
+          "tags": [
+            { "key": "Name", "value": "prod-windows-bastion" },
+            { "key": "Environment", "value": "production" }
+          ]
+        }
+      },
+      "service": {
+        "serviceName": "guardduty",
+        "detectorId": "d2b1c3a4e5f678901234567890abcdef",
+        "action": {
+          "actionType": "NETWORK_CONNECTION",
+          "networkConnectionAction": {
+            "connectionDirection": "INBOUND",
+            "remoteIpDetails": {
+              "ipAddressV4": "203.0.113.201",
+              "organization": {
+                "asn": "9009",
+                "asnOrg": "M247 Ltd",
+                "isp": "M247 Ltd",
+                "org": "M247 Ltd"
+              },
+              "country": {
+                "countryName": "Romania"
+              },
+              "city": {
+                "cityName": "Bucharest"
+              },
+              "geoLocation": {
+                "lat": 44.4268,
+                "lon": 26.1025
+              }
+            },
+            "remotePortDetails": {
+              "port": 52341,
+              "portName": "Unknown"
+            },
+            "localPortDetails": {
+              "port": 3389,
+              "portName": "RDP"
+            },
+            "protocol": "TCP",
+            "blocked": false
+          }
+        },
+        "evidence": {
+          "threatIntelligenceDetails": [
+            {
+              "threatListName": "ProofPoint",
+              "threatNames": ["Brute Force", "Scanner"]
+            }
+          ]
+        },
+        "resourceRole": "TARGET",
+        "additionalInfo": {
+          "loginAttempts": 1500
+        },
+        "eventFirstSeen": "2025-01-15T14:00:00Z",
+        "eventLastSeen": "2025-01-15T14:58:31Z",
+        "archived": false,
+        "count": 1500
+      }
+    }
+  }
+]

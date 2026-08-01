@@ -1,0 +1,214 @@
+# =============================================================================
+# Home SOC Lab — Wazuh Single-Node Docker Compose
+# =============================================================================
+# Stack: Wazuh Manager 4.9.2 + Wazuh Indexer 4.9.2 + Wazuh Dashboard 4.9.2
+#
+# Usage:
+#   docker compose up -d          # Start the stack
+#   docker compose down           # Stop (preserve data)
+#   docker compose down -v        # Stop and destroy all volumes
+#
+# Prerequisites:
+#   - Docker Engine ≥ 24.0 and Docker Compose v2
+#   - vm.max_map_count ≥ 262144  (required by the indexer)
+#   - TLS certificates generated via wazuh-certs-generator
+#
+# See scripts/setup_lab.sh for automated bootstrap.
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # Wazuh Indexer (OpenSearch-based)
+  # ---------------------------------------------------------------------------
+  wazuh.indexer:
+    image: wazuh/wazuh-indexer:${WAZUH_VERSION:-4.9.2}
+    platform: linux/amd64
+    container_name: wazuh.indexer
+    hostname: wazuh.indexer
+    restart: unless-stopped
+    ports:
+      - "9200:9200"                       # Indexer REST API
+    environment:
+      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "bootstrap.memory_lock=true"
+      - 'plugins.security.nodes_dn=["CN=wazuh.indexer"]'
+    env_file:
+      - .env
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - indexer-data:/var/lib/wazuh-indexer
+      - ./config/wazuh/wazuh_indexer.yml:/usr/share/wazuh-indexer/opensearch.yml:ro
+      - indexer_ssl_certs:/usr/share/wazuh-indexer/certs:ro
+    networks:
+      - soc-net
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "curl -sku ${INDEXER_USERNAME}:${INDEXER_PASSWORD} https://localhost:9200/_cluster/health | grep -qE '\"status\":\"(green|yellow)\"'"
+      interval: 20s
+      timeout: 10s
+      retries: 30
+      start_period: 300s
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+        reservations:
+          memory: 1g
+
+  # ---------------------------------------------------------------------------
+  # Wazuh Manager (HIDS engine, agent enrollment, API)
+  # ---------------------------------------------------------------------------
+  wazuh.manager:
+    image: wazuh/wazuh-manager:${WAZUH_VERSION:-4.9.2}
+    platform: linux/amd64
+    container_name: wazuh.manager
+    hostname: wazuh.manager
+    restart: unless-stopped
+    depends_on:
+      wazuh.indexer:
+        condition: service_healthy
+    ports:
+      - "1514:1514"                       # Agent communication
+      - "1515:1515"                       # Agent enrollment (authd)
+      - "514:514/udp"                     # Syslog (UDP)
+      - "514:514/tcp"                     # Syslog (TCP — log replay)
+      - "55000:55000"                     # Wazuh REST API
+    environment:
+      - INDEXER_URL=https://wazuh.indexer:9200
+      - INDEXER_USERNAME=${INDEXER_USERNAME:-admin}
+      - INDEXER_PASSWORD=${INDEXER_PASSWORD:-SecretPassword}
+      - FILEBEAT_SSL_VERIFICATION_MODE=full
+      - SSL_CERTIFICATE_AUTHORITIES=/etc/ssl/root-ca.pem
+      - SSL_CERTIFICATE=/etc/ssl/filebeat.pem
+      - SSL_KEY=/etc/ssl/filebeat.key
+      - API_USERNAME=${API_USERNAME:-wazuh-wui}
+      - API_PASSWORD=${API_PASSWORD:-MyS3cr3tP4ssw0rd}
+    env_file:
+      - .env
+    volumes:
+      # --- Persistent named volumes ---
+      - wazuh_api_configuration:/var/ossec/api/configuration
+      - wazuh_logs:/var/ossec/logs
+      - wazuh_queue:/var/ossec/queue
+      - wazuh_var_multigroups:/var/ossec/var/multigroups
+      - wazuh_integrations:/var/ossec/integrations
+      - wazuh_active_response:/var/ossec/active-response
+      - wazuh_agentless:/var/ossec/agentless
+      - wazuh_wodles:/var/ossec/wodles
+      - filebeat_var:/var/lib/filebeat
+      # --- Custom configuration mounts ---
+      - ./config/wazuh/ossec.conf:/wazuh-config-mount/etc/ossec.conf
+      - ./config/wazuh/local_rules.xml:/var/ossec/etc/rules/local_rules.xml
+      - ./config/wazuh/local_decoders.xml:/var/ossec/etc/decoders/local_decoder.xml
+      - ./rules/:/var/ossec/etc/rules/custom/
+      - ./config/wazuh/lists/:/var/ossec/etc/lists/custom/
+      # --- TLS certificates ---
+      - ./config/wazuh_indexer_ssl_certs/root-ca.pem:/etc/ssl/root-ca.pem
+      - ./config/wazuh_indexer_ssl_certs/wazuh.manager.pem:/etc/ssl/filebeat.pem
+      - ./config/wazuh_indexer_ssl_certs/wazuh.manager-key.pem:/etc/ssl/filebeat.key
+      - ./config/wazuh_cluster_ssl_certs/root-ca.pem:/var/ossec/etc/sslmanager.ca
+      - ./config/wazuh_cluster_ssl_certs/wazuh.manager.pem:/var/ossec/etc/sslmanager.cert
+      - ./config/wazuh_cluster_ssl_certs/wazuh.manager-key.pem:/var/ossec/etc/sslmanager.key
+    networks:
+      - soc-net
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "/var/ossec/bin/wazuh-control status | grep -q 'is running' || exit 1"
+      interval: 20s
+      timeout: 10s
+      retries: 20
+      start_period: 300s
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+        reservations:
+          memory: 512m
+
+  # ---------------------------------------------------------------------------
+  # Wazuh Dashboard (Kibana-based UI)
+  # ---------------------------------------------------------------------------
+  wazuh.dashboard:
+    image: wazuh/wazuh-dashboard:${WAZUH_VERSION:-4.9.2}
+    platform: linux/amd64
+    container_name: wazuh.dashboard
+    hostname: wazuh.dashboard
+    restart: unless-stopped
+    depends_on:
+      wazuh.indexer:
+        condition: service_healthy
+      wazuh.manager:
+        condition: service_healthy
+    ports:
+      - "443:5601"                        # HTTPS — Dashboard UI
+    environment:
+      - OPENSEARCH_HOSTS=["https://wazuh.indexer:9200"]
+      - INDEXER_URL=https://wazuh.indexer:9200
+      - INDEXER_USERNAME=${INDEXER_USERNAME:-admin}
+      - INDEXER_PASSWORD=${INDEXER_PASSWORD:-admin}
+      - WAZUH_API_URL=https://wazuh.manager
+      - DASHBOARD_USERNAME=${DASHBOARD_USERNAME:-kibanaserver}
+      - DASHBOARD_PASSWORD=${DASHBOARD_PASSWORD:-kibanaserver}
+      - API_USERNAME=${API_USERNAME:-wazuh-wui}
+      - API_PASSWORD=${API_PASSWORD:-MyS3cr3tP4ssw0rd!}
+    env_file:
+      - .env
+    volumes:
+      - ./config/wazuh/opensearch_dashboards.yml:/usr/share/wazuh-dashboard/config/opensearch_dashboards.yml:ro
+      - indexer_ssl_certs:/usr/share/wazuh-dashboard/certs:ro
+    networks:
+      - soc-net
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "curl -sku ${DASHBOARD_USERNAME}:${DASHBOARD_PASSWORD} https://localhost:5601/api/status | grep -q '\"state\":\"green\"' || exit 1"
+      interval: 20s
+      timeout: 10s
+      retries: 20
+      start_period: 300s
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+        reservations:
+          memory: 512m
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  soc-net:
+    driver: bridge
+    name: soc-net
+
+# =============================================================================
+# Named Volumes — persistent across container restarts
+# =============================================================================
+volumes:
+  # Wazuh Manager volumes
+  wazuh_api_configuration:
+  wazuh_etc:
+  wazuh_logs:
+  wazuh_queue:
+  wazuh_var_multigroups:
+  wazuh_integrations:
+  wazuh_active_response:
+  wazuh_agentless:
+  wazuh_wodles:
+  # Filebeat volumes (ships logs from manager → indexer)
+  filebeat_etc:
+  filebeat_var:
+  # Indexer data
+  indexer-data:
+  # SSL Certificates
+  indexer_ssl_certs:
+    external: true
+    name: home-soc-lab_indexer_ssl_certs

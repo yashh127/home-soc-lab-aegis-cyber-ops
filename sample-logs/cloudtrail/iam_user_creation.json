@@ -1,0 +1,98 @@
+{
+  "Records": [
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAI3EXAMPLECMPADM08",
+        "arn": "arn:aws:iam::123456789012:user/compromised-admin",
+        "accountId": "123456789012",
+        "userName": "compromised-admin"
+      },
+      "eventTime": "2025-01-15T03:22:15Z",
+      "eventSource": "iam.amazonaws.com",
+      "eventName": "CreateUser",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.55",
+      "userAgent": "aws-cli/2.15.10 Python/3.11.6 Linux/6.2.0-39-generic",
+      "requestParameters": {
+        "userName": "backdoor-admin"
+      },
+      "responseElements": {
+        "user": {
+          "path": "/",
+          "userName": "backdoor-admin",
+          "userId": "AIDAI3EXAMPLEBKDADM09",
+          "arn": "arn:aws:iam::123456789012:user/backdoor-admin",
+          "createDate": "2025-01-15T03:22:15Z"
+        }
+      },
+      "requestID": "11223344-5566-7788-99aa-bbccddeeff00",
+      "eventID": "6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c",
+      "readOnly": false,
+      "eventType": "AwsApiCall",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAI3EXAMPLECMPADM08",
+        "arn": "arn:aws:iam::123456789012:user/compromised-admin",
+        "accountId": "123456789012",
+        "userName": "compromised-admin"
+      },
+      "eventTime": "2025-01-15T03:24:15Z",
+      "eventSource": "iam.amazonaws.com",
+      "eventName": "AttachUserPolicy",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.55",
+      "userAgent": "aws-cli/2.15.10 Python/3.11.6 Linux/6.2.0-39-generic",
+      "requestParameters": {
+        "userName": "backdoor-admin",
+        "policyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+      },
+      "responseElements": null,
+      "requestID": "22334455-6677-8899-aabb-ccddeeff0011",
+      "eventID": "7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d",
+      "readOnly": false,
+      "eventType": "AwsApiCall",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAI3EXAMPLECMPADM08",
+        "arn": "arn:aws:iam::123456789012:user/compromised-admin",
+        "accountId": "123456789012",
+        "userName": "compromised-admin"
+      },
+      "eventTime": "2025-01-15T03:25:30Z",
+      "eventSource": "iam.amazonaws.com",
+      "eventName": "CreateAccessKey",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.55",
+      "userAgent": "aws-cli/2.15.10 Python/3.11.6 Linux/6.2.0-39-generic",
+      "requestParameters": {
+        "userName": "backdoor-admin"
+      },
+      "responseElements": {
+        "accessKey": {
+          "userName": "backdoor-admin",
+          "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+          "status": "Active",
+          "createDate": "2025-01-15T03:25:30Z"
+        }
+      },
+      "requestID": "33445566-7788-99aa-bbcc-ddeeff001122",
+      "eventID": "8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e",
+      "readOnly": false,
+      "eventType": "AwsApiCall",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+<!-- ============================================================
+     Linux Persistence Detection Rules (100101 - 100104)
+     Home SOC Lab - Custom Wazuh Rules
+     
+     Detects common Linux persistence and privilege escalation
+     techniques mapped to MITRE ATT&CK framework.
+     ============================================================ -->
+
+<group name="linux,persistence,custom,">
+
+  <!-- ==========================================================
+       Rule 100101: Crontab Modification by Non-Root User
+       MITRE ATT&CK: T1053.003 (Scheduled Task/Job: Cron)
+       
+       Detection logic:
+       Triggers on syscheck (file integrity monitoring) events
+       where the modified file path contains crontab entries or
+       the user-level cron spool directory. Crontab modifications
+       by non-root users may indicate persistence establishment.
+       ========================================================== -->
+  <rule id="100101" level="8">
+    <if_group>ossec</if_group>
+    <match>syscheck</match>
+    <regex>crontab|/var/spool/cron</regex>
+    <description>Scheduled task/crontab modification detected</description>
+    <mitre>
+      <id>T1053.003</id>
+    </mitre>
+    <group>syscheck,persistence,pci_dss_10.5.5,gpg13_4.13,</group>
+  </rule>
+
+  <!-- ==========================================================
+       Rule 100102: SSH authorized_keys File Modified
+       MITRE ATT&CK: T1098.004 (Account Manipulation: SSH Keys)
+       
+       Detection logic:
+       Triggers on syscheck events detecting modifications to
+       .ssh/authorized_keys files. Unauthorized changes to this
+       file allow attackers to maintain SSH access without
+       credentials, a common persistence technique.
+       ========================================================== -->
+  <rule id="100102" level="10">
+    <if_group>ossec</if_group>
+    <match>syscheck</match>
+    <regex>.ssh/authorized_keys</regex>
+    <description>SSH authorized_keys file modified - possible persistence</description>
+    <mitre>
+      <id>T1098.004</id>
+    </mitre>
+    <group>syscheck,persistence,pci_dss_10.5.5,gpg13_4.13,</group>
+  </rule>
+
+  <!-- ==========================================================
+       Rule 100103: SUID/SGID Binary Created
+       MITRE ATT&CK: T1548.001 (Abuse Elevation Control: SUID/SGID)
+       
+       Detection logic:
+       Matches audit or command monitoring logs where chmod is
+       used with the +s flag or octal 4755, which sets the SUID
+       bit. Attackers create SUID binaries to escalate privileges
+       by running processes as the file owner (often root).
+       ========================================================== -->
+  <rule id="100103" level="12">
+    <if_group>ossec</if_group>
+    <match>chmod</match>
+    <regex>+s|4755</regex>
+    <description>SUID/SGID binary created - privilege escalation attempt</description>
+    <mitre>
+      <id>T1548.001</id>
+    </mitre>
+    <group>audit,privilege_escalation,pci_dss_10.2.7,gpg13_4.13,</group>
+  </rule>
+
+  <!-- ==========================================================
+       Rule 100104: Suspicious Execution from /tmp or /dev/shm
+       MITRE ATT&CK: T1059.004 (Command and Scripting: Unix Shell)
+       
+       Detection logic:
+       Matches process execution or command logs where the binary
+       or script path originates from /tmp/ or /dev/shm/. These
+       world-writable directories are commonly used by attackers
+       to stage and execute malicious payloads, as they don't
+       require elevated privileges to write to.
+       ========================================================== -->
+  <rule id="100104" level="8">
+    <if_group>ossec</if_group>
+    <regex>/tmp/|/dev/shm/</regex>
+    <description>Suspicious process execution from temporary directory</description>
+    <mitre>
+      <id>T1059.004</id>
+    </mitre>
+    <group>process_monitor,execution,pci_dss_10.6.1,gpg13_4.13,</group>
+  </rule>
+
+</group>

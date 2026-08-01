@@ -1,0 +1,56 @@
+[
+  {
+    "timestamp": "2025-01-15T22:15:33Z",
+    "hostname": "prod-web-01",
+    "program": "audit",
+    "type": "EXECVE",
+    "pid": 38901,
+    "message": "argc=1 a0=\"/tmp/.hidden/backdoor\"",
+    "action": "execve",
+    "exe": "/tmp/.hidden/backdoor",
+    "command": "/tmp/.hidden/backdoor",
+    "username": "www-data",
+    "uid": 33,
+    "ppid": 1822,
+    "parent_exe": "/usr/sbin/apache2",
+    "cwd": "/var/www/html"
+  },
+  {
+    "timestamp": "2025-01-15T22:18:45Z",
+    "hostname": "prod-web-01",
+    "program": "audit",
+    "type": "EXECVE",
+    "pid": 38945,
+    "message": "argc=1 a0=\"/dev/shm/payload\"",
+    "action": "execve",
+    "exe": "/dev/shm/payload",
+    "command": "/dev/shm/payload",
+    "username": "root",
+    "uid": 0,
+    "ppid": 38901,
+    "parent_exe": "/tmp/.hidden/backdoor",
+    "cwd": "/dev/shm"
+  },
+  {
+    "timestamp": "2025-01-15T22:20:01Z",
+    "hostname": "prod-web-01",
+    "program": "audit",
+    "type": "EXECVE",
+    "pid": 38972,
+    "message": "argc=3 a0=\"/bin/bash\" a1=\"-c\" a2=\"/tmp/update.sh\"",
+    "action": "execve",
+    "exe": "/bin/bash",
+    "command": "/bin/bash -c /tmp/update.sh",
+    "username": "root",
+    "uid": 0,
+    "ppid": 38945,
+    "parent_exe": "/dev/shm/payload",
+    "cwd": "/tmp",
+    "network": {
+      "dstip": "203.0.113.99",
+      "dstport": 4444,
+      "protocol": "tcp",
+      "direction": "outbound"
+    }
+  }
+]
