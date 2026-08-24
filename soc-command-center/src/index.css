@@ -1,21 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
 
 :root {
-  --bg-dark: #0b0f17;
-  --bg-card: rgba(18, 26, 41, 0.75);
-  --bg-card-hover: rgba(26, 37, 58, 0.85);
-  --border-subtle: rgba(56, 189, 248, 0.15);
-  --border-highlight: rgba(56, 189, 248, 0.4);
+  --bg-dark: #050811;
+  --bg-card: rgba(13, 22, 38, 0.85);
+  --bg-card-hover: rgba(20, 32, 54, 0.92);
   
-  --cyan-primary: #38bdf8;
-  --cyan-glow: rgba(56, 189, 248, 0.25);
-  
-  --red-critical: #f43f5e;
-  --red-glow: rgba(244, 63, 94, 0.25);
+  --border-subtle: rgba(56, 189, 248, 0.2);
+  --border-highlight: rgba(0, 240, 255, 0.5);
 
-  --amber-warning: #fbbf24;
+  --cyan-primary: #00f0ff;
+  --cyan-glow: rgba(0, 240, 255, 0.3);
+  
+  --amber-gold: #fbbf24;
+  --amber-glow: rgba(251, 191, 36, 0.3);
+
+  --red-critical: #f43f5e;
+  --red-glow: rgba(244, 63, 94, 0.35);
+
   --emerald-success: #10b981;
-  --purple-accent: #a855f7;
+  --purple-accent: #c084fc;
 
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
@@ -34,9 +37,10 @@ body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   background-image: 
-    radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 50% 10%, rgba(0, 240, 255, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(251, 191, 36, 0.08) 0%, transparent 45%),
     radial-gradient(circle at 90% 90%, rgba(244, 63, 94, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 60%);
+    linear-gradient(rgba(5, 8, 17, 0.95), rgba(5, 8, 17, 0.95));
   background-attachment: fixed;
 }
 
@@ -49,74 +53,57 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Premium Ultra-Clean Glassmorphism Card Style */
+/* Premium Midnight Glassmorphism Card Style */
 .cyber-card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
+  overflow: hidden;
+}
+
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan-primary), var(--amber-gold), transparent);
+  opacity: 0.85;
 }
 
 .cyber-card:hover {
   border-color: var(--border-highlight);
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6), 0 0 20px 0 var(--cyan-glow);
+  box-shadow: 0 18px 45px -8px rgba(0, 0, 0, 0.75), 0 0 25px 0 var(--cyan-glow);
   transform: translateY(-2px);
 }
 
-.cyber-card-danger {
-  border-color: rgba(244, 63, 94, 0.3);
-}
-.cyber-card-danger:hover {
-  border-color: rgba(244, 63, 94, 0.6);
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6), 0 0 20px 0 var(--red-glow);
-}
-
-/* Custom Clean Scrollbars */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(11, 15, 23, 0.6);
-  border-radius: 4px;
+  background: rgba(5, 8, 17, 0.8);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(56, 189, 248, 0.25);
+  background: rgba(0, 240, 255, 0.3);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(56, 189, 248, 0.5);
+  background: rgba(0, 240, 255, 0.6);
 }
 
-/* Subtle Animated Glow Effects */
-@keyframes pulse-soft-red {
-  0%, 100% { box-shadow: 0 0 12px rgba(244, 63, 94, 0.3); }
-  50% { box-shadow: 0 0 24px rgba(244, 63, 94, 0.6); }
-}
-
-@keyframes pulse-soft-cyan {
-  0%, 100% { box-shadow: 0 0 12px rgba(56, 189, 248, 0.3); }
-  50% { box-shadow: 0 0 24px rgba(56, 189, 248, 0.6); }
-}
-
-.pulse-danger {
-  animation: pulse-soft-red 2.5s infinite ease-in-out;
-}
-
-.pulse-cyan {
-  animation: pulse-soft-cyan 2.5s infinite ease-in-out;
-}
-
-/* Tooltip & Badge Utilities */
 .badge-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
   font-weight: 600;
-  padding: 0.25rem 0.6rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 9999px;
   display: inline-flex;
   align-items: center;
