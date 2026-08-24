@@ -11,6 +11,8 @@ import PayloadSimulator from './components/PayloadSimulator';
 import SystemAdvisoryWidget from './components/SystemAdvisoryWidget';
 import ThreatIntelFeed from './components/ThreatIntelFeed';
 import IngestionRateChart from './components/IngestionRateChart';
+import AiNeuralAnomalyDetector from './components/AiNeuralAnomalyDetector';
+import AiChatAssistantModal from './components/AiChatAssistantModal';
 import ReportGeneratorModal from './components/ReportGeneratorModal';
 import AlertDetailModal from './components/AlertDetailModal';
 import { initialAlerts, generateSampleEvent } from './components/MockDataGenerator';
@@ -21,6 +23,7 @@ export default function App() {
   const [selectedAlert, setSelectedAlert] = useState(null);
   const [isStreaming, setIsStreaming] = useState(true);
   const [isReportOpen, setIsReportOpen] = useState(false);
+  const [isAiChatOpen, setIsAiChatOpen] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
   // Live polling & tactical voice dispatch
@@ -72,6 +75,7 @@ export default function App() {
         isStreaming={isStreaming}
         setIsStreaming={setIsStreaming}
         onOpenReport={() => setIsReportOpen(true)}
+        onOpenAiChat={() => setIsAiChatOpen(true)}
         showHelp={showHelp}
         setShowHelp={setShowHelp}
       />
@@ -89,51 +93,56 @@ export default function App() {
         </div>
       </div>
 
-      {/* Main Grid: Row 2 - Threat Intel IOC Feed & SIEM Ingestion Velocity Graph */}
+      {/* Main Grid: Row 2 - AI Neural Anomaly Detector & SIEM Ingestion Velocity Graph */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <div className="lg:col-span-6">
-          <ThreatIntelFeed showHelp={showHelp} />
+          <AiNeuralAnomalyDetector showHelp={showHelp} />
         </div>
         <div className="lg:col-span-6">
           <IngestionRateChart showHelp={showHelp} />
         </div>
       </div>
 
-      {/* Main Grid: Row 3 - MITRE ATT&CK Matrix & Interactive Payload Simulator */}
+      {/* Main Grid: Row 3 - Threat Intel IOC Feed & Interactive Payload Simulator */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <div className="lg:col-span-6">
-          <MitreMatrix showHelp={showHelp} />
+          <ThreatIntelFeed showHelp={showHelp} />
         </div>
         <div className="lg:col-span-6">
           <PayloadSimulator onSimulateEvent={handleSimulateEvent} showHelp={showHelp} />
         </div>
       </div>
 
-      {/* Main Grid: Row 4 - AI Copilot & Network Topology */}
+      {/* Main Grid: Row 4 - MITRE ATT&CK Matrix & AI Copilot */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div className="lg:col-span-7">
+          <MitreMatrix showHelp={showHelp} />
+        </div>
         <div className="lg:col-span-5">
           <AiCopilot latestAlert={latestAlert} showHelp={showHelp} />
         </div>
+      </div>
+
+      {/* Main Grid: Row 5 - Asset Topology & Active Incident Response */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <div className="lg:col-span-7">
           <NetworkTopology showHelp={showHelp} />
         </div>
-      </div>
-
-      {/* Main Grid: Row 5 - Active Response Panel & Live Stream Queue */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <div className="lg:col-span-5">
           <IncidentResponsePanel showHelp={showHelp} />
         </div>
-        <div className="lg:col-span-7">
-          <LiveAlertStream
-            alerts={alerts}
-            onInspectAlert={(alert) => {
-              audioEngine.playClick();
-              setSelectedAlert(alert);
-            }}
-            showHelp={showHelp}
-          />
-        </div>
+      </div>
+
+      {/* Main Grid: Row 6 - Live Stream Ticker Queue */}
+      <div className="w-full">
+        <LiveAlertStream
+          alerts={alerts}
+          onInspectAlert={(alert) => {
+            audioEngine.playClick();
+            setSelectedAlert(alert);
+          }}
+          showHelp={showHelp}
+        />
       </div>
 
       {/* Alert Detail Inspector Modal */}
@@ -146,6 +155,12 @@ export default function App() {
           }}
         />
       )}
+
+      {/* Interactive AI SOC Analyst Chatbot Modal */}
+      <AiChatAssistantModal
+        isOpen={isAiChatOpen}
+        onClose={() => setIsAiChatOpen(false)}
+      />
 
       {/* Executive Report Generator Modal */}
       <ReportGeneratorModal

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Activity, Wifi, Clock, Volume2, VolumeX, RefreshCw, Radio, Maximize2, Mic, HelpCircle, FileText, Cpu, HardDrive, Server } from 'lucide-react';
+import { Shield, Activity, Wifi, Clock, Volume2, VolumeX, RefreshCw, Radio, Maximize2, Mic, HelpCircle, FileText, Cpu, HardDrive, Server, Bot, Sparkles } from 'lucide-react';
 import { audioEngine } from '../utils/audioEngine';
 import AudioVisualizer from './AudioVisualizer';
 
-export default function Header({ onTriggerReplay, isStreaming, setIsStreaming, onOpenReport, showHelp, setShowHelp }) {
+export default function Header({ onTriggerReplay, isStreaming, setIsStreaming, onOpenReport, onOpenAiChat, showHelp, setShowHelp }) {
   const [time, setTime] = useState(new Date());
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
@@ -93,7 +93,7 @@ export default function Header({ onTriggerReplay, isStreaming, setIsStreaming, o
         </div>
       </div>
 
-      {/* Center 2: Cluster Hardware & Asset Telemetry Gauge (Fills Right Gap) */}
+      {/* Center 2: Cluster Hardware & Asset Telemetry Gauge */}
       <div className="hidden 2xl:flex items-center gap-4 px-3.5 py-2 rounded-xl bg-slate-900/80 border border-slate-800">
         <div className="flex items-center gap-2 text-xs font-mono">
           <Cpu className="w-4 h-4 text-purple-400" />
@@ -116,6 +116,17 @@ export default function Header({ onTriggerReplay, isStreaming, setIsStreaming, o
 
       {/* Right: Action Buttons & Clock */}
       <div className="flex items-center gap-2 flex-wrap">
+        {/* AI SOC CHAT BUTTON */}
+        <button
+          onClick={onOpenAiChat}
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-600/30 hover:from-cyan-500/30 hover:to-blue-600/40 border border-cyan-400/40 text-cyan-300 text-xs font-semibold transition-all active:scale-95 shadow-md shadow-cyan-500/10"
+          title="Open J.A.R.V.I.S. Interactive AI SOC Chatbot"
+        >
+          <Bot className="w-4 h-4 text-cyan-400 animate-bounce" />
+          <span>AI SOC CHAT</span>
+          <Sparkles className="w-3 h-3 text-amber-400" />
+        </button>
+
         <button
           onClick={() => setShowHelp(!showHelp)}
           className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-semibold transition-all ${
