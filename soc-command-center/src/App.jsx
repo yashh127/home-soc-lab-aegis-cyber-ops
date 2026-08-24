@@ -9,6 +9,8 @@ import NetworkTopology from './components/NetworkTopology';
 import AiCopilot from './components/AiCopilot';
 import PayloadSimulator from './components/PayloadSimulator';
 import SystemAdvisoryWidget from './components/SystemAdvisoryWidget';
+import ThreatIntelFeed from './components/ThreatIntelFeed';
+import IngestionRateChart from './components/IngestionRateChart';
 import ReportGeneratorModal from './components/ReportGeneratorModal';
 import AlertDetailModal from './components/AlertDetailModal';
 import { initialAlerts, generateSampleEvent } from './components/MockDataGenerator';
@@ -63,7 +65,7 @@ export default function App() {
   const latestAlert = alerts[0];
 
   return (
-    <div className="min-h-screen p-4 md:p-6 flex flex-col max-w-[1700px] mx-auto">
+    <div className="min-h-screen p-4 md:p-6 flex flex-col max-w-[1700px] mx-auto space-y-5">
       {/* Header */}
       <Header
         onTriggerReplay={handleTriggerReplay}
@@ -78,7 +80,7 @@ export default function App() {
       <KpiMetrics stats={stats} showHelp={showHelp} />
 
       {/* Main Grid: Row 1 - Upper Left: System Advisory Radar, Upper Right: Global Threat Map */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <div className="lg:col-span-5">
           <SystemAdvisoryWidget showHelp={showHelp} />
         </div>
@@ -87,8 +89,18 @@ export default function App() {
         </div>
       </div>
 
-      {/* Main Grid: Row 2 - MITRE ATT&CK Matrix & Interactive Payload Simulator */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
+      {/* Main Grid: Row 2 - Threat Intel IOC Feed & SIEM Ingestion Velocity Graph */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div className="lg:col-span-6">
+          <ThreatIntelFeed showHelp={showHelp} />
+        </div>
+        <div className="lg:col-span-6">
+          <IngestionRateChart showHelp={showHelp} />
+        </div>
+      </div>
+
+      {/* Main Grid: Row 3 - MITRE ATT&CK Matrix & Interactive Payload Simulator */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <div className="lg:col-span-6">
           <MitreMatrix showHelp={showHelp} />
         </div>
@@ -97,8 +109,8 @@ export default function App() {
         </div>
       </div>
 
-      {/* Main Grid: Row 3 - AI Copilot & Network Topology */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
+      {/* Main Grid: Row 4 - AI Copilot & Network Topology */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <div className="lg:col-span-5">
           <AiCopilot latestAlert={latestAlert} showHelp={showHelp} />
         </div>
@@ -107,8 +119,8 @@ export default function App() {
         </div>
       </div>
 
-      {/* Main Grid: Row 4 - Active Response Panel & Live Stream Queue */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
+      {/* Main Grid: Row 5 - Active Response Panel & Live Stream Queue */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <div className="lg:col-span-5">
           <IncidentResponsePanel showHelp={showHelp} />
         </div>
