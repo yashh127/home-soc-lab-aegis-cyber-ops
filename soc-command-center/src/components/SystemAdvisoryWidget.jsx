@@ -9,11 +9,11 @@ export default function SystemAdvisoryWidget({ showHelp }) {
   ];
 
   return (
-    <div className="cyber-card p-5 flex flex-col h-full border-blue-500/20">
+    <div className="cyber-card p-5 flex flex-col h-full border-purple-500/20">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3 pb-3 border-b border-blue-500/20">
+      <div className="flex items-center justify-between mb-3 pb-3 border-b border-purple-500/20">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-blue-500/20 text-blue-500 border border-blue-500/30">
+          <div className="p-2 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/30">
             <Radio className="w-5 h-5 animate-pulse" />
           </div>
           <div>
@@ -23,28 +23,28 @@ export default function SystemAdvisoryWidget({ showHelp }) {
             <p className="text-xs text-slate-400 font-medium">Real-Time Threat Level Index & US-CERT Bulletins</p>
           </div>
         </div>
-        <span className="badge-label bg-blue-500/15 border border-blue-500/30 text-blue-300">
+        <span className="badge-label bg-purple-500/15 border border-purple-500/30 text-purple-300">
           DEFCON 3 ELEVATED
         </span>
       </div>
 
       {showHelp && (
-        <div className="mb-3 text-xs bg-blue-950/40 p-2.5 rounded-xl border border-blue-500/30 text-blue-200">
+        <div className="mb-3 text-xs bg-purple-950/40 p-2.5 rounded-xl border border-purple-500/30 text-purple-200">
           💡 <strong>What is this?</strong> This widget monitors the overall threat risk score (78/100) and displays live global security bulletins from CISA and AWS security advisories.
         </div>
       )}
 
       {/* Threat Index Gauge Box */}
       <div className="grid grid-cols-2 gap-3 mb-3.5">
-        <div className="bg-slate-950/80 p-3.5 rounded-xl border border-blue-500/30 flex flex-col items-center justify-center text-center relative overflow-hidden">
+        <div className="bg-slate-950/80 p-3.5 rounded-xl border border-purple-500/30 flex flex-col items-center justify-center text-center relative overflow-hidden">
           <div className="text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-wider mb-1">
             THREAT RISK INDEX
           </div>
-          <div className="text-3xl font-extrabold font-cyber text-blue-400 my-0.5">
+          <div className="text-3xl font-extrabold font-cyber text-purple-400 my-0.5">
             78<span className="text-xs text-slate-500 font-mono">/100</span>
           </div>
-          <div className="text-[11px] text-blue-300 font-medium flex items-center gap-1 mt-1">
-            <ShieldAlert className="w-3.5 h-3.5 text-blue-400" />
+          <div className="text-[11px] text-purple-300 font-medium flex items-center gap-1 mt-1">
+            <ShieldAlert className="w-3.5 h-3.5 text-purple-400" />
             <span>HIGH THREAT STATE</span>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function SystemAdvisoryWidget({ showHelp }) {
         {advisories.map((adv) => (
           <div
             key={adv.id}
-            className="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800/90 hover:border-blue-500/40 transition-colors flex items-center justify-between gap-3"
+            className="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800/90 hover:border-purple-500/40 transition-colors flex items-center justify-between gap-3"
           >
             <div className="flex items-center gap-2.5 min-w-0">
               <AlertCircle className={`w-4 h-4 shrink-0 ${
