@@ -19,7 +19,7 @@ import ReportGeneratorModal from './components/ReportGeneratorModal';
 import AlertDetailModal from './components/AlertDetailModal';
 import { initialAlerts, generateSampleEvent } from './components/MockDataGenerator';
 import { audioEngine } from './utils/audioEngine';
-import { Shield, Play, Brain, Activity, Layers } from 'lucide-react';
+import { Shield, Play, Brain, Layers } from 'lucide-react';
 
 export default function App() {
   const [alerts, setAlerts] = useState(initialAlerts);
@@ -103,11 +103,11 @@ export default function App() {
             onClick={() => handleTabChange('operations', 'Live Operations')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-cyber text-xs font-bold transition-all ${
               activeTab === 'operations'
-                ? 'bg-gradient-to-r from-cyan-500/30 to-blue-600/30 border border-cyan-400 text-cyan-200 shadow-lg shadow-cyan-500/15'
+                ? 'bg-gradient-to-r from-red-600/30 to-rose-700/30 border border-red-500 text-red-200 shadow-lg shadow-red-500/20'
                 : 'bg-slate-950/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
             }`}
           >
-            <Shield className={`w-4 h-4 ${activeTab === 'operations' ? 'text-cyan-400' : 'text-slate-500'}`} />
+            <Shield className={`w-4 h-4 ${activeTab === 'operations' ? 'text-red-400' : 'text-slate-500'}`} />
             <span>1. LIVE OPERATIONS</span>
             <span className="px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono">
               ● REALTIME
@@ -119,13 +119,13 @@ export default function App() {
             onClick={() => handleTabChange('simulation', 'Attack Simulation and Kill Chain')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-cyber text-xs font-bold transition-all ${
               activeTab === 'simulation'
-                ? 'bg-gradient-to-r from-rose-500/30 to-amber-600/30 border border-rose-400 text-rose-200 shadow-lg shadow-rose-500/15'
+                ? 'bg-gradient-to-r from-amber-600/30 to-red-600/30 border border-amber-500 text-amber-200 shadow-lg shadow-amber-500/20'
                 : 'bg-slate-950/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
             }`}
           >
-            <Play className={`w-4 h-4 ${activeTab === 'simulation' ? 'text-rose-400' : 'text-slate-500'}`} />
+            <Play className={`w-4 h-4 ${activeTab === 'simulation' ? 'text-amber-400' : 'text-slate-500'}`} />
             <span>2. ATTACK SIMULATION</span>
-            <span className="px-1.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-mono">
+            <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-mono">
               DEMO MODE
             </span>
           </button>
@@ -135,13 +135,13 @@ export default function App() {
             onClick={() => handleTabChange('intel', 'AI Copilot and Threat Intelligence')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-cyber text-xs font-bold transition-all ${
               activeTab === 'intel'
-                ? 'bg-gradient-to-r from-purple-500/30 to-indigo-600/30 border border-purple-400 text-purple-200 shadow-lg shadow-purple-500/15'
+                ? 'bg-gradient-to-r from-rose-600/30 to-slate-700/30 border border-rose-400 text-rose-200 shadow-lg shadow-rose-500/20'
                 : 'bg-slate-950/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
             }`}
           >
-            <Brain className={`w-4 h-4 ${activeTab === 'intel' ? 'text-purple-400' : 'text-slate-500'}`} />
+            <Brain className={`w-4 h-4 ${activeTab === 'intel' ? 'text-rose-400' : 'text-slate-500'}`} />
             <span>3. AI & THREAT INTEL</span>
-            <span className="px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-mono">
+            <span className="px-1.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-mono">
               GENAI
             </span>
           </button>
@@ -149,7 +149,7 @@ export default function App() {
 
         {/* Tab Context Helper Badge */}
         <div className="hidden md:flex items-center gap-2 text-xs font-mono text-slate-400 px-3">
-          <Layers className="w-3.5 h-3.5 text-cyan-400" />
+          <Layers className="w-3.5 h-3.5 text-red-400" />
           <span>
             {activeTab === 'operations' && 'Viewing Live Telemetry, World Map & Active Threat Queue'}
             {activeTab === 'simulation' && 'Interactive Lockheed Martin Kill-Chain & Payload Ingestion Terminal'}

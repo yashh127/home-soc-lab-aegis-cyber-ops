@@ -21,11 +21,11 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
   });
 
   return (
-    <div className="cyber-card p-4 flex flex-col h-full">
+    <div className="cyber-card p-4 flex flex-col h-full border-red-500/20">
       {/* Header & Filter Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-3 pb-2 border-b border-cyan-500/20">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-3 pb-2 border-b border-red-500/20">
         <div className="flex items-center gap-2">
-          <Terminal className="w-5 h-5 text-cyan-400" />
+          <Terminal className="w-5 h-5 text-red-500" />
           <h2 className="font-cyber text-sm font-bold text-white tracking-wide">
             LIVE SIEM ALERT STREAM & ANALYST QUEUE
           </h2>
@@ -43,7 +43,7 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
               placeholder="Search IP, Rule ID, text..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-slate-950 border border-slate-800 rounded px-2.5 py-1 pl-8 text-xs font-mono text-white focus:outline-none focus:border-cyan-500 w-44"
+              className="bg-slate-950 border border-slate-800 rounded px-2.5 py-1 pl-8 text-xs font-mono text-white focus:outline-none focus:border-red-500 w-44"
             />
           </div>
 
@@ -54,7 +54,7 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
                 onClick={() => setFilterSource(src)}
                 className={`px-2 py-0.5 text-[10px] font-mono rounded transition-colors ${
                   filterSource === src
-                    ? 'bg-cyan-500/30 border border-cyan-500/50 text-cyan-300 font-bold'
+                    ? 'bg-red-500/30 border border-red-500/50 text-red-200 font-bold'
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -65,65 +65,51 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
         </div>
       </div>
 
-      {/* Stream List Table */}
-      <div className="flex-1 overflow-y-auto max-h-[360px] space-y-2 pr-1">
-        {filteredAlerts.map((alert) => {
-          const isCritical = alert.level >= 12;
-          const isHigh = alert.level >= 10 && alert.level < 12;
-
-          return (
-            <div
-              key={alert.id}
-              onClick={() => onInspectAlert(alert)}
-              className={`p-3 rounded-lg border flex items-center justify-between gap-3 transition-all cursor-pointer group ${
-                isCritical
-                  ? 'bg-rose-950/20 border-rose-500/30 hover:border-rose-500 hover:bg-rose-950/40'
-                  : isHigh
-                  ? 'bg-amber-950/20 border-amber-500/30 hover:border-amber-500 hover:bg-amber-950/40'
-                  : 'bg-slate-900/40 border-slate-800 hover:border-cyan-500/40 hover:bg-slate-900/80'
-              }`}
-            >
-              {/* Level & Timestamp */}
-              <div className="flex items-center gap-3">
-                <span
-                  className={`px-2 py-1 rounded text-xs font-mono font-bold border ${
-                    isCritical
-                      ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
-                      : isHigh
-                      ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                      : 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
-                  }`}
-                >
+      {/* High-Density Stream Table */}
+      <div className="flex-1 overflow-y-auto space-y-2 max-h-[380px] pr-1">
+        {filteredAlerts.map((alert) => (
+          <div
+            key={alert.id}
+            onClick={() => onInspectAlert(alert)}
+            className="p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 hover:border-red-500/50 hover:bg-slate-900/90 transition-all cursor-pointer flex items-center justify-between gap-3 group"
+          >
+            {/* Left: Severity & Meta */}
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="flex flex-col items-center justify-center shrink-0 w-9">
+                <span className={`text-[11px] font-mono font-bold ${
+                  alert.level >= 12 ? 'text-red-400' : alert.level >= 10 ? 'text-amber-400' : 'text-slate-300'
+                }`}>
                   LVL {alert.level}
                 </span>
+                <span className="text-[9px] font-mono text-slate-400">RULE {alert.ruleId}</span>
+              </div>
 
-                <div>
-                  <div className="text-xs font-semibold text-white flex items-center gap-2">
-                    <span>{alert.description}</span>
-                    {alert.mitre && (
-                      <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
-                        {alert.mitre}
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-[11px] font-mono text-slate-400 mt-0.5 flex items-center gap-3">
-                    <span>Rule SID: <strong className="text-cyan-400">{alert.ruleId}</strong></span>
-                    <span>•</span>
-                    <span>Src: <strong className="text-slate-200">{alert.sourceIp}</strong></span>
-                    <span>•</span>
-                    <span>Src Log: <strong className="text-slate-300">{alert.source}</strong></span>
-                  </div>
+              <div className="h-7 w-px bg-slate-800 shrink-0"></div>
+
+              {/* Center: Description & Attribution */}
+              <div className="truncate">
+                <div className="text-xs font-sans font-bold text-slate-200 group-hover:text-red-300 transition-colors truncate">
+                  {alert.description}
+                </div>
+                <div className="text-[10px] font-mono text-slate-400 flex items-center gap-2 mt-0.5">
+                  <span className="text-slate-300">SRC: {alert.sourceIp}</span>
+                  <span>•</span>
+                  <span className="text-slate-400 font-sans">{alert.source}</span>
+                  <span>•</span>
+                  <span className="text-red-400 font-semibold">{alert.mitre}</span>
                 </div>
               </div>
-
-              {/* Right Action */}
-              <div className="flex items-center gap-2 font-mono text-xs text-slate-400 group-hover:text-cyan-300">
-                <span>{alert.timestamp}</span>
-                <Eye className="w-4 h-4 text-slate-500 group-hover:text-cyan-400" />
-              </div>
             </div>
-          );
-        })}
+
+            {/* Right: Timestamp & Inspect Button */}
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="text-[10px] font-mono text-slate-400">{alert.timestamp}</span>
+              <button className="p-1.5 rounded-lg bg-slate-900 group-hover:bg-red-500/20 text-slate-400 group-hover:text-red-400 border border-slate-800 group-hover:border-red-500/40 transition-all">
+                <Eye className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
