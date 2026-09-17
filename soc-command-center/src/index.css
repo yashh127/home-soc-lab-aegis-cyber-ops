@@ -1,25 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
 
-/* Nordic Frost & Titanium (Linear / Vercel Minimalist Defense Matrix) */
+/* Nordic Frost & Titanium (Luminous Dark Standard) */
 :root {
-  --bg-dark: #09090b;
-  --bg-card: rgba(18, 18, 24, 0.94);
-  --bg-card-hover: rgba(24, 24, 32, 0.98);
+  --bg-dark: #0b0c10;
+  --bg-card: rgba(22, 24, 33, 0.94);
+  --bg-card-hover: rgba(28, 31, 42, 0.98);
   
-  --border-subtle: rgba(255, 255, 255, 0.10);
-  --border-highlight: rgba(255, 255, 255, 0.28);
+  --border-subtle: rgba(255, 255, 255, 0.16);
+  --border-highlight: rgba(255, 255, 255, 0.42);
 
-  --primary-silver: #f4f4f5;
-  --primary-silver-glow: rgba(255, 255, 255, 0.12);
+  --primary-silver: #ffffff;
+  --primary-silver-glow: rgba(255, 255, 255, 0.22);
   
   --emerald-success: #10b981;
   --rose-critical: #f43f5e;
   --amber-warning: #f59e0b;
   --stark-white: #ffffff;
 
-  --text-primary: #f4f4f5;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
 }
 
 * {
@@ -34,9 +34,10 @@ body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
-    linear-gradient(#09090b, #09090b);
+    radial-gradient(circle at 50% -5%, rgba(255, 255, 255, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 10% 70%, rgba(255, 255, 255, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 45%),
+    linear-gradient(#0b0c10, #090a0e);
   background-attachment: fixed;
 }
 
@@ -52,11 +53,11 @@ body {
 /* Nordic Titanium Frosted Glass Card */
 .cyber-card {
   background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
-  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.85), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  box-shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.75), inset 0 1px 0 0 rgba(255, 255, 255, 0.14), 0 0 25px 0 rgba(255, 255, 255, 0.04);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
@@ -68,14 +69,14 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.15), transparent);
-  opacity: 0.9;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.35), transparent);
+  opacity: 1;
 }
 
 .cyber-card:hover {
   border-color: var(--border-highlight);
-  box-shadow: 0 18px 45px -8px rgba(0, 0, 0, 0.9), 0 0 25px 0 var(--primary-silver-glow);
+  box-shadow: 0 20px 50px -8px rgba(0, 0, 0, 0.85), 0 0 35px 0 var(--primary-silver-glow), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
 }
 
@@ -85,20 +86,20 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(9, 9, 11, 0.9);
+  background: rgba(11, 12, 16, 0.9);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.28);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.55);
 }
 
 .badge-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: 0.25rem 0.65rem;
   border-radius: 9999px;
   display: inline-flex;

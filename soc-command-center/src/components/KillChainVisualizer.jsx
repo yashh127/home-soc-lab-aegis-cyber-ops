@@ -135,11 +135,11 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
   };
 
   return (
-    <div className="cyber-card p-5 flex flex-col h-full border-zinc-800 bg-zinc-950/90">
+    <div className="cyber-card p-5 flex flex-col h-full border-zinc-700/80 bg-zinc-900/90">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-zinc-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-zinc-700/80">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-zinc-900 text-zinc-300 border border-zinc-700 animate-pulse">
+          <div className="p-2.5 rounded-xl bg-zinc-800 text-white border border-zinc-600 shadow-sm animate-pulse">
             <Zap className="w-5 h-5" />
           </div>
           <div>
@@ -147,11 +147,11 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
               <h2 className="font-cyber text-base font-bold text-white tracking-wide">
                 AUTONOMOUS CYBER KILL CHAIN & SOAR ENGINE
               </h2>
-              <span className="badge-label bg-zinc-900 text-zinc-200 border border-zinc-700 text-[10px]">
+              <span className="badge-label bg-zinc-800 text-white border border-zinc-600 font-bold shadow-sm text-[10px]">
                 TITANIUM SOAR v4.9
               </span>
             </div>
-            <p className="text-xs text-zinc-400 font-medium">
+            <p className="text-xs text-zinc-300 font-medium">
               Real-time MITRE ATT&CK kill-chain progression & zero-touch automated remediation
             </p>
           </div>
@@ -170,12 +170,12 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
             }}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono font-bold transition-all ${
               soarMode
-                ? 'bg-zinc-800 border-zinc-500 text-white shadow-md'
-                : 'bg-zinc-900 border-zinc-800 text-zinc-400'
+                ? 'bg-zinc-750 border-zinc-500 text-white shadow-md'
+                : 'bg-zinc-800 border-zinc-700 text-zinc-300 hover:text-white'
             }`}
             title="Toggle autonomous self-healing containment"
           >
-            <ShieldCheck className={`w-4 h-4 ${soarMode ? 'text-zinc-100' : 'text-zinc-500'}`} />
+            <ShieldCheck className={`w-4 h-4 ${soarMode ? 'text-white' : 'text-zinc-400'}`} />
             <span>SOAR DEFENSE: {soarMode ? 'ACTIVE (0.6s MTTR)' : 'MANUAL'}</span>
           </button>
 
@@ -183,10 +183,10 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
           <button
             onClick={handleRunFullScenario}
             disabled={isRunningScenario}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-cyber font-bold transition-all shadow-md active:scale-95 ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-cyber font-bold transition-all shadow-lg active:scale-95 ${
               isRunningScenario
                 ? 'bg-amber-500/20 border border-amber-500/50 text-amber-300 animate-pulse cursor-not-allowed'
-                : 'bg-white hover:bg-zinc-200 text-zinc-950 border border-white shadow-white/10'
+                : 'bg-white hover:bg-zinc-100 text-zinc-950 border border-white shadow-white/20'
             }`}
           >
             <Play className={`w-3.5 h-3.5 ${isRunningScenario ? 'animate-spin text-amber-400' : 'text-zinc-950 fill-zinc-950'}`} />
@@ -196,32 +196,32 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
       </div>
 
       {showHelp && (
-        <div className="mb-3.5 text-xs bg-zinc-900/80 p-3 rounded-xl border border-zinc-700 text-zinc-300 font-sans leading-relaxed">
+        <div className="mb-3.5 text-xs bg-zinc-800/90 p-3 rounded-xl border border-zinc-600 text-zinc-200 font-sans leading-relaxed">
           💡 <strong>What Recruiters & Managers Love About This:</strong> This module visualizes how an attacker tries to progress through all 7 stages of an intrusion (Reconnaissance to Exfiltration). Clicking <strong>"SIMULATE FULL-CHAIN APT ATTACK"</strong> fires a realistic cyber attack in real-time, proving how your autonomous SOAR rules immediately catch and isolate each phase before damage occurs!
         </div>
       )}
 
       {/* SOAR Velocity Metrics */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-        <div className="bg-zinc-950/90 p-3 rounded-xl border border-zinc-800 flex flex-col justify-between">
-          <div className="text-[10px] font-mono text-zinc-400 uppercase">MEAN TIME TO DETECT (MTTD)</div>
+        <div className="bg-zinc-850/90 p-3 rounded-xl border border-zinc-700 shadow-sm flex flex-col justify-between">
+          <div className="text-[10px] font-mono font-bold text-zinc-300 uppercase">MEAN TIME TO DETECT (MTTD)</div>
           <div className="text-xl font-cyber font-extrabold text-white my-0.5">1.2 SEC</div>
-          <div className="text-[10px] font-mono text-emerald-400">99.4% REAL-TIME INGESTION</div>
+          <div className="text-[10px] font-mono font-semibold text-emerald-400">99.4% REAL-TIME INGESTION</div>
         </div>
-        <div className="bg-zinc-950/90 p-3 rounded-xl border border-zinc-800 flex flex-col justify-between">
-          <div className="text-[10px] font-mono text-zinc-400 uppercase">MEAN TIME TO RESPOND (MTTR)</div>
+        <div className="bg-zinc-850/90 p-3 rounded-xl border border-zinc-700 shadow-sm flex flex-col justify-between">
+          <div className="text-[10px] font-mono font-bold text-zinc-300 uppercase">MEAN TIME TO RESPOND (MTTR)</div>
           <div className="text-xl font-cyber font-extrabold text-white my-0.5">0.6 SEC</div>
-          <div className="text-[10px] font-mono text-zinc-400">AUTONOMOUS CONTAINMENT</div>
+          <div className="text-[10px] font-mono text-zinc-300">AUTONOMOUS CONTAINMENT</div>
         </div>
-        <div className="bg-zinc-950/90 p-3 rounded-xl border border-zinc-800 flex flex-col justify-between">
-          <div className="text-[10px] font-mono text-zinc-400 uppercase">CONTAINMENT RATE</div>
+        <div className="bg-zinc-850/90 p-3 rounded-xl border border-zinc-700 shadow-sm flex flex-col justify-between">
+          <div className="text-[10px] font-mono font-bold text-zinc-300 uppercase">CONTAINMENT RATE</div>
           <div className="text-xl font-cyber font-extrabold text-white my-0.5">100%</div>
-          <div className="text-[10px] font-mono text-zinc-300">ZERO LATERAL ESCAPE</div>
+          <div className="text-[10px] font-mono font-semibold text-zinc-200">ZERO LATERAL ESCAPE</div>
         </div>
-        <div className="bg-zinc-950/90 p-3 rounded-xl border border-zinc-800 flex flex-col justify-between">
-          <div className="text-[10px] font-mono text-zinc-400 uppercase">FRAMEWORK ALIGNMENT</div>
+        <div className="bg-zinc-850/90 p-3 rounded-xl border border-zinc-700 shadow-sm flex flex-col justify-between">
+          <div className="text-[10px] font-mono font-bold text-zinc-300 uppercase">FRAMEWORK ALIGNMENT</div>
           <div className="text-xl font-cyber font-extrabold text-amber-400 my-0.5">MITRE v15</div>
-          <div className="text-[10px] font-mono text-zinc-400">7/7 STAGES CORRELATED</div>
+          <div className="text-[10px] font-mono text-zinc-300">7/7 STAGES CORRELATED</div>
         </div>
       </div>
 
@@ -241,10 +241,10 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
               }}
               className={`p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between relative group ${
                 isActive
-                  ? 'bg-zinc-800/90 border-white shadow-lg shadow-white/10 scale-[1.03]'
+                  ? 'bg-zinc-800 border-2 border-white shadow-xl shadow-white/20 scale-[1.03]'
                   : isPassed
-                  ? 'bg-emerald-950/40 border-emerald-500/50'
-                  : 'bg-zinc-950/70 border-zinc-800 hover:border-zinc-600'
+                  ? 'bg-emerald-950/50 border border-emerald-500/60'
+                  : 'bg-zinc-850/90 border border-zinc-750 hover:border-zinc-500 hover:bg-zinc-800'
               }`}
             >
               {/* Active Pulse Glow Indicator */}
@@ -255,33 +255,33 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <span className={`text-[10px] font-mono font-bold ${
-                    stage.severity === 'CRITICAL' ? 'text-rose-400' : stage.severity === 'HIGH' ? 'text-amber-400' : 'text-zinc-300'
+                    stage.severity === 'CRITICAL' ? 'text-rose-400' : stage.severity === 'HIGH' ? 'text-amber-400' : 'text-zinc-200'
                   }`}>
                     {stage.severity}
                   </span>
                   {isPassed ? (
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   ) : (
-                    <span className="text-[9px] font-mono text-zinc-500">#{idx + 1}</span>
+                    <span className="text-[9px] font-mono text-zinc-400">#{idx + 1}</span>
                   )}
                 </div>
 
-                <div className="text-xs font-cyber font-bold text-white mb-1 group-hover:text-zinc-200 transition-colors">
+                <div className="text-xs font-cyber font-bold text-white mb-1 group-hover:text-zinc-100 transition-colors">
                   {stage.name}
                 </div>
 
-                <div className="text-[10px] font-mono text-zinc-400 mb-1.5 truncate">
+                <div className="text-[10px] font-mono text-zinc-300 mb-1.5 truncate">
                   {stage.technique}
                 </div>
 
-                <div className="text-[11px] text-zinc-300 font-sans leading-snug">
+                <div className="text-[11px] text-zinc-200 font-sans leading-snug">
                   {plainEnglishMode ? stage.plainDesc : stage.techDesc}
                 </div>
               </div>
 
-              <div className="mt-3 pt-2 border-t border-zinc-800/80">
-                <div className="text-[9px] font-mono text-zinc-400 uppercase">SOAR REMEDIATION</div>
-                <div className="text-[10px] font-mono font-bold text-zinc-200 truncate">
+              <div className="mt-3 pt-2 border-t border-zinc-700/80">
+                <div className="text-[9px] font-mono font-bold text-zinc-400 uppercase">SOAR REMEDIATION</div>
+                <div className="text-[10px] font-mono font-extrabold text-white truncate">
                   ⚡ {stage.soarAction}
                 </div>
               </div>
