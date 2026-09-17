@@ -20,11 +20,11 @@ export default function Header({
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState('default');
+  const [currentTheme, setCurrentTheme] = useState('obsidian');
 
   const themes = [
-    { id: 'default', name: 'Cyber Cyan', label: '🩵 Cyber Cyan', class: '' },
-    { id: 'obsidian', name: 'Stealth Obsidian', label: '🖤 Stealth Obsidian', class: 'theme-obsidian' },
+    { id: 'obsidian', name: 'Stealth Obsidian', label: '🖤 Stealth Obsidian (Default)', class: '' },
+    { id: 'cyan', name: 'Cyber Cyan', label: '🩵 Cyber Cyan', class: 'theme-cyan' },
     { id: 'matrix', name: 'Matrix Emerald', label: '💚 Matrix Emerald', class: 'theme-matrix' },
     { id: 'crimson', name: 'Crimson War-Room', label: '❤️ Crimson War-Room', class: 'theme-crimson' },
     { id: 'navy', name: 'Sapphire Navy', label: '💙 Sapphire Navy', class: 'theme-navy' }

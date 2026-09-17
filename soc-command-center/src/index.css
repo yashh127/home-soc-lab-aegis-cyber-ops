@@ -1,18 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
 
+/* Default Theme: Stealth Obsidian (CrowdStrike Falcon Enterprise Standard) */
 :root {
-  --bg-dark: #050811;
-  --bg-card: rgba(13, 22, 38, 0.85);
-  --bg-card-hover: rgba(20, 32, 54, 0.92);
+  --bg-dark: #07090e;
+  --bg-card: rgba(15, 20, 32, 0.88);
+  --bg-card-hover: rgba(22, 30, 48, 0.95);
   
-  --border-subtle: rgba(56, 189, 248, 0.2);
-  --border-highlight: rgba(0, 240, 255, 0.5);
+  --border-subtle: rgba(148, 163, 184, 0.18);
+  --border-highlight: rgba(56, 189, 248, 0.6);
 
-  --cyan-primary: #00f0ff;
-  --cyan-glow: rgba(0, 240, 255, 0.3);
+  --cyan-primary: #38bdf8;
+  --cyan-glow: rgba(56, 189, 248, 0.35);
   
-  --amber-gold: #fbbf24;
-  --amber-glow: rgba(251, 191, 36, 0.3);
+  --amber-gold: #94a3b8;
+  --amber-glow: rgba(148, 163, 184, 0.25);
 
   --red-critical: #f43f5e;
   --red-glow: rgba(244, 63, 94, 0.35);
@@ -25,22 +26,23 @@
   --text-muted: #64748b;
 }
 
-/* Theme 1: Stealth Obsidian (CrowdStrike Falcon Style) */
-body.theme-obsidian {
-  --bg-dark: #07090e;
-  --bg-card: rgba(15, 20, 32, 0.88);
-  --bg-card-hover: rgba(22, 30, 48, 0.95);
-  --border-subtle: rgba(148, 163, 184, 0.18);
-  --border-highlight: rgba(56, 189, 248, 0.6);
-  --cyan-primary: #38bdf8;
-  --cyan-glow: rgba(56, 189, 248, 0.35);
-  --amber-gold: #94a3b8;
+/* Alternate Theme 1: Vibrant Neon Cyan */
+body.theme-cyan {
+  --bg-dark: #050811;
+  --bg-card: rgba(13, 22, 38, 0.85);
+  --bg-card-hover: rgba(20, 32, 54, 0.92);
+  --border-subtle: rgba(56, 189, 248, 0.2);
+  --border-highlight: rgba(0, 240, 255, 0.5);
+  --cyan-primary: #00f0ff;
+  --cyan-glow: rgba(0, 240, 255, 0.3);
+  --amber-gold: #fbbf24;
   background-image: 
-    radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.09) 0%, transparent 45%),
-    linear-gradient(rgba(7, 9, 14, 0.98), rgba(7, 9, 14, 0.98));
+    radial-gradient(circle at 50% 10%, rgba(0, 240, 255, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(251, 191, 36, 0.08) 0%, transparent 45%),
+    linear-gradient(rgba(5, 8, 17, 0.95), rgba(5, 8, 17, 0.95));
 }
 
-/* Theme 2: Matrix Emerald (Cyber Terminal Style) */
+/* Alternate Theme 2: Matrix Emerald */
 body.theme-matrix {
   --bg-dark: #020704;
   --bg-card: rgba(4, 24, 12, 0.88);
@@ -56,7 +58,7 @@ body.theme-matrix {
     linear-gradient(rgba(2, 7, 4, 0.98), rgba(2, 7, 4, 0.98));
 }
 
-/* Theme 3: Crimson Sentinel (Red-Team War Room) */
+/* Alternate Theme 3: Crimson Sentinel */
 body.theme-crimson {
   --bg-dark: #0b0407;
   --bg-card: rgba(28, 8, 16, 0.88);
@@ -72,7 +74,7 @@ body.theme-crimson {
     linear-gradient(rgba(11, 4, 7, 0.98), rgba(11, 4, 7, 0.98));
 }
 
-/* Theme 4: Deep Sapphire Navy (Enterprise Sentinel) */
+/* Alternate Theme 4: Deep Sapphire Navy */
 body.theme-navy {
   --bg-dark: #060b1b;
   --bg-card: rgba(13, 23, 50, 0.88);
@@ -100,10 +102,8 @@ body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   background-image: 
-    radial-gradient(circle at 50% 10%, rgba(0, 240, 255, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 10% 90%, rgba(251, 191, 36, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 90% 90%, rgba(244, 63, 94, 0.08) 0%, transparent 45%),
-    linear-gradient(rgba(5, 8, 17, 0.95), rgba(5, 8, 17, 0.95));
+    radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.09) 0%, transparent 45%),
+    linear-gradient(rgba(7, 9, 14, 0.98), rgba(7, 9, 14, 0.98));
   background-attachment: fixed;
   transition: background 0.4s ease, color 0.4s ease;
 }
@@ -117,14 +117,14 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Premium Midnight Glassmorphism Card Style */
+/* Premium Stealth Glassmorphism Card Style */
 .cyber-card {
   background: var(--bg-card);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
-  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.75), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
@@ -137,13 +137,13 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--cyan-primary), var(--amber-gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--cyan-primary), rgba(255, 255, 255, 0.2), transparent);
   opacity: 0.85;
 }
 
 .cyber-card:hover {
   border-color: var(--border-highlight);
-  box-shadow: 0 18px 45px -8px rgba(0, 0, 0, 0.75), 0 0 25px 0 var(--cyan-glow);
+  box-shadow: 0 18px 45px -8px rgba(0, 0, 0, 0.85), 0 0 25px 0 var(--cyan-glow);
   transform: translateY(-2px);
 }
 
@@ -153,7 +153,7 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(5, 8, 17, 0.8);
+  background: rgba(7, 9, 14, 0.8);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--cyan-primary);
