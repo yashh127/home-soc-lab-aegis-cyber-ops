@@ -96,18 +96,18 @@ export default function App() {
       />
 
       {/* Clean Tabbed Workspace Navigation Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-2 rounded-2xl bg-slate-900/90 border border-slate-800 backdrop-blur-md">
+      <div className="flex flex-wrap items-center justify-between gap-3 p-2 rounded-2xl bg-zinc-900/90 border border-zinc-800 backdrop-blur-md">
         <div className="flex items-center gap-2">
           {/* Tab 1: Live Operations */}
           <button
             onClick={() => handleTabChange('operations', 'Live Operations')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-cyber text-xs font-bold transition-all ${
               activeTab === 'operations'
-                ? 'bg-gradient-to-r from-purple-600/30 to-indigo-700/30 border border-purple-500 text-purple-200 shadow-lg shadow-purple-500/20'
-                : 'bg-slate-950/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                ? 'bg-zinc-800 border border-zinc-500 text-white shadow-md shadow-white/5'
+                : 'bg-zinc-950/60 border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700'
             }`}
           >
-            <Shield className={`w-4 h-4 ${activeTab === 'operations' ? 'text-purple-400' : 'text-slate-500'}`} />
+            <Shield className={`w-4 h-4 ${activeTab === 'operations' ? 'text-zinc-100' : 'text-zinc-500'}`} />
             <span>1. LIVE OPERATIONS</span>
             <span className="px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono">
               ● REALTIME
@@ -119,13 +119,13 @@ export default function App() {
             onClick={() => handleTabChange('simulation', 'Attack Simulation and Kill Chain')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-cyber text-xs font-bold transition-all ${
               activeTab === 'simulation'
-                ? 'bg-gradient-to-r from-purple-600/30 to-fuchsia-600/30 border border-purple-400 text-purple-200 shadow-lg shadow-purple-500/20'
-                : 'bg-slate-950/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                ? 'bg-zinc-800 border border-zinc-500 text-white shadow-md shadow-white/5'
+                : 'bg-zinc-950/60 border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700'
             }`}
           >
-            <Play className={`w-4 h-4 ${activeTab === 'simulation' ? 'text-purple-400' : 'text-slate-500'}`} />
+            <Play className={`w-4 h-4 ${activeTab === 'simulation' ? 'text-zinc-100' : 'text-zinc-500'}`} />
             <span>2. ATTACK SIMULATION</span>
-            <span className="px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-mono">
+            <span className="px-1.5 py-0.5 rounded-full bg-zinc-700/60 text-zinc-200 text-[10px] font-mono">
               DEMO MODE
             </span>
           </button>
@@ -135,21 +135,21 @@ export default function App() {
             onClick={() => handleTabChange('intel', 'AI Copilot and Threat Intelligence')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-cyber text-xs font-bold transition-all ${
               activeTab === 'intel'
-                ? 'bg-gradient-to-r from-fuchsia-600/30 to-indigo-700/30 border border-fuchsia-400 text-fuchsia-200 shadow-lg shadow-fuchsia-500/20'
-                : 'bg-slate-950/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                ? 'bg-zinc-800 border border-zinc-500 text-white shadow-md shadow-white/5'
+                : 'bg-zinc-950/60 border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700'
             }`}
           >
-            <Brain className={`w-4 h-4 ${activeTab === 'intel' ? 'text-fuchsia-400' : 'text-slate-500'}`} />
+            <Brain className={`w-4 h-4 ${activeTab === 'intel' ? 'text-zinc-100' : 'text-zinc-500'}`} />
             <span>3. AI & THREAT INTEL</span>
-            <span className="px-1.5 py-0.5 rounded-full bg-fuchsia-500/20 text-fuchsia-300 text-[10px] font-mono">
+            <span className="px-1.5 py-0.5 rounded-full bg-zinc-700/60 text-zinc-200 text-[10px] font-mono">
               GENAI
             </span>
           </button>
         </div>
 
         {/* Tab Context Helper Badge */}
-        <div className="hidden md:flex items-center gap-2 text-xs font-mono text-slate-400 px-3">
-          <Layers className="w-3.5 h-3.5 text-purple-400" />
+        <div className="hidden md:flex items-center gap-2 text-xs font-mono text-zinc-400 px-3">
+          <Layers className="w-3.5 h-3.5 text-zinc-300" />
           <span>
             {activeTab === 'operations' && 'Viewing Live Telemetry, World Map & Active Threat Queue'}
             {activeTab === 'simulation' && 'Interactive Lockheed Martin Kill-Chain & Payload Ingestion Terminal'}

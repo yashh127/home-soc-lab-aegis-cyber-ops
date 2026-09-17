@@ -7,12 +7,12 @@ export default function NetworkTopology() {
     { id: 'firewall', name: 'Boundary Firewall', icon: Shield, status: 'FILTERING', ip: '10.0.0.1', color: 'text-rose-400', border: 'border-rose-500/40' },
     { id: 'manager', name: 'Wazuh SIEM Manager', icon: Server, status: 'ACTIVE', ip: '172.18.0.3', color: 'text-cyan-400', border: 'border-cyan-500/40' },
     { id: 'indexer', name: 'OpenSearch Indexer', icon: Database, status: 'HEALTHY', ip: '172.18.0.2', color: 'text-emerald-400', border: 'border-emerald-500/40' },
-    { id: 'endpoints', name: 'Linux/Windows Hosts', icon: Laptop, status: 'MONITORED', ip: '192.168.1.0/24', color: 'text-purple-400', border: 'border-purple-500/40' }
+    { id: 'endpoints', name: 'Linux/Windows Hosts', icon: Laptop, status: 'MONITORED', ip: '192.168.1.0/24', color: 'text-zinc-200', border: 'border-zinc-600' }
   ];
 
   return (
     <div className="cyber-card p-4 flex flex-col h-full">
-      <div className="flex items-center justify-between mb-3 pb-2 border-b border-cyan-500/20">
+      <div className="flex items-center justify-between mb-3 pb-2 border-b border-zinc-800">
         <div className="flex items-center gap-2">
           <Cpu className="w-5 h-5 text-cyan-400" />
           <h2 className="font-cyber text-sm font-bold text-white tracking-wide">

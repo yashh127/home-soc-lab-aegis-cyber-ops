@@ -47,14 +47,14 @@ export default function MitreMatrix() {
 
   return (
     <div className="cyber-card p-4 flex flex-col h-full">
-      <div className="flex items-center justify-between mb-3 pb-2 border-b border-cyan-500/20">
+      <div className="flex items-center justify-between mb-3 pb-2 border-b border-zinc-800">
         <div className="flex items-center gap-2">
-          <Layers className="w-5 h-5 text-purple-400" />
+          <Layers className="w-5 h-5 text-zinc-300" />
           <h2 className="font-cyber text-sm font-bold text-white tracking-wide">
             MITRE ATT&CK THREAT MATRIX HEATMAP
           </h2>
         </div>
-        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-purple-950 border border-purple-500/30 text-purple-300">
+        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300">
           5 TACTICS COVERED
         </span>
       </div>

@@ -45,11 +45,11 @@ export default function KpiMetrics({ stats, showHelp }) {
       helpText: 'Total stream of raw logs collected across all systems and cloud services.',
       value: stats.total,
       icon: Info,
-      color: 'text-purple-400',
-      borderColor: 'border-purple-500/30',
-      bgGlow: 'bg-purple-500/10',
+      color: 'text-zinc-200',
+      borderColor: 'border-zinc-700/50',
+      bgGlow: 'bg-zinc-800',
       badge: 'LIVE FEED (514)',
-      badgeColor: 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+      badgeColor: 'bg-zinc-800 text-zinc-300 border-zinc-700'
     },
     {
       title: 'SIEM NODES ONLINE',

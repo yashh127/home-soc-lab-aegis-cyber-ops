@@ -51,7 +51,7 @@ export default function ThreatIntelFeed({ showHelp }) {
               <span
                 className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
                   ioc.type === 'HASH'
-                    ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
+                    ? 'bg-zinc-800 text-zinc-200 border border-zinc-700'
                     : ioc.type === 'DOMAIN'
                     ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
                     : 'bg-sky-500/20 text-sky-300 border border-sky-500/30'

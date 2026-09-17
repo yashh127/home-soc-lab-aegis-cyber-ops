@@ -60,17 +60,17 @@ export default function AlertDetailModal({ alert, onClose }) {
             </div>
 
             <div className="bg-slate-900/80 p-2.5 rounded border border-slate-800">
-              <div className="text-[10px] text-slate-400">LOG SOURCE</div>
-              <div className="text-base font-bold text-purple-300">{alert.source}</div>
+              <div className="text-[10px] text-zinc-400">LOG SOURCE</div>
+              <div className="text-base font-bold text-zinc-100">{alert.source}</div>
             </div>
           </div>
 
           {/* MITRE & Recommendations */}
-          <div className="bg-slate-900/60 p-3 rounded border border-slate-800 space-y-2">
-            <div className="text-xs font-bold text-cyan-300 flex items-center justify-between">
+          <div className="bg-zinc-900/60 p-3 rounded border border-zinc-800 space-y-2">
+            <div className="text-xs font-bold text-zinc-200 flex items-center justify-between">
               <span>ANALYST TRIAGE RECOMMENDATIONS</span>
               {alert.mitre && (
-                <span className="px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
+                <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-200 border border-zinc-700">
                   MITRE ATT&CK: {alert.mitre}
                 </span>
               )}

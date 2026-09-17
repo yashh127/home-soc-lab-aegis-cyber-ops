@@ -21,15 +21,15 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
   });
 
   return (
-    <div className="cyber-card p-4 flex flex-col h-full border-purple-500/20">
+    <div className="cyber-card p-4 flex flex-col h-full border-zinc-800">
       {/* Header & Filter Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-3 pb-2 border-b border-purple-500/20">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-3 pb-2 border-b border-zinc-800">
         <div className="flex items-center gap-2">
-          <Terminal className="w-5 h-5 text-purple-400" />
+          <Terminal className="w-5 h-5 text-zinc-300" />
           <h2 className="font-cyber text-sm font-bold text-white tracking-wide">
             LIVE SIEM ALERT STREAM & ANALYST QUEUE
           </h2>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-300">
             {filteredAlerts.length} ALERTS MATCHED
           </span>
         </div>
@@ -37,25 +37,25 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
         {/* Search & Filter Buttons */}
         <div className="flex items-center gap-2 flex-wrap">
           <div className="relative">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 transform -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-1/2 transform -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search IP, Rule ID, text..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-slate-950 border border-slate-800 rounded px-2.5 py-1 pl-8 text-xs font-mono text-white focus:outline-none focus:border-purple-500 w-44"
+              className="bg-zinc-950 border border-zinc-800 rounded px-2.5 py-1 pl-8 text-xs font-mono text-white focus:outline-none focus:border-zinc-500 w-44"
             />
           </div>
 
-          <div className="flex items-center gap-1 bg-slate-950 p-0.5 rounded border border-slate-800">
+          <div className="flex items-center gap-1 bg-zinc-950 p-0.5 rounded border border-zinc-800">
             {sources.map(src => (
               <button
                 key={src}
                 onClick={() => setFilterSource(src)}
                 className={`px-2 py-0.5 text-[10px] font-mono rounded transition-colors ${
                   filterSource === src
-                    ? 'bg-purple-500/30 border border-purple-500/50 text-purple-200 font-bold'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-zinc-800 border border-zinc-600 text-white font-bold'
+                    : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
                 {src}
@@ -71,40 +71,40 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
           <div
             key={alert.id}
             onClick={() => onInspectAlert(alert)}
-            className="p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 hover:border-purple-500/50 hover:bg-slate-900/90 transition-all cursor-pointer flex items-center justify-between gap-3 group"
+            className="p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/80 hover:border-zinc-600 hover:bg-zinc-900/90 transition-all cursor-pointer flex items-center justify-between gap-3 group"
           >
             {/* Left: Severity & Meta */}
             <div className="flex items-center gap-3 min-w-0">
               <div className="flex flex-col items-center justify-center shrink-0 w-9">
                 <span className={`text-[11px] font-mono font-bold ${
-                  alert.level >= 12 ? 'text-rose-400' : alert.level >= 10 ? 'text-amber-400' : 'text-slate-300'
+                  alert.level >= 12 ? 'text-rose-400' : alert.level >= 10 ? 'text-amber-400' : 'text-zinc-300'
                 }`}>
                   LVL {alert.level}
                 </span>
-                <span className="text-[9px] font-mono text-slate-400">RULE {alert.ruleId}</span>
+                <span className="text-[9px] font-mono text-zinc-400">RULE {alert.ruleId}</span>
               </div>
 
-              <div className="h-7 w-px bg-slate-800 shrink-0"></div>
+              <div className="h-7 w-px bg-zinc-800 shrink-0"></div>
 
               {/* Center: Description & Attribution */}
               <div className="truncate">
-                <div className="text-xs font-sans font-bold text-slate-200 group-hover:text-purple-300 transition-colors truncate">
+                <div className="text-xs font-sans font-bold text-zinc-200 group-hover:text-white transition-colors truncate">
                   {alert.description}
                 </div>
-                <div className="text-[10px] font-mono text-slate-400 flex items-center gap-2 mt-0.5">
-                  <span className="text-slate-300">SRC: {alert.sourceIp}</span>
+                <div className="text-[10px] font-mono text-zinc-400 flex items-center gap-2 mt-0.5">
+                  <span className="text-zinc-300">SRC: {alert.sourceIp}</span>
                   <span>•</span>
-                  <span className="text-slate-400 font-sans">{alert.source}</span>
+                  <span className="text-zinc-400 font-sans">{alert.source}</span>
                   <span>•</span>
-                  <span className="text-purple-400 font-semibold">{alert.mitre}</span>
+                  <span className="text-zinc-300 font-semibold">{alert.mitre}</span>
                 </div>
               </div>
             </div>
 
             {/* Right: Timestamp & Inspect Button */}
             <div className="flex items-center gap-3 shrink-0">
-              <span className="text-[10px] font-mono text-slate-400">{alert.timestamp}</span>
-              <button className="p-1.5 rounded-lg bg-slate-900 group-hover:bg-purple-500/20 text-slate-400 group-hover:text-purple-400 border border-slate-800 group-hover:border-purple-500/40 transition-all">
+              <span className="text-[10px] font-mono text-zinc-400">{alert.timestamp}</span>
+              <button className="p-1.5 rounded-lg bg-zinc-900 group-hover:bg-zinc-800 text-zinc-400 group-hover:text-white border border-zinc-800 group-hover:border-zinc-600 transition-all">
                 <Eye className="w-3.5 h-3.5" />
               </button>
             </div>

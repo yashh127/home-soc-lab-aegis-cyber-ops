@@ -101,14 +101,14 @@ export default function AiChatAssistantModal({ isOpen, onClose }) {
               <div
                 className={`max-w-[80%] p-3 rounded-xl text-xs font-mono leading-relaxed ${
                   msg.sender === 'user'
-                    ? 'bg-purple-600/30 border border-purple-500/40 text-purple-200'
-                    : 'bg-slate-900 border border-cyan-500/30 text-cyan-200'
+                    ? 'bg-zinc-800 border border-zinc-600 text-zinc-100'
+                    : 'bg-zinc-900 border border-zinc-700 text-zinc-200'
                 }`}
               >
                 {msg.text}
               </div>
               {msg.sender === 'user' && (
-                <div className="p-2 rounded-lg bg-purple-500/20 text-purple-400 h-fit border border-purple-500/30">
+                <div className="p-2 rounded-lg bg-zinc-800 text-zinc-200 h-fit border border-zinc-700">
                   <User className="w-4 h-4" />
                 </div>
               )}

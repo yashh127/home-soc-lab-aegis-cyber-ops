@@ -60,8 +60,8 @@ export default function AiCopilot({ latestAlert }) {
               : 'Sir, I am monitoring 310 telemetry events across all cloud and host vectors. All cluster indices remain stable.'}
           </p>
 
-          <div className="pt-2 text-[10px] text-slate-400 border-t border-slate-800 flex items-center justify-between">
-            <span>MITRE TACTIC: <strong className="text-purple-300">{latestAlert?.mitre || 'INITIAL ACCESS'}</strong></span>
+          <div className="pt-2 text-[10px] text-zinc-400 border-t border-zinc-800 flex items-center justify-between">
+            <span>MITRE TACTIC: <strong className="text-zinc-200">{latestAlert?.mitre || 'INITIAL ACCESS'}</strong></span>
             <span>COUNTERMEASURE: <strong className="text-rose-400">AUTO-CONTAIN</strong></span>
           </div>
         </div>

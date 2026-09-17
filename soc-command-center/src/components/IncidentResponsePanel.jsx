@@ -89,16 +89,16 @@ export default function IncidentResponsePanel({ showHelp }) {
             'pkill -f "/tmp/stage1_dropper.sh"',
             'Malware process terminated. Background scripts purged from /tmp.'
           )}
-          className="p-3 rounded-xl bg-slate-950/80 border border-purple-500/30 hover:bg-purple-950/30 text-purple-300 text-xs font-mono flex items-center justify-between transition-all group shadow-sm"
+          className="p-3 rounded-xl bg-zinc-950/80 border border-zinc-700/60 hover:bg-zinc-900/60 text-zinc-300 text-xs font-mono flex items-center justify-between transition-all group shadow-sm"
         >
           <div className="flex items-center gap-2.5">
-            <Trash2 className="w-4 h-4 text-purple-400" />
+            <Trash2 className="w-4 h-4 text-zinc-300" />
             <div className="text-left font-sans">
               <div className="font-bold text-white text-xs">TERMINATE /tmp PAYLOADS</div>
-              <div className="text-[10px] text-slate-400 font-mono">Purge background scripts</div>
+              <div className="text-[10px] text-zinc-400 font-mono">Purge background scripts</div>
             </div>
           </div>
-          <Play className="w-3.5 h-3.5 text-purple-400 group-hover:translate-x-1 transition-transform fill-purple-400" />
+          <Play className="w-3.5 h-3.5 text-zinc-300 group-hover:translate-x-1 transition-transform fill-zinc-300" />
         </button>
 
         <button
