@@ -33,11 +33,11 @@ export default function KpiMetrics({ stats, showHelp }) {
       helpText: 'Routine system events, minor config updates, or low-risk log entries.',
       value: stats.mediumLow,
       icon: AlertTriangle,
-      color: 'text-sky-400',
-      borderColor: 'border-sky-500/30',
-      bgGlow: 'bg-sky-500/10',
+      color: 'text-zinc-200',
+      borderColor: 'border-zinc-700/60',
+      bgGlow: 'bg-zinc-800/40',
       badge: 'MONITORING',
-      badgeColor: 'bg-sky-500/15 text-sky-300 border-sky-500/30'
+      badgeColor: 'bg-zinc-800/80 text-zinc-200 border-zinc-700/70'
     },
     {
       title: 'EVENTS ANALYZED',

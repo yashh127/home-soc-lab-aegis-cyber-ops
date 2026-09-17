@@ -107,31 +107,31 @@ export default function IncidentResponsePanel({ showHelp }) {
             '/var/ossec/bin/wazuh-control restart',
             'Custom XML detection rules reloaded across Wazuh Manager.'
           )}
-          className="p-3 rounded-xl bg-slate-950/80 border border-sky-500/30 hover:bg-sky-950/30 text-sky-300 text-xs font-mono flex items-center justify-between transition-all group shadow-sm"
+          className="p-3 rounded-xl bg-zinc-950/80 border border-zinc-700/60 hover:bg-zinc-900/60 text-zinc-300 text-xs font-mono flex items-center justify-between transition-all group shadow-sm"
         >
           <div className="flex items-center gap-2.5">
-            <CheckCircle2 className="w-4 h-4 text-sky-400" />
+            <CheckCircle2 className="w-4 h-4 text-zinc-300" />
             <div className="text-left font-sans">
               <div className="font-bold text-white text-xs">RELOAD DETECTION RULES</div>
-              <div className="text-[10px] text-slate-400 font-mono">Hot-apply custom XML rules</div>
+              <div className="text-[10px] text-zinc-400 font-mono">Hot-apply custom XML rules</div>
             </div>
           </div>
-          <Play className="w-3.5 h-3.5 text-sky-400 group-hover:translate-x-1 transition-transform fill-sky-400" />
+          <Play className="w-3.5 h-3.5 text-zinc-300 group-hover:translate-x-1 transition-transform fill-zinc-300" />
         </button>
       </div>
 
       {/* Terminal Execution Log */}
-      <div className="flex-1 bg-slate-950/90 rounded-xl p-3 border border-slate-800 font-mono text-[11px] max-h-[140px] overflow-y-auto space-y-1.5 shadow-inner">
+      <div className="flex-1 bg-[#0e0f15] rounded-xl p-3 border border-zinc-800/80 font-mono text-[11px] max-h-[140px] overflow-y-auto space-y-1.5 shadow-inner">
         {logs.map(log => (
           <div key={log.id} className="flex items-start gap-2">
-            <span className="text-slate-500">[{log.time}]</span>
+            <span className="text-zinc-500">[{log.time}]</span>
             <span
               className={
                 log.type === 'success'
                   ? 'text-emerald-400 font-semibold'
                   : log.type === 'error'
                   ? 'text-rose-400 font-semibold'
-                  : 'text-sky-300'
+                  : 'text-zinc-300'
               }
             >
               {log.msg}

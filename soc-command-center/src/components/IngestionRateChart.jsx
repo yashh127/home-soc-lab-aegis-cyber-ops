@@ -26,16 +26,16 @@ export default function IngestionRateChart({ showHelp }) {
   const maxEps = Math.max(...data.map(d => d.eps));
 
   return (
-    <div className="cyber-card p-5 flex flex-col h-full border-sky-500/30">
+    <div className="cyber-card p-5 flex flex-col h-full border-zinc-700/60">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3 pb-3 border-b border-sky-500/15">
+      <div className="flex items-center justify-between mb-3 pb-3 border-b border-zinc-800">
         <div className="flex items-center gap-2.5">
           <Activity className="w-5 h-5 text-emerald-400 animate-pulse" />
           <div>
             <h2 className="font-cyber text-base font-bold text-white tracking-wide">
               REAL-TIME SIEM INGESTION VELOCITY
             </h2>
-            <p className="text-xs text-slate-400 font-medium">Live Events Per Second (EPS) Throughput Stream</p>
+            <p className="text-xs text-zinc-400 font-medium">Live Events Per Second (EPS) Throughput Stream</p>
           </div>
         </div>
         <span className="badge-label bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">
@@ -45,18 +45,18 @@ export default function IngestionRateChart({ showHelp }) {
       </div>
 
       {showHelp && (
-        <div className="mb-3 text-xs bg-sky-950/40 p-2.5 rounded-xl border border-sky-500/20 text-sky-200 font-sans">
+        <div className="mb-3 text-xs bg-zinc-900/80 p-2.5 rounded-xl border border-zinc-700/60 text-zinc-300 font-sans">
           💡 <strong>SIEM Ingestion Velocity Graph:</strong> Tracks the real-time speed at which security logs (events per second) are decoded by Wazuh and indexed into OpenSearch.
         </div>
       )}
 
       {/* Real-time SVG Sparkline Graph */}
-      <div className="relative w-full h-[120px] bg-slate-950/90 rounded-xl p-3 border border-slate-800 flex flex-col justify-between shadow-inner">
-        <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 z-10">
+      <div className="relative w-full h-[120px] bg-[#0e0f15] rounded-xl p-3 border border-zinc-800/80 flex flex-col justify-between shadow-inner">
+        <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400 z-10">
           <span className="flex items-center gap-1 text-emerald-400 font-bold">
             <TrendingUp className="w-3.5 h-3.5" /> PEAK: {maxEps} EPS
           </span>
-          <span className="text-slate-500">SYS_PORT: UDP 514</span>
+          <span className="text-zinc-500">SYS_PORT: UDP 514</span>
         </div>
 
         {/* SVG Sparkline Curve */}
@@ -79,7 +79,7 @@ export default function IngestionRateChart({ showHelp }) {
           />
         </svg>
 
-        <div className="flex justify-between text-[10px] font-mono text-slate-500 border-t border-slate-900 pt-1">
+        <div className="flex justify-between text-[10px] font-mono text-zinc-500 border-t border-zinc-800/80 pt-1">
           {data.map((d, i) => (
             <span key={i}>{d.time}</span>
           ))}

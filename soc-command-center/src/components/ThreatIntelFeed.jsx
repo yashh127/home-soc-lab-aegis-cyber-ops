@@ -16,16 +16,16 @@ export default function ThreatIntelFeed({ showHelp }) {
   };
 
   return (
-    <div className="cyber-card p-5 flex flex-col h-full border-sky-500/30">
+    <div className="cyber-card p-5 flex flex-col h-full border-zinc-700/60">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3 pb-3 border-b border-sky-500/15">
+      <div className="flex items-center justify-between mb-3 pb-3 border-b border-zinc-800">
         <div className="flex items-center gap-2.5">
           <Database className="w-5 h-5 text-amber-400" />
           <div>
             <h2 className="font-cyber text-base font-bold text-white tracking-wide">
               LIVE THREAT INTEL & IOC INDICATOR WATCH
             </h2>
-            <p className="text-xs text-slate-400 font-medium">Real-time VirusTotal, AbuseIPDB, & AlienVault OTX Threat Feeds</p>
+            <p className="text-xs text-zinc-400 font-medium">Real-time VirusTotal, AbuseIPDB, & AlienVault OTX Threat Feeds</p>
           </div>
         </div>
         <span className="badge-label bg-amber-500/15 border border-amber-500/30 text-amber-300">
@@ -45,7 +45,7 @@ export default function ThreatIntelFeed({ showHelp }) {
           <div
             key={ioc.id}
             onClick={() => handleInspectIoc(ioc)}
-            className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/40 cursor-pointer transition-all flex items-center justify-between gap-3 group"
+            className="p-3 rounded-xl bg-zinc-950/80 border border-zinc-800 hover:border-zinc-500 cursor-pointer transition-all flex items-center justify-between gap-3 group"
           >
             <div className="flex items-center gap-2.5 min-w-0">
               <span
@@ -54,7 +54,7 @@ export default function ThreatIntelFeed({ showHelp }) {
                     ? 'bg-zinc-800 text-zinc-200 border border-zinc-700'
                     : ioc.type === 'DOMAIN'
                     ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                    : 'bg-sky-500/20 text-sky-300 border border-sky-500/30'
+                    : 'bg-zinc-800 text-zinc-200 border border-zinc-700'
                 }`}
               >
                 {ioc.type}

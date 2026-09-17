@@ -94,19 +94,19 @@ export default function PayloadSimulator({ onSimulateEvent, showHelp }) {
   };
 
   return (
-    <div className="cyber-card p-5 flex flex-col h-full border-sky-500/30">
+    <div className="cyber-card p-5 flex flex-col h-full border-zinc-700/60">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3 pb-3 border-b border-sky-500/15">
+      <div className="flex items-center justify-between mb-3 pb-3 border-b border-zinc-800">
         <div className="flex items-center gap-2.5">
-          <Terminal className="w-5 h-5 text-sky-400" />
+          <Terminal className="w-5 h-5 text-zinc-200" />
           <div>
             <h2 className="font-cyber text-base font-bold text-white tracking-wide">
               INTERACTIVE THREAT PAYLOAD SIMULATOR
             </h2>
-            <p className="text-xs text-slate-400 font-medium">Select an attack payload preset or edit raw JSON to test detection rules</p>
+            <p className="text-xs text-zinc-400 font-medium">Select an attack payload preset or edit raw JSON to test detection rules</p>
           </div>
         </div>
-        <span className="badge-label bg-sky-950/80 border border-sky-400/30 text-sky-300">
+        <span className="badge-label bg-zinc-800/90 border border-zinc-700 text-zinc-200">
           <Sparkles className="w-3.5 h-3.5 text-amber-400" />
           LIVE RULE ENGINE
         </span>
@@ -114,7 +114,7 @@ export default function PayloadSimulator({ onSimulateEvent, showHelp }) {
 
       {showHelp && (
         <div className="mb-3 text-xs bg-amber-950/40 p-2.5 rounded-xl border border-amber-500/20 text-amber-200">
-          💡 <strong>What does this do?</strong> Click any of the 4 attack presets below to see the exact JSON log data generated during cyber attacks. Click the blue <strong>"INJECT THREAT PAYLOAD"</strong> button to test your SIEM detection and hear J.A.R.V.I.S. announce the alert!
+          💡 <strong>What does this do?</strong> Click any of the 4 attack presets below to see the exact JSON log data generated during cyber attacks. Click the luminous <strong>"SIMULATE & INJECT THREAT PAYLOAD"</strong> button to test your SIEM detection and hear J.A.R.V.I.S. announce the alert!
         </div>
       )}
 
@@ -130,12 +130,12 @@ export default function PayloadSimulator({ onSimulateEvent, showHelp }) {
             }}
             className={`p-3 rounded-xl border text-left font-sans text-xs transition-all ${
               selectedPreset === p.id
-                ? 'bg-sky-500/20 border-sky-400 text-white font-bold shadow-md shadow-sky-500/10'
-                : 'bg-slate-950/80 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                ? 'bg-zinc-800 border-white/40 text-white font-bold shadow-md shadow-white/5'
+                : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-900'
             }`}
           >
             <div className="font-semibold text-sm mb-1 truncate">{p.name}</div>
-            <div className="text-[11px] font-mono text-sky-300">LVL {p.level} • {p.mitre}</div>
+            <div className="text-[11px] font-mono text-zinc-300">LVL {p.level} • {p.mitre}</div>
           </button>
         ))}
       </div>
@@ -145,10 +145,10 @@ export default function PayloadSimulator({ onSimulateEvent, showHelp }) {
         <textarea
           value={customPayload || currentPreset.payload}
           onChange={(e) => setCustomPayload(e.target.value)}
-          className="w-full h-36 bg-slate-950/90 p-3.5 rounded-xl border border-slate-800 font-mono text-xs text-sky-300 focus:outline-none focus:border-sky-500 leading-relaxed resize-none shadow-inner"
+          className="w-full h-36 bg-[#0e0f15] p-3.5 rounded-xl border border-zinc-800 font-mono text-xs text-zinc-200 focus:outline-none focus:border-zinc-500 leading-relaxed resize-none shadow-inner"
         />
-        <div className="absolute top-3 right-3 text-[11px] font-mono text-slate-400 flex items-center gap-1.5 bg-slate-900/80 px-2 py-1 rounded border border-slate-800">
-          <Code className="w-3.5 h-3.5 text-sky-400" />
+        <div className="absolute top-3 right-3 text-[11px] font-mono text-zinc-400 flex items-center gap-1.5 bg-zinc-900 px-2 py-1 rounded border border-zinc-700 text-zinc-300">
+          <Code className="w-3.5 h-3.5 text-zinc-300" />
           <span>JSON PAYLOAD EDITOR</span>
         </div>
       </div>
@@ -156,9 +156,9 @@ export default function PayloadSimulator({ onSimulateEvent, showHelp }) {
       {/* Action Button */}
       <button
         onClick={handleRunSimulation}
-        className="w-full py-3 px-5 rounded-xl bg-gradient-to-r from-sky-500/20 to-blue-600/30 hover:from-sky-500/30 hover:to-blue-600/40 border border-sky-400/40 text-sky-200 font-cyber font-bold text-xs flex items-center justify-center gap-2.5 transition-all active:scale-[0.99] shadow-lg shadow-sky-500/10"
+        className="w-full py-3 px-5 rounded-xl bg-zinc-100 hover:bg-white text-zinc-950 font-cyber font-bold text-xs flex items-center justify-center gap-2.5 transition-all active:scale-[0.99] shadow-lg shadow-white/10"
       >
-        <Play className="w-4 h-4 text-sky-400 fill-sky-400" />
+        <Play className="w-4 h-4 text-zinc-950 fill-zinc-950" />
         <span>SIMULATE & INJECT THREAT PAYLOAD</span>
       </button>
     </div>
