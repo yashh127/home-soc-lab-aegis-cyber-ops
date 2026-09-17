@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Activity, Wifi, Clock, Volume2, VolumeX, RefreshCw, Radio, Maximize2, Mic, HelpCircle, FileText, Cpu, HardDrive, Server, Bot, Sparkles, Play, Lightbulb } from 'lucide-react';
+import { Shield, Activity, Wifi, Clock, Volume2, VolumeX, RefreshCw, Radio, Maximize2, Mic, HelpCircle, FileText, Cpu, HardDrive, Server, Bot, Sparkles, Play, Lightbulb, Palette, ChevronDown } from 'lucide-react';
 import { audioEngine } from '../utils/audioEngine';
 import AudioVisualizer from './AudioVisualizer';
 
@@ -19,11 +19,29 @@ export default function Header({
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('default');
+
+  const themes = [
+    { id: 'default', name: 'Cyber Cyan', label: '🩵 Cyber Cyan', class: '' },
+    { id: 'obsidian', name: 'Stealth Obsidian', label: '🖤 Stealth Obsidian', class: 'theme-obsidian' },
+    { id: 'matrix', name: 'Matrix Emerald', label: '💚 Matrix Emerald', class: 'theme-matrix' },
+    { id: 'crimson', name: 'Crimson War-Room', label: '❤️ Crimson War-Room', class: 'theme-crimson' },
+    { id: 'navy', name: 'Sapphire Navy', label: '💙 Sapphire Navy', class: 'theme-navy' }
+  ];
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  const handleSelectTheme = (theme) => {
+    audioEngine.playClick();
+    setCurrentTheme(theme.id);
+    setThemeOpen(false);
+    document.body.className = theme.class;
+    audioEngine.speak(`Theme updated to ${theme.name}, sir.`);
+  };
 
   const toggleFullscreen = () => {
     audioEngine.playClick();
@@ -62,7 +80,7 @@ export default function Header({
   };
 
   return (
-    <header className="cyber-card p-4 mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-sky-500/20">
+    <header className="cyber-card p-4 mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-sky-500/20 relative z-30">
       {/* Left 1: Brand & Subtitle */}
       <div className="flex items-center gap-3.5 shrink-0">
         <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/10 border border-cyan-400/30 text-cyan-400 pulse-cyan shadow-lg shadow-cyan-500/10">
@@ -136,8 +154,43 @@ export default function Header({
         </div>
       </div>
 
-      {/* Right: Action Buttons & Clock */}
+      {/* Right: Action Buttons & Controls */}
       <div className="flex items-center gap-2 flex-wrap">
+        {/* Dynamic Theme Switcher Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setThemeOpen(!themeOpen)}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold transition-all shadow-md active:scale-95"
+            title="Switch Dashboard Color Theme"
+          >
+            <Palette className="w-4 h-4 text-cyan-400" />
+            <span className="hidden sm:inline">THEME</span>
+            <ChevronDown className="w-3 h-3 text-slate-400" />
+          </button>
+
+          {themeOpen && (
+            <div className="absolute right-0 mt-2 w-48 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl p-1.5 z-50 animate-fadeIn">
+              <div className="text-[10px] font-mono text-slate-400 px-2.5 py-1 uppercase border-b border-slate-800 mb-1">
+                Select Theme
+              </div>
+              {themes.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => handleSelectTheme(t)}
+                  className={`w-full text-left px-3 py-1.5 rounded-lg text-xs font-mono flex items-center justify-between transition-all ${
+                    currentTheme === t.id
+                      ? 'bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-500/30'
+                      : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                  }`}
+                >
+                  <span>{t.label}</span>
+                  {currentTheme === t.id && <span className="text-cyan-400">✓</span>}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
         {/* Recruiter / Plain English View Toggle */}
         <button
           onClick={handleTogglePlainEnglish}
