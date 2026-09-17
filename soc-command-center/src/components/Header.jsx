@@ -61,19 +61,19 @@ export default function Header({
   };
 
   return (
-    <header className="cyber-card p-4 mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-red-500/20 relative z-30">
-      {/* Left: Falcon Brand & Subtitle */}
+    <header className="cyber-card p-4 mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-blue-500/20 relative z-30">
+      {/* Left: Brand & Subtitle */}
       <div className="flex items-center gap-3.5 shrink-0">
-        <div className="p-3 rounded-xl bg-gradient-to-br from-red-500/20 to-rose-600/10 border border-red-500/40 text-red-500 shadow-lg shadow-red-500/15">
-          <Shield className="w-7 h-7 text-red-500" />
+        <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-600/10 border border-blue-500/40 text-blue-500 shadow-lg shadow-blue-500/15">
+          <Shield className="w-7 h-7 text-blue-500" />
         </div>
         <div>
           <div className="flex items-center gap-2.5">
             <h1 className="font-cyber text-2xl font-extrabold tracking-tight text-white">
-              A.E.G.I.S. <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-rose-400 to-amber-300">CYBER OPS</span>
+              A.E.G.I.S. <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-300">CYBER OPS</span>
             </h1>
-            <span className="badge-label bg-red-950/80 border border-red-500/40 text-red-300">
-              FALCON EDR v4.9
+            <span className="badge-label bg-blue-950/80 border border-blue-500/40 text-blue-300">
+              SENTINEL EDR v4.9
             </span>
           </div>
           <p className="text-xs text-slate-400 font-medium flex items-center gap-2 mt-0.5 font-sans">
@@ -93,7 +93,7 @@ export default function Header({
 
         <div className="flex items-center gap-4 px-3.5 py-2 rounded-xl bg-slate-900/90 border border-slate-800 shadow-inner">
           <div className="flex items-center gap-2 text-xs font-mono">
-            <Activity className="w-4 h-4 text-red-400 animate-spin" />
+            <Activity className="w-4 h-4 text-blue-400 animate-spin" />
             <span className="text-slate-400">INGEST:</span>
             <span className="text-white font-bold">18.4 EPS</span>
           </div>
@@ -105,9 +105,9 @@ export default function Header({
           </div>
           <div className="w-px h-4 bg-slate-800"></div>
           <div className="flex items-center gap-2 text-xs font-mono">
-            <Radio className="w-4 h-4 text-red-400 animate-pulse" />
+            <Radio className="w-4 h-4 text-blue-400 animate-pulse" />
             <span className="text-slate-400">DEFCON:</span>
-            <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 font-bold border border-red-500/40 text-[11px]">
+            <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-bold border border-blue-500/40 text-[11px]">
               LEVEL 3 ELEVATED
             </span>
           </div>
@@ -117,7 +117,7 @@ export default function Header({
       {/* Center 2: Cluster Hardware Gauge */}
       <div className="hidden 2xl:flex items-center gap-4 px-3.5 py-2 rounded-xl bg-slate-900/90 border border-slate-800">
         <div className="flex items-center gap-2 text-xs font-mono">
-          <Cpu className="w-4 h-4 text-red-400" />
+          <Cpu className="w-4 h-4 text-blue-400" />
           <span className="text-slate-400">CPU:</span>
           <span className="text-white font-bold">14%</span>
         </div>
@@ -154,10 +154,10 @@ export default function Header({
         {/* AI SOC CHAT BUTTON */}
         <button
           onClick={onOpenAiChat}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-red-600/30 to-rose-700/30 hover:from-red-600/40 hover:to-rose-700/40 border border-red-500/40 text-red-200 text-xs font-semibold transition-all active:scale-95 shadow-md shadow-red-500/15"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600/30 to-indigo-700/30 hover:from-blue-600/40 hover:to-indigo-700/40 border border-blue-500/40 text-blue-200 text-xs font-semibold transition-all active:scale-95 shadow-md shadow-blue-500/15"
           title="Open J.A.R.V.I.S. Interactive AI SOC Chatbot"
         >
-          <Bot className="w-4 h-4 text-red-400 animate-bounce" />
+          <Bot className="w-4 h-4 text-blue-400 animate-bounce" />
           <span>AI SOC CHAT</span>
           <Sparkles className="w-3 h-3 text-amber-400" />
         </button>
@@ -166,12 +166,12 @@ export default function Header({
           onClick={() => setShowHelp(!showHelp)}
           className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-semibold transition-all ${
             showHelp
-              ? 'bg-red-500/20 border-red-500/50 text-red-300'
+              ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
               : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white'
           }`}
           title="Toggle Explanatory Guide Boxes"
         >
-          <HelpCircle className="w-4 h-4 text-red-400" />
+          <HelpCircle className="w-4 h-4 text-blue-400" />
           <span>{showHelp ? 'GUIDE ON' : 'EASY GUIDE'}</span>
         </button>
 
@@ -180,7 +180,7 @@ export default function Header({
           className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 text-xs font-semibold transition-all active:scale-95 shadow-md"
           title="Generate Executive Incident Audit Report"
         >
-          <FileText className="w-4 h-4 text-red-400" />
+          <FileText className="w-4 h-4 text-blue-400" />
           <span>EXECUTIVE REPORT</span>
         </button>
 
@@ -190,7 +190,7 @@ export default function Header({
             onTriggerReplay();
             if (voiceEnabled) audioEngine.speak('Replaying security telemetry into A.E.G.I.S. pipeline, sir.');
           }}
-          className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-300 text-xs font-semibold transition-all active:scale-95 shadow-md shadow-red-500/10"
+          className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/40 text-blue-300 text-xs font-semibold transition-all active:scale-95 shadow-md shadow-blue-500/10"
           title="Stream simulated threat attack logs"
         >
           <RefreshCw className="w-4 h-4" />
@@ -217,7 +217,7 @@ export default function Header({
           onClick={handleVoiceToggle}
           className={`p-2.5 rounded-xl border transition-all ${
             voiceEnabled
-              ? 'bg-red-500/20 border-red-500/40 text-red-300 shadow-md shadow-red-500/10'
+              ? 'bg-blue-500/20 border-blue-500/40 text-blue-300 shadow-md shadow-blue-500/10'
               : 'bg-slate-900 border-slate-800 text-slate-500'
           }`}
           title="Toggle J.A.R.V.I.S. AI Voice Guidance"
@@ -231,7 +231,7 @@ export default function Header({
           className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-colors"
           title="Toggle UI Sound Effects"
         >
-          {soundEnabled ? <Volume2 className="w-4.5 h-4.5 text-red-400" /> : <VolumeX className="w-4.5 h-4.5 text-slate-500" />}
+          {soundEnabled ? <Volume2 className="w-4.5 h-4.5 text-blue-400" /> : <VolumeX className="w-4.5 h-4.5 text-slate-500" />}
         </button>
 
         {/* Fullscreen Button */}
@@ -245,7 +245,7 @@ export default function Header({
 
         <div className="hidden sm:flex flex-col items-end font-mono text-xs pl-3 border-l border-slate-800">
           <div className="flex items-center gap-1.5 text-slate-200 font-bold">
-            <Clock className="w-3.5 h-3.5 text-red-400" />
+            <Clock className="w-3.5 h-3.5 text-blue-400" />
             <span>{time.toLocaleTimeString()}</span>
           </div>
           <div className="text-[10px] text-slate-400 font-sans mt-0.5">

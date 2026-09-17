@@ -61,7 +61,7 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
       target: 'Root Kernel',
       severity: 'CRITICAL',
       soarAction: 'Remove SUID Bit (chmod 0755)',
-      color: 'red'
+      color: 'rose'
     },
     {
       id: 'cred_access',
@@ -72,7 +72,7 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
       target: 'LSASS Process Memory',
       severity: 'CRITICAL',
       soarAction: 'Memory Sandbox Quarantine',
-      color: 'red'
+      color: 'rose'
     },
     {
       id: 'exfiltration',
@@ -83,7 +83,7 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
       target: 'DNS Gateway',
       severity: 'CRITICAL',
       soarAction: 'Null-Route Attacker IP (iptables)',
-      color: 'red'
+      color: 'rose'
     }
   ];
 
@@ -135,11 +135,11 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
   };
 
   return (
-    <div className="cyber-card p-5 flex flex-col h-full border-red-500/30 bg-gradient-to-br from-slate-900/95 via-slate-950 to-red-950/20">
+    <div className="cyber-card p-5 flex flex-col h-full border-blue-500/30 bg-gradient-to-br from-slate-900/95 via-slate-950 to-blue-950/20">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-red-500/20">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-blue-500/20">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-red-500/20 text-red-500 border border-red-500/40 animate-pulse">
+          <div className="p-2.5 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/40 animate-pulse">
             <Zap className="w-5 h-5" />
           </div>
           <div>
@@ -147,8 +147,8 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
               <h2 className="font-cyber text-base font-bold text-white tracking-wide">
                 AUTONOMOUS CYBER KILL CHAIN & SOAR ENGINE
               </h2>
-              <span className="badge-label bg-red-950 text-red-300 border border-red-500/40 text-[10px]">
-                FALCON SOAR v4.9
+              <span className="badge-label bg-blue-950 text-blue-300 border border-blue-500/40 text-[10px]">
+                SENTINEL SOAR v4.9
               </span>
             </div>
             <p className="text-xs text-slate-400 font-medium">
@@ -170,12 +170,12 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
             }}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono font-bold transition-all ${
               soarMode
-                ? 'bg-red-500/20 border-red-500/50 text-red-200 shadow-md shadow-red-500/10'
+                ? 'bg-blue-500/20 border-blue-500/50 text-blue-200 shadow-md shadow-blue-500/10'
                 : 'bg-slate-900 border-slate-800 text-slate-400'
             }`}
             title="Toggle autonomous self-healing containment"
           >
-            <ShieldCheck className={`w-4 h-4 ${soarMode ? 'text-red-400' : 'text-slate-500'}`} />
+            <ShieldCheck className={`w-4 h-4 ${soarMode ? 'text-blue-400' : 'text-slate-500'}`} />
             <span>SOAR DEFENSE: {soarMode ? 'ACTIVE (0.6s MTTR)' : 'MANUAL'}</span>
           </button>
 
@@ -186,7 +186,7 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-cyber font-bold transition-all shadow-lg active:scale-95 ${
               isRunningScenario
                 ? 'bg-amber-500/20 border border-amber-500/50 text-amber-300 animate-pulse cursor-not-allowed'
-                : 'bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-500 hover:to-rose-500 border border-red-400 text-white shadow-red-500/20'
+                : 'bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 border border-blue-400 text-white shadow-blue-500/20'
             }`}
           >
             <Play className={`w-3.5 h-3.5 ${isRunningScenario ? 'animate-spin text-amber-400' : 'text-white fill-white'}`} />
@@ -196,7 +196,7 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
       </div>
 
       {showHelp && (
-        <div className="mb-3.5 text-xs bg-red-950/40 p-3 rounded-xl border border-red-500/30 text-red-200 font-sans leading-relaxed">
+        <div className="mb-3.5 text-xs bg-blue-950/40 p-3 rounded-xl border border-blue-500/30 text-blue-200 font-sans leading-relaxed">
           💡 <strong>What Recruiters & Managers Love About This:</strong> This module visualizes how an attacker tries to progress through all 7 stages of an intrusion (Reconnaissance to Exfiltration). Clicking <strong>"SIMULATE FULL-CHAIN APT ATTACK"</strong> fires a realistic cyber attack in real-time, proving how your autonomous SOAR rules immediately catch and isolate each phase before damage occurs!
         </div>
       )}
@@ -210,13 +210,13 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
         </div>
         <div className="bg-slate-950/90 p-3 rounded-xl border border-slate-800 flex flex-col justify-between">
           <div className="text-[10px] font-mono text-slate-400 uppercase">MEAN TIME TO RESPOND (MTTR)</div>
-          <div className="text-xl font-cyber font-extrabold text-red-400 my-0.5">0.6 SEC</div>
+          <div className="text-xl font-cyber font-extrabold text-blue-400 my-0.5">0.6 SEC</div>
           <div className="text-[10px] font-mono text-slate-400">AUTONOMOUS CONTAINMENT</div>
         </div>
         <div className="bg-slate-950/90 p-3 rounded-xl border border-slate-800 flex flex-col justify-between">
           <div className="text-[10px] font-mono text-slate-400 uppercase">CONTAINMENT RATE</div>
           <div className="text-xl font-cyber font-extrabold text-white my-0.5">100%</div>
-          <div className="text-[10px] font-mono text-rose-300">ZERO LATERAL ESCAPE</div>
+          <div className="text-[10px] font-mono text-blue-300">ZERO LATERAL ESCAPE</div>
         </div>
         <div className="bg-slate-950/90 p-3 rounded-xl border border-slate-800 flex flex-col justify-between">
           <div className="text-[10px] font-mono text-slate-400 uppercase">FRAMEWORK ALIGNMENT</div>
@@ -241,21 +241,21 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
               }}
               className={`p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between relative group ${
                 isActive
-                  ? 'bg-red-950/70 border-red-500 shadow-lg shadow-red-500/30 scale-[1.03]'
+                  ? 'bg-blue-950/70 border-blue-500 shadow-lg shadow-blue-500/30 scale-[1.03]'
                   : isPassed
                   ? 'bg-emerald-950/40 border-emerald-500/50'
-                  : 'bg-slate-950/70 border-slate-800 hover:border-red-500/50'
+                  : 'bg-slate-950/70 border-slate-800 hover:border-blue-500/50'
               }`}
             >
               {/* Active Pulse Glow Indicator */}
               {isActive && (
-                <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-red-500 animate-ping"></div>
+                <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-blue-500 animate-ping"></div>
               )}
 
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <span className={`text-[10px] font-mono font-bold ${
-                    stage.severity === 'CRITICAL' ? 'text-red-400' : stage.severity === 'HIGH' ? 'text-amber-400' : 'text-slate-300'
+                    stage.severity === 'CRITICAL' ? 'text-rose-400' : stage.severity === 'HIGH' ? 'text-amber-400' : 'text-slate-300'
                   }`}>
                     {stage.severity}
                   </span>
@@ -266,11 +266,11 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
                   )}
                 </div>
 
-                <div className="text-xs font-cyber font-bold text-white mb-1 group-hover:text-red-300 transition-colors">
+                <div className="text-xs font-cyber font-bold text-white mb-1 group-hover:text-blue-300 transition-colors">
                   {stage.name}
                 </div>
 
-                <div className="text-[10px] font-mono text-red-300/90 mb-1.5 truncate">
+                <div className="text-[10px] font-mono text-blue-300/90 mb-1.5 truncate">
                   {stage.technique}
                 </div>
 
@@ -281,7 +281,7 @@ export default function KillChainVisualizer({ onSimulateEvent, showHelp, plainEn
 
               <div className="mt-3 pt-2 border-t border-slate-800/80">
                 <div className="text-[9px] font-mono text-slate-400 uppercase">SOAR REMEDIATION</div>
-                <div className="text-[10px] font-mono font-bold text-red-300 truncate">
+                <div className="text-[10px] font-mono font-bold text-blue-300 truncate">
                   ⚡ {stage.soarAction}
                 </div>
               </div>

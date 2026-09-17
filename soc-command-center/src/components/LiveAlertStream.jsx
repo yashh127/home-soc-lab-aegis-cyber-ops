@@ -21,11 +21,11 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
   });
 
   return (
-    <div className="cyber-card p-4 flex flex-col h-full border-red-500/20">
+    <div className="cyber-card p-4 flex flex-col h-full border-blue-500/20">
       {/* Header & Filter Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-3 pb-2 border-b border-red-500/20">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-3 pb-2 border-b border-blue-500/20">
         <div className="flex items-center gap-2">
-          <Terminal className="w-5 h-5 text-red-500" />
+          <Terminal className="w-5 h-5 text-blue-500" />
           <h2 className="font-cyber text-sm font-bold text-white tracking-wide">
             LIVE SIEM ALERT STREAM & ANALYST QUEUE
           </h2>
@@ -43,7 +43,7 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
               placeholder="Search IP, Rule ID, text..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-slate-950 border border-slate-800 rounded px-2.5 py-1 pl-8 text-xs font-mono text-white focus:outline-none focus:border-red-500 w-44"
+              className="bg-slate-950 border border-slate-800 rounded px-2.5 py-1 pl-8 text-xs font-mono text-white focus:outline-none focus:border-blue-500 w-44"
             />
           </div>
 
@@ -54,7 +54,7 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
                 onClick={() => setFilterSource(src)}
                 className={`px-2 py-0.5 text-[10px] font-mono rounded transition-colors ${
                   filterSource === src
-                    ? 'bg-red-500/30 border border-red-500/50 text-red-200 font-bold'
+                    ? 'bg-blue-500/30 border border-blue-500/50 text-blue-200 font-bold'
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -71,13 +71,13 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
           <div
             key={alert.id}
             onClick={() => onInspectAlert(alert)}
-            className="p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 hover:border-red-500/50 hover:bg-slate-900/90 transition-all cursor-pointer flex items-center justify-between gap-3 group"
+            className="p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 hover:border-blue-500/50 hover:bg-slate-900/90 transition-all cursor-pointer flex items-center justify-between gap-3 group"
           >
             {/* Left: Severity & Meta */}
             <div className="flex items-center gap-3 min-w-0">
               <div className="flex flex-col items-center justify-center shrink-0 w-9">
                 <span className={`text-[11px] font-mono font-bold ${
-                  alert.level >= 12 ? 'text-red-400' : alert.level >= 10 ? 'text-amber-400' : 'text-slate-300'
+                  alert.level >= 12 ? 'text-rose-400' : alert.level >= 10 ? 'text-amber-400' : 'text-slate-300'
                 }`}>
                   LVL {alert.level}
                 </span>
@@ -88,7 +88,7 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
 
               {/* Center: Description & Attribution */}
               <div className="truncate">
-                <div className="text-xs font-sans font-bold text-slate-200 group-hover:text-red-300 transition-colors truncate">
+                <div className="text-xs font-sans font-bold text-slate-200 group-hover:text-blue-300 transition-colors truncate">
                   {alert.description}
                 </div>
                 <div className="text-[10px] font-mono text-slate-400 flex items-center gap-2 mt-0.5">
@@ -96,7 +96,7 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
                   <span>•</span>
                   <span className="text-slate-400 font-sans">{alert.source}</span>
                   <span>•</span>
-                  <span className="text-red-400 font-semibold">{alert.mitre}</span>
+                  <span className="text-blue-400 font-semibold">{alert.mitre}</span>
                 </div>
               </div>
             </div>
@@ -104,7 +104,7 @@ export default function LiveAlertStream({ alerts, onInspectAlert }) {
             {/* Right: Timestamp & Inspect Button */}
             <div className="flex items-center gap-3 shrink-0">
               <span className="text-[10px] font-mono text-slate-400">{alert.timestamp}</span>
-              <button className="p-1.5 rounded-lg bg-slate-900 group-hover:bg-red-500/20 text-slate-400 group-hover:text-red-400 border border-slate-800 group-hover:border-red-500/40 transition-all">
+              <button className="p-1.5 rounded-lg bg-slate-900 group-hover:bg-blue-500/20 text-slate-400 group-hover:text-blue-400 border border-slate-800 group-hover:border-blue-500/40 transition-all">
                 <Eye className="w-3.5 h-3.5" />
               </button>
             </div>
