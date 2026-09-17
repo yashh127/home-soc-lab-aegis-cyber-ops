@@ -19,6 +19,7 @@ import ReportGeneratorModal from './components/ReportGeneratorModal';
 import AlertDetailModal from './components/AlertDetailModal';
 import { initialAlerts, generateSampleEvent } from './components/MockDataGenerator';
 import { audioEngine } from './utils/audioEngine';
+import { Shield, Play, Brain, Activity, Layers } from 'lucide-react';
 
 export default function App() {
   const [alerts, setAlerts] = useState(initialAlerts);
@@ -28,6 +29,9 @@ export default function App() {
   const [isAiChatOpen, setIsAiChatOpen] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [plainEnglishMode, setPlainEnglishMode] = useState(false);
+  
+  // Navigation Tabs: 'operations' | 'simulation' | 'intel'
+  const [activeTab, setActiveTab] = useState('operations');
 
   // Live polling & tactical voice dispatch
   useEffect(() => {
@@ -70,9 +74,15 @@ export default function App() {
 
   const latestAlert = alerts[0];
 
+  const handleTabChange = (tabId, label) => {
+    audioEngine.playClick();
+    setActiveTab(tabId);
+    audioEngine.speak(`Switched workspace to ${label}, sir.`);
+  };
+
   return (
     <div className="min-h-screen p-4 md:p-6 flex flex-col max-w-[1700px] mx-auto space-y-5">
-      {/* Header with Plain-English ELI5 Mode & Controls */}
+      {/* Top Header Bar */}
       <Header
         onTriggerReplay={handleTriggerReplay}
         isStreaming={isStreaming}
@@ -85,85 +95,161 @@ export default function App() {
         setPlainEnglishMode={setPlainEnglishMode}
       />
 
-      {/* KPI Stat Cards */}
-      <KpiMetrics stats={stats} showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+      {/* Clean Tabbed Workspace Navigation Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 p-2 rounded-2xl bg-slate-900/90 border border-slate-800 backdrop-blur-md">
+        <div className="flex items-center gap-2">
+          {/* Tab 1: Live Operations */}
+          <button
+            onClick={() => handleTabChange('operations', 'Live Operations')}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-cyber text-xs font-bold transition-all ${
+              activeTab === 'operations'
+                ? 'bg-gradient-to-r from-cyan-500/30 to-blue-600/30 border border-cyan-400 text-cyan-200 shadow-lg shadow-cyan-500/15'
+                : 'bg-slate-950/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+            }`}
+          >
+            <Shield className={`w-4 h-4 ${activeTab === 'operations' ? 'text-cyan-400' : 'text-slate-500'}`} />
+            <span>1. LIVE OPERATIONS</span>
+            <span className="px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono">
+              ● REALTIME
+            </span>
+          </button>
 
-      {/* HERO SECTION: Autonomous Cyber Kill Chain & SOAR Engine */}
-      <div className="w-full">
-        <KillChainVisualizer 
-          onSimulateEvent={handleSimulateEvent} 
-          showHelp={showHelp} 
-          plainEnglishMode={plainEnglishMode} 
-        />
+          {/* Tab 2: Attack Simulation */}
+          <button
+            onClick={() => handleTabChange('simulation', 'Attack Simulation and Kill Chain')}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-cyber text-xs font-bold transition-all ${
+              activeTab === 'simulation'
+                ? 'bg-gradient-to-r from-rose-500/30 to-amber-600/30 border border-rose-400 text-rose-200 shadow-lg shadow-rose-500/15'
+                : 'bg-slate-950/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+            }`}
+          >
+            <Play className={`w-4 h-4 ${activeTab === 'simulation' ? 'text-rose-400' : 'text-slate-500'}`} />
+            <span>2. ATTACK SIMULATION</span>
+            <span className="px-1.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-mono">
+              DEMO MODE
+            </span>
+          </button>
+
+          {/* Tab 3: AI & Threat Intel */}
+          <button
+            onClick={() => handleTabChange('intel', 'AI Copilot and Threat Intelligence')}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-cyber text-xs font-bold transition-all ${
+              activeTab === 'intel'
+                ? 'bg-gradient-to-r from-purple-500/30 to-indigo-600/30 border border-purple-400 text-purple-200 shadow-lg shadow-purple-500/15'
+                : 'bg-slate-950/60 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+            }`}
+          >
+            <Brain className={`w-4 h-4 ${activeTab === 'intel' ? 'text-purple-400' : 'text-slate-500'}`} />
+            <span>3. AI & THREAT INTEL</span>
+            <span className="px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-mono">
+              GENAI
+            </span>
+          </button>
+        </div>
+
+        {/* Tab Context Helper Badge */}
+        <div className="hidden md:flex items-center gap-2 text-xs font-mono text-slate-400 px-3">
+          <Layers className="w-3.5 h-3.5 text-cyan-400" />
+          <span>
+            {activeTab === 'operations' && 'Viewing Live Telemetry, World Map & Active Threat Queue'}
+            {activeTab === 'simulation' && 'Interactive Lockheed Martin Kill-Chain & Payload Ingestion Terminal'}
+            {activeTab === 'intel' && 'Autonomous J.A.R.V.I.S. Copilot, Zero-Trust Posture & IOC Feeds'}
+          </span>
+        </div>
       </div>
 
-      {/* Main Grid: Row 1 - Security Advisory Radar & Global Threat Trajectory Map */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <div className="lg:col-span-5">
-          <SystemAdvisoryWidget showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
-        </div>
-        <div className="lg:col-span-7">
-          <ThreatMap activeAttacks={alerts} showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
-        </div>
-      </div>
+      {/* ==================== TAB 1: LIVE OPERATIONS ==================== */}
+      {activeTab === 'operations' && (
+        <div className="space-y-5 animate-fadeIn">
+          {/* KPI Summary Cards */}
+          <KpiMetrics stats={stats} showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
 
-      {/* Main Grid: Row 2 - Zero-Trust Posture (CSPM) & AI Neural Anomaly Detector */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <div className="lg:col-span-6">
-          <CloudZeroTrustPosture showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
-        </div>
-        <div className="lg:col-span-6">
-          <AiNeuralAnomalyDetector showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
-        </div>
-      </div>
+          {/* Core Grid: System Advisory Radar + Global Threat Map */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div className="lg:col-span-5">
+              <SystemAdvisoryWidget showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+            <div className="lg:col-span-7">
+              <ThreatMap activeAttacks={alerts} showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+          </div>
 
-      {/* Main Grid: Row 3 - Threat Intel IOC Feed & Real-time Ingestion Velocity Graph */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <div className="lg:col-span-6">
-          <ThreatIntelFeed showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+          {/* Operational Response Grid: 1-Click Containment + Live SIEM Alert Stream */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div className="lg:col-span-5">
+              <IncidentResponsePanel showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+            <div className="lg:col-span-7">
+              <LiveAlertStream
+                alerts={alerts}
+                onInspectAlert={(alert) => {
+                  audioEngine.playClick();
+                  setSelectedAlert(alert);
+                }}
+                showHelp={showHelp}
+                plainEnglishMode={plainEnglishMode}
+              />
+            </div>
+          </div>
         </div>
-        <div className="lg:col-span-6">
-          <IngestionRateChart showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
-        </div>
-      </div>
+      )}
 
-      {/* Main Grid: Row 4 - MITRE ATT&CK Matrix & Interactive Payload Simulator */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <div className="lg:col-span-6">
-          <MitreMatrix showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
-        </div>
-        <div className="lg:col-span-6">
-          <PayloadSimulator onSimulateEvent={handleSimulateEvent} showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
-        </div>
-      </div>
-
-      {/* Main Grid: Row 5 - AI Copilot & Network Asset Topology */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <div className="lg:col-span-5">
-          <AiCopilot latestAlert={latestAlert} showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
-        </div>
-        <div className="lg:col-span-7">
-          <NetworkTopology showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
-        </div>
-      </div>
-
-      {/* Main Grid: Row 6 - Active Incident Response Panel & Live Alert Stream Queue */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <div className="lg:col-span-5">
-          <IncidentResponsePanel showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
-        </div>
-        <div className="lg:col-span-7">
-          <LiveAlertStream
-            alerts={alerts}
-            onInspectAlert={(alert) => {
-              audioEngine.playClick();
-              setSelectedAlert(alert);
-            }}
-            showHelp={showHelp}
-            plainEnglishMode={plainEnglishMode}
+      {/* ==================== TAB 2: ATTACK SIMULATION ==================== */}
+      {activeTab === 'simulation' && (
+        <div className="space-y-5 animate-fadeIn">
+          {/* Hero Feature: Autonomous Cyber Kill Chain & SOAR Engine */}
+          <KillChainVisualizer 
+            onSimulateEvent={handleSimulateEvent} 
+            showHelp={showHelp} 
+            plainEnglishMode={plainEnglishMode} 
           />
+
+          {/* Interactive Simulation Grid: MITRE ATT&CK Matrix + Raw Payload Simulator */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div className="lg:col-span-6">
+              <MitreMatrix showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+            <div className="lg:col-span-6">
+              <PayloadSimulator onSimulateEvent={handleSimulateEvent} showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* ==================== TAB 3: AI & THREAT INTEL ==================== */}
+      {activeTab === 'intel' && (
+        <div className="space-y-5 animate-fadeIn">
+          {/* AI Reasoning Row: J.A.R.V.I.S. Copilot + Deep Learning Tensor Anomaly Detector */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div className="lg:col-span-6">
+              <AiCopilot latestAlert={latestAlert} showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+            <div className="lg:col-span-6">
+              <AiNeuralAnomalyDetector showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+          </div>
+
+          {/* Posture & Intel Row: Zero-Trust CSPM + Real-time IOC Feeds */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div className="lg:col-span-6">
+              <CloudZeroTrustPosture showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+            <div className="lg:col-span-6">
+              <ThreatIntelFeed showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+          </div>
+
+          {/* Topology & Ingestion Velocity Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div className="lg:col-span-6">
+              <IngestionRateChart showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+            <div className="lg:col-span-6">
+              <NetworkTopology showHelp={showHelp} plainEnglishMode={plainEnglishMode} />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Alert Detail Inspector Modal */}
       {selectedAlert && (
